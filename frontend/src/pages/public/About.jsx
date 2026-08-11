@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import AnimatedCounter from '../../components/common/AnimatedCounter';
 
 const teamMembers = [
@@ -9,6 +10,8 @@ const teamMembers = [
 ];
 
 const About = () => {
+  const settings = useSelector((state) => state.settings.settings) || {};
+
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900">
       <section className="relative py-20 bg-gradient-to-r from-[#0F172A] to-[#1E293B] overflow-hidden">
@@ -30,7 +33,7 @@ const About = () => {
               <span className="text-[#38BDF8] font-semibold text-sm uppercase tracking-wider">Our Story</span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6">A Decade of Excellence</h2>
               <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>Founded in 2015, Asilah Real Estate was born from a vision to transform the real estate experience in this beautiful coastal city. What started as a small agency has grown into a comprehensive property management platform serving hundreds of satisfied clients.</p>
+                <p>{settings.about_us || 'Premium real estate agency in Asilah, offering exceptional properties and rental services across Northern Morocco.'}</p>
                 <p>Our deep understanding of the local market, combined with professional management practices, allows us to offer unparalleled service to property owners and tenants alike.</p>
                 <p>We specialize in rental properties, from beachfront apartments to traditional Moroccan riads, ensuring each property is managed with the utmost care and professionalism.</p>
               </div>
@@ -62,7 +65,7 @@ const About = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Our Mission</h3>
-              <p className="text-gray-500 dark:text-gray-400">To provide exceptional real estate services that connect people with their perfect properties in Asilah, ensuring transparent, professional, and hassle-free experiences for property owners and tenants.</p>
+              <p className="text-gray-500 dark:text-gray-400">{settings.mission || 'To provide exceptional real estate services that connect people with their perfect properties in Asilah, ensuring transparent, professional, and hassle-free experiences for property owners and tenants.'}</p>
             </div>
             <div className="p-8 rounded-2xl bg-gradient-to-br from-[#F59E0B]/5 to-transparent border border-[#F59E0B]/10">
               <div className="w-12 h-12 rounded-xl bg-[#F59E0B]/10 flex items-center justify-center mb-4">
@@ -71,7 +74,7 @@ const About = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Our Vision</h3>
-              <p className="text-gray-500 dark:text-gray-400">To become the most trusted and innovative real estate platform in Northern Morocco, setting new standards for property management and client satisfaction.</p>
+              <p className="text-gray-500 dark:text-gray-400">{settings.vision || 'To become the most trusted and innovative real estate platform in Northern Morocco, setting new standards for property management and client satisfaction.'}</p>
             </div>
           </motion.div>
 

@@ -189,7 +189,11 @@ const PropertyDetails = () => {
                 WhatsApp
               </a>
 
-              <MapComponent location={property.location || 'Asilah, Morocco'} />
+              <MapComponent
+                location={property.location || 'Asilah, Morocco'}
+                latitude={property.latitude}
+                longitude={property.longitude}
+              />
             </div>
           </motion.div>
         </div>

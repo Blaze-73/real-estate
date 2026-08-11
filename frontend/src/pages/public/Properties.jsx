@@ -182,11 +182,13 @@ const Properties = () => {
             )}
 
             {pagination.pages > 1 && (
-              <div className="flex justify-center gap-2 mt-10">
+              <nav className="flex justify-center gap-2 mt-10" aria-label="Pagination">
                 {Array.from({ length: pagination.pages }).map((_, i) => (
                   <button
                     key={i}
                     onClick={() => updateParam('page', String(i + 1))}
+                    aria-label={`Go to page ${i + 1}`}
+                    aria-current={filters.page === i + 1 ? 'page' : undefined}
                     className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${
                       filters.page === i + 1
                         ? 'bg-[#38BDF8] text-white'
@@ -196,7 +198,7 @@ const Properties = () => {
                     {i + 1}
                   </button>
                 ))}
-              </div>
+              </nav>
             )}
           </div>
         </div>

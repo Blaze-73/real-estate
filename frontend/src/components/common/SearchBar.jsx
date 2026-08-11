@@ -28,10 +28,11 @@ const SearchBar = ({ onSearch, className = '' }) => {
       className={`bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-6 ${className}`}
     >
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-        <select
+<select
           name="type"
           value={filters.type}
           onChange={handleChange}
+          aria-label="Property type"
           className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
         >
           <option value="" className="text-gray-900">Property Type</option>
@@ -41,10 +42,11 @@ const SearchBar = ({ onSearch, className = '' }) => {
           <option value="studio" className="text-gray-900">Studio</option>
           <option value="office" className="text-gray-900">Office</option>
         </select>
-        <input
+<input
           type="number"
           name="min_price"
           placeholder="Min Price"
+          aria-label="Minimum price"
           value={filters.min_price}
           onChange={handleChange}
           className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
@@ -53,6 +55,7 @@ const SearchBar = ({ onSearch, className = '' }) => {
           type="number"
           name="max_price"
           placeholder="Max Price"
+          aria-label="Maximum price"
           value={filters.max_price}
           onChange={handleChange}
           className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
@@ -61,6 +64,7 @@ const SearchBar = ({ onSearch, className = '' }) => {
           name="bedrooms"
           value={filters.bedrooms}
           onChange={handleChange}
+          aria-label="Number of bedrooms"
           className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
         >
           <option value="" className="text-gray-900">Bedrooms</option>
@@ -72,6 +76,7 @@ const SearchBar = ({ onSearch, className = '' }) => {
           name="bathrooms"
           value={filters.bathrooms}
           onChange={handleChange}
+          aria-label="Number of bathrooms"
           className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
         >
           <option value="" className="text-gray-900">Bathrooms</option>

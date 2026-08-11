@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import formatPrice from '../../utils/formatPrice';
 
 const getFavorites = () => {
   try {
@@ -63,7 +64,7 @@ const PropertyCard = ({ property }) => {
           </div>
           <div className="absolute bottom-3 left-3">
             <span className="text-xl font-bold text-white">
-              {price ? `${price.toLocaleString()} MAD` : 'Contact'}
+              {formatPrice(price)}
             </span>
           </div>
         </div>

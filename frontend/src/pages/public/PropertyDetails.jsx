@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { fetchProperty, clearProperty } from '../../store/slices/propertySlice';
 import contactService from '../../services/contactService';
+import formatPrice from '../../utils/formatPrice';
 import ImageGallery from '../../components/common/ImageGallery';
 import MapComponent from '../../components/common/MapComponent';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
@@ -102,7 +103,7 @@ const PropertyDetails = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-[#38BDF8]">
-                    {property.price ? `${property.price.toLocaleString()} MAD` : 'Contact for Price'}
+                    {formatPrice(property.price, 'Contact for Price')}
                   </p>
                   {property.type && (
                     <span className="inline-block mt-1 px-3 py-1 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] text-sm">{property.type}</span>

@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PaymentResource;
+use App\Models\Payment;
+use App\Services\RevenueService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class PaymentController extends Controller
+{
+    public function __construct(
+        protected RevenueService $revenueService
+    ) {}
+
+    public function index(Request $request): JsonResponse
+    {
+        $query = Payment::with('rental.property');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('rental_id')) {
+            $query->where('rental_id', $request->rental_id);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->where('payment_date', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->where('payment_date', '<=', $request->date_to);
+        }
+
+        $payments = $query->latest()->paginate($request->per_page ?? 15);
+
+        return response()->json(PaymentResource::collection($payments));
+    }
+
+    public function show(Payment $payment): JsonResponse
+    {
+        $payment->load('rental.property');
+
+        return response()->json(new PaymentResource($payment));
+    }
+
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'rental_id' => 'required|exists:rentals,id',
+            'amount' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'payment_method' => 'required|string|max:255',
+            'status' => 'nullable|in:paid,pending,overdue',
+            'receipt_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
+            'notes' => 'nullable|string',
+        ]);
+
+        if ($request->hasFile('receipt_file')) {
+            $validated['receipt_file'] = $request->file('receipt_file')->store('receipts', 'public');
+        }
+
+        $payment = Payment::create($validated);
+        $payment->load('rental.property');
+
+        return response()->json(new PaymentResource($payment), 201);
+    }
+
+    public function update(Request $request, Payment $payment): JsonResponse
+    {
+        $validated = $request->validate([
+            'rental_id' => 'sometimes|exists:rentals,id',
+            'amount' => 'sometimes|numeric|min:0',
+            'payment_date' => 'sometimes|date',
+            'payment_method' => 'sometimes|string|max:255',
+            'status' => 'nullable|in:paid,pending,overdue',
+            'receipt_file' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:10240',
+            'notes' => 'nullable|string',
+        ]);
+
+        if ($request->hasFile('receipt_file')) {
+            $validated['receipt_file'] = $request->file('receipt_file')->store('receipts', 'public');
+        }
+
+        $payment->update($validated);
+        $payment->load('rental.property');
+
+        return response()->json(new PaymentResource($payment));
+    }
+
+    public function destroy(Payment $payment): JsonResponse
+    {
+        $payment->delete();
+
+        return response()->json(['message' => 'Payment deleted successfully']);
+    }
+
+    public function monthlyReport(Request $request): JsonResponse
+    {
+        $year = $request->year ?? now()->year;
+        $report = $this->revenueService->getMonthlyRevenue((int) $year);
+
+        return response()->json($report);
+    }
+
+    public function yearlyReport(): JsonResponse
+    {
+        $report = $this->revenueService->getYearlyRevenue();
+
+        return response()->json($report);
+    }
+}

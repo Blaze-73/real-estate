@@ -46,7 +46,14 @@ const Navbar = () => {
           ? 'bg-[#0F172A]/90 backdrop-blur-xl shadow-lg'
           : 'bg-transparent'
       }`}
+      aria-label="Main navigation"
     >
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#38BDF8] focus:text-white focus:text-sm"
+      >
+        Skip to content
+      </a>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2">
@@ -63,6 +70,7 @@ const Navbar = () => {
               <Link
                 key={link.to}
                 to={link.to}
+                aria-current={isActive(link.to) ? 'page' : undefined}
                 className={`text-sm font-medium transition-colors ${
                   isActive(link.to)
                     ? 'text-[#38BDF8]'
@@ -130,6 +138,7 @@ const Navbar = () => {
                   key={link.to}
                   to={link.to}
                   onClick={() => setMenuOpen(false)}
+                  aria-current={isActive(link.to) ? 'page' : undefined}
                   className={`block px-4 py-2.5 rounded-xl text-sm transition-colors ${
                     isActive(link.to)
                       ? 'bg-white/10 text-[#38BDF8]'

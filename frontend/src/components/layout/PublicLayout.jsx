@@ -17,7 +17,7 @@ const PublicLayout = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-900">
       <Navbar />
-      <main>
+      <main id="main-content">
         <Outlet />
       </main>
       <Footer />

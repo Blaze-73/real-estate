@@ -15,6 +15,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { featured, loading } = useSelector((state) => state.properties);
+  const settings = useSelector((state) => state.settings.settings) || {};
 
   useEffect(() => {
     dispatch(fetchFeatured());
@@ -149,9 +150,9 @@ const Home = () => {
               <h3 className="text-2xl font-bold mb-4">Visit Us in Asilah</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-6">Our office is located in the medina — stop by to see properties in person.</p>
               <div className="space-y-3">
-                <div className="text-sm text-gray-500 dark:text-gray-400">Asilah Medina, Asilah, Morocco</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">+212 5XX XX XX XX</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">contact@asilahrealestate.com</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{settings.company_address || 'Asilah Medina, Asilah, Morocco'}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{settings.company_phone || '+212 5XX XX XX XX'}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{settings.company_email || 'contact@asilahrealestate.com'}</div>
               </div>
             </div>
             <MapComponent />

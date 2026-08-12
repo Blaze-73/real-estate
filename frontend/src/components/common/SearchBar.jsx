@@ -1,97 +1,79 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 
+const fieldClass =
+  'w-full rounded-xl border border-ink-100 bg-sand-50 px-3.5 py-3 text-sm text-ink-900 placeholder-ink-400 outline-none transition-colors focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/25 dark:border-ink-700 dark:bg-ink-800 dark:text-sand-50 dark:placeholder-ink-300';
+
 const SearchBar = ({ onSearch, className = '' }) => {
-  const [filters, setFilters] = useState({
-    type: '',
-    min_price: '',
-    max_price: '',
-    bedrooms: '',
-    bathrooms: '',
-  });
-
-  const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const filters = {
+      type: data.get('type') || '',
+      min_price: data.get('min_price') || '',
+      max_price: data.get('max_price') || '',
+      bedrooms: data.get('bedrooms') || '',
+      bathrooms: data.get('bathrooms') || '',
+    };
     if (onSearch) onSearch(filters);
   };
 
   return (
     <motion.form
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.5, duration: 0.6 }}
+      transition={{ delay: 0.4, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       onSubmit={handleSubmit}
-      className={`bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-6 ${className}`}
+      className={className}
+      noValidate
     >
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-<select
-          name="type"
-          value={filters.type}
-          onChange={handleChange}
-          aria-label="Property type"
-          className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
-        >
-          <option value="" className="text-gray-900">Property Type</option>
-          <option value="apartment" className="text-gray-900">Apartment</option>
-          <option value="villa" className="text-gray-900">Villa</option>
-          <option value="house" className="text-gray-900">House</option>
-          <option value="studio" className="text-gray-900">Studio</option>
-          <option value="office" className="text-gray-900">Office</option>
+      <div className="grid grid-cols-2 gap-2.5 md:grid-cols-5 lg:gap-3">
+        <select name="type" defaultValue="" aria-label="Property type" className={fieldClass}>
+          <option value="" disabled>Property type</option>
+          <option value="apartment">Apartment</option>
+          <option value="villa">Villa</option>
+          <option value="house">House</option>
+          <option value="studio">Studio</option>
+          <option value="office">Office</option>
         </select>
-<input
+        <input
           type="number"
           name="min_price"
-          placeholder="Min Price"
+          min="0"
+          placeholder="Min price"
           aria-label="Minimum price"
-          value={filters.min_price}
-          onChange={handleChange}
-          className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
+          className={fieldClass}
         />
         <input
           type="number"
           name="max_price"
-          placeholder="Max Price"
+          min="0"
+          placeholder="Max price"
           aria-label="Maximum price"
-          value={filters.max_price}
-          onChange={handleChange}
-          className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
+          className={fieldClass}
         />
-        <select
-          name="bedrooms"
-          value={filters.bedrooms}
-          onChange={handleChange}
-          aria-label="Number of bedrooms"
-          className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
-        >
-          <option value="" className="text-gray-900">Bedrooms</option>
+        <select name="bedrooms" defaultValue="" aria-label="Number of bedrooms" className={fieldClass}>
+          <option value="" disabled>Bedrooms</option>
           {[1, 2, 3, 4, 5].map((n) => (
-            <option key={n} value={n} className="text-gray-900">{n}+ Beds</option>
+            <option key={n} value={n}>{n}+ beds</option>
           ))}
         </select>
-        <select
-          name="bathrooms"
-          value={filters.bathrooms}
-          onChange={handleChange}
-          aria-label="Number of bathrooms"
-          className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#38BDF8] text-sm"
-        >
-          <option value="" className="text-gray-900">Bathrooms</option>
+        <select name="bathrooms" defaultValue="" aria-label="Number of bathrooms" className={fieldClass}>
+          <option value="" disabled>Bathrooms</option>
           {[1, 2, 3, 4].map((n) => (
-            <option key={n} value={n} className="text-gray-900">{n}+ Baths</option>
+            <option key={n} value={n}>{n}+ baths</option>
           ))}
         </select>
       </div>
       <motion.button
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.015 }}
+        whileTap={{ scale: 0.985 }}
         type="submit"
-        className="mt-3 w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm"
+        className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-ocean-600 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-500"
       >
-        Search Properties
+        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+        </svg>
+        Search properties
       </motion.button>
     </motion.form>
   );

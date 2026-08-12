@@ -1,1 +1,128 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+
+  /* ink — cool, coastal charcoal */
+  --color-ink-50: #f5f7f8;
+  --color-ink-100: #e7ecef;
+  --color-ink-200: #c9d4da;
+  --color-ink-300: #a5b6c0;
+  --color-ink-400: #78909e;
+  --color-ink-500: #557384;
+  --color-ink-600: #3f5a69;
+  --color-ink-700: #2f4552;
+  --color-ink-800: #20303b;
+  --color-ink-900: #141f28;
+  --color-ink-950: #0b141b;
+
+  /* sand — warm, sun-bleached neutrals */
+  --color-sand-50: #faf7f1;
+  --color-sand-100: #f3ede1;
+  --color-sand-200: #e7dcc9;
+  --color-sand-300: #d7c7a9;
+  --color-sand-400: #c2ab83;
+
+  /* ocean — Atlantic teal, primary action */
+  --color-ocean-50: #eefbfd;
+  --color-ocean-100: #d5f2f7;
+  --color-ocean-200: #b0e4ee;
+  --color-ocean-300: #7dcfe0;
+  --color-ocean-400: #42b2c9;
+  --color-ocean-500: #1f94af;
+  --color-ocean-600: #117490;
+  --color-ocean-700: #0e5d75;
+  --color-ocean-800: #0b4b5f;
+  --color-ocean-900: #07323f;
+
+  /* terra — terracotta, warm accents */
+  --color-terra-50: #faf3ee;
+  --color-terra-100: #f3e0d0;
+  --color-terra-200: #e8c3a6;
+  --color-terra-300: #db9f72;
+  --color-terra-400: #d17c47;
+  --color-terra-500: #c05e2c;
+  --color-terra-600: #a34a1f;
+  --color-terra-700: #7e3517;
+
+  /* gold — stars and small highlights */
+  --color-gold-300: #f0ce7a;
+  --color-gold-400: #e3b44e;
+  --color-gold-500: #d19a2e;
+
+  --animate-kenburns: kenburns 9s ease-out forwards;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-cue: cue 1.7s ease-in-out infinite;
+  --animate-float-slow: float 7s ease-in-out infinite;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 0.35;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-sand-50 font-sans text-ink-900 antialiased dark:bg-ink-950 dark:text-sand-50;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    background-color: var(--color-ocean-200);
+    color: var(--color-ink-900);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

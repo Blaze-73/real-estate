@@ -28,7 +28,7 @@ const AnimatedCounter = ({ end, duration = 2, suffix = '', prefix = '' }) => {
       initial={{ opacity: 0, scale: 0.5 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="text-4xl md:text-5xl font-bold text-[#38BDF8]"
+      className="font-display text-5xl font-semibold tracking-tight text-ocean-600 dark:text-ocean-300"
     >
       {prefix}{count}{suffix}
     </motion.span>

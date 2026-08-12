@@ -25,10 +25,10 @@ const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const ActivityLogs = lazy(() => import('./pages/admin/ActivityLogs'));
 
 const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] dark:bg-gray-900">
+  <div className="min-h-screen flex items-center justify-center bg-sand-50 dark:bg-ink-950">
     <div className="flex flex-col items-center gap-3">
-      <div className="w-10 h-10 border-4 border-[#38BDF8] border-t-transparent rounded-full animate-spin" />
-      <p className="text-sm text-gray-400">Loading...</p>
+      <div className="w-10 h-10 border-4 border-ocean-500 border-t-transparent rounded-full animate-spin" />
+      <p className="text-sm text-ink-400 dark:text-ink-300">Loading...</p>
     </div>
   </div>
 );

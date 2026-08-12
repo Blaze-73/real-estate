@@ -15,7 +15,7 @@ const PublicLayout = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-900">
+    <div className="min-h-screen bg-sand-50 dark:bg-ink-950">
       <Navbar />
       <main id="main-content">
         <Outlet />

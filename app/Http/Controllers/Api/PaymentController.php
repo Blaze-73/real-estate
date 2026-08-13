@@ -17,7 +17,7 @@ class PaymentController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $query = Payment::with('rental.property');
+        $query = Payment::with(['rental.property', 'reservation.property']);
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
@@ -25,6 +25,10 @@ class PaymentController extends Controller
 
         if ($request->filled('rental_id')) {
             $query->where('rental_id', $request->rental_id);
+        }
+
+        if ($request->filled('reservation_id')) {
+            $query->where('reservation_id', $request->reservation_id);
         }
 
         if ($request->filled('date_from')) {
@@ -42,7 +46,7 @@ class PaymentController extends Controller
 
     public function show(Payment $payment): JsonResponse
     {
-        $payment->load('rental.property');
+        $payment->load(['rental.property', 'reservation.property']);
 
         return response()->json(new PaymentResource($payment));
     }
@@ -50,7 +54,8 @@ class PaymentController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'rental_id' => 'required|exists:rentals,id',
+            'rental_id' => 'nullable|exists:rentals,id',
+            'reservation_id' => 'nullable|exists:reservations,id',
             'amount' => 'required|numeric|min:0',
             'payment_date' => 'required|date',
             'payment_method' => 'required|string|max:255',
@@ -64,7 +69,7 @@ class PaymentController extends Controller
         }
 
         $payment = Payment::create($validated);
-        $payment->load('rental.property');
+        $payment->load(['rental.property', 'reservation.property']);
 
         return response()->json(new PaymentResource($payment), 201);
     }
@@ -72,7 +77,8 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment): JsonResponse
     {
         $validated = $request->validate([
-            'rental_id' => 'sometimes|exists:rentals,id',
+            'rental_id' => 'nullable|exists:rentals,id',
+            'reservation_id' => 'nullable|exists:reservations,id',
             'amount' => 'sometimes|numeric|min:0',
             'payment_date' => 'sometimes|date',
             'payment_method' => 'sometimes|string|max:255',
@@ -86,7 +92,19 @@ class PaymentController extends Controller
         }
 
         $payment->update($validated);
-        $payment->load('rental.property');
+        $payment->load(['rental.property', 'reservation.property']);
+
+        return response()->json(new PaymentResource($payment));
+    }
+
+    public function markPaid(Payment $payment): JsonResponse
+    {
+        $payment->update([
+            'status' => 'paid',
+            'payment_date' => now()->toDateString(),
+            'payment_method' => $payment->payment_method ?: 'cash',
+        ]);
+        $payment->load(['rental.property', 'reservation.property']);
 
         return response()->json(new PaymentResource($payment));
     }

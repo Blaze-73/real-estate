@@ -57,6 +57,7 @@ Route::prefix('v1')->group(function () {
 
         Route::get('payments/reports/monthly', [PaymentController::class, 'monthlyReport']);
         Route::get('payments/reports/yearly', [PaymentController::class, 'yearlyReport']);
+        Route::put('payments/{payment}/mark-paid', [PaymentController::class, 'markPaid']);
         Route::apiResource('payments', PaymentController::class);
 
         Route::get('notifications/unread-count', [NotificationController::class, 'unreadCount']);

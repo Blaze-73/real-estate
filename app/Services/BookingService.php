@@ -7,6 +7,7 @@ use App\Mail\NewBookingNotification;
 use App\Models\Property;
 use App\Models\PropertyAvailability;
 use App\Models\Reservation;
+use App\Models\Payment;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -144,12 +145,29 @@ class BookingService
             'source' => $data['source'] ?? null,
         ])->load(['property', 'client']);
 
+        $this->createDepositPayment($reservation, $quote['deposit']);
         $this->notifyBookingCreated($reservation);
 
         return [
             'reservation' => $reservation,
             'quote' => $quote,
         ];
+    }
+
+    private function createDepositPayment(Reservation $reservation, float $deposit): void
+    {
+        if ($deposit <= 0) {
+            return;
+        }
+
+        Payment::create([
+            'reservation_id' => $reservation->id,
+            'amount' => $deposit,
+            'payment_date' => now()->toDateString(),
+            'payment_method' => 'deposit',
+            'status' => 'pending',
+            'notes' => 'Booking deposit for ' . $reservation->booking_reference,
+        ]);
     }
 
     private function notifyBookingCreated(Reservation $reservation): void

@@ -17,6 +17,10 @@ const propertyService = {
     const { data } = await api.post(`/public/properties/${slug}/book`, bookingData);
     return data;
   },
+  calendar: async (slug, month) => {
+    const { data } = await api.get(`/public/properties/${slug}/calendar`, { params: { month } });
+    return data;
+  },
   create: async (propertyData) => {
     const { data } = await api.post('/properties', propertyData);
     return data;

@@ -23,6 +23,7 @@ const MessagesManagement = lazy(() => import('./pages/admin/MessagesManagement')
 const NotificationsPage = lazy(() => import('./pages/admin/NotificationsPage'));
 const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const ActivityLogs = lazy(() => import('./pages/admin/ActivityLogs'));
+const CalendarManagement = lazy(() => import('./pages/admin/CalendarManagement'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-sand-50 dark:bg-ink-950">
@@ -53,6 +54,7 @@ function App() {
             <Route path="properties" element={<PropertiesManagement />} />
             <Route path="clients" element={<ClientsManagement />} />
             <Route path="reservations" element={<ReservationsManagement />} />
+            <Route path="calendar" element={<CalendarManagement />} />
             <Route path="rentals" element={<RentalsManagement />} />
             <Route path="payments" element={<PaymentsManagement />} />
             <Route path="testimonials" element={<TestimonialsManagement />} />

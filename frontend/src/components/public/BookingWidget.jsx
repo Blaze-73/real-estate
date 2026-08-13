@@ -1,8 +1,11 @@
-import { Component, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import propertyService from '../../services/propertyService';
+import MonthCalendar from '../common/MonthCalendar';
 import formatPrice from '../../utils/formatPrice';
 
 const today = () => new Date().toISOString().split('T')[0];
+
+const monthKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 
 class BookingErrorBoundary extends Component {
   constructor(props) {
@@ -29,6 +32,44 @@ const BookingWidget = ({ property, slug }) => {
   const [quoteState, setQuoteState] = useState({ loading: false, error: '' });
   const [booking, setBooking] = useState({ name: '', email: '', phone: '' });
   const [bookingState, setBookingState] = useState({ sending: false, done: false, error: '', reference: '' });
+  const [calMonth, setCalMonth] = useState(() => new Date());
+  const [calendar, setCalendar] = useState({});
+  const [calLoading, setCalLoading] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    async function load() {
+      setCalLoading(true);
+      try {
+        const data = await propertyService.calendar(slug, monthKey(calMonth));
+        if (active) setCalendar(data.days || {});
+      } catch {
+        if (active) setCalendar({});
+      } finally {
+        if (active) setCalLoading(false);
+      }
+    }
+    load();
+    return () => { active = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, monthKey(calMonth)]);
+
+  const handleSelectDay = (dateStr) => {
+    setQuote(null);
+    setDates((prev) => {
+      if (!prev.check_in || (prev.check_in && prev.check_out)) {
+        return { check_in: dateStr, check_out: '' };
+      }
+      if (dateStr > prev.check_in) {
+        return { ...prev, check_out: dateStr };
+      }
+      return { check_in: dateStr, check_out: '' };
+    });
+  };
+
+  const shiftMonth = (dir) => {
+    setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + dir, 1));
+  };
 
   const rateLabel = quote?.rate_type === 'month'
     ? `${formatPrice(quote?.rate, '')}/month`
@@ -99,6 +140,35 @@ const BookingWidget = ({ property, slug }) => {
         <div>
           <label className={labelCls}>Guests</label>
           <input type="number" min="1" max="20" value={guests} onChange={(e) => setGuests(Number(e.target.value) || 1)} className={inputCls} />
+        </div>
+
+        <div className="pt-1">
+          <div className="flex items-center justify-between mb-2">
+            <p className={labelCls}>Availability Calendar</p>
+            <div className="flex items-center gap-2">
+              <button type="button" onClick={() => shiftMonth(-1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">‹</button>
+              <span className="text-xs font-medium text-gray-600 dark:text-gray-300 min-w-[110px] text-center">
+                {calMonth.toLocaleString('en', { month: 'long', year: 'numeric' })}
+              </span>
+              <button type="button" onClick={() => shiftMonth(1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">›</button>
+            </div>
+          </div>
+          {calLoading ? (
+            <p className="text-sm text-gray-400 py-6 text-center">Loading availability...</p>
+          ) : (
+            <MonthCalendar
+              month={calMonth}
+              dayStatus={calendar}
+              selected={[dates.check_in, dates.check_out].filter(Boolean)}
+              onSelect={handleSelectDay}
+              disablePast
+            />
+          )}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-[11px] text-gray-500 dark:text-gray-400">
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-sky-500/15 border border-sky-300 dark:border-sky-700" />Booked</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700" />Blocked</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700" />Selectable</span>
+          </div>
         </div>
 
         {quoteState.error && (

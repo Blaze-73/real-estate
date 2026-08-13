@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ActivityLogController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DashboardController;
@@ -30,6 +31,7 @@ Route::prefix('v1')->group(function () {
     Route::get('public/properties/{property:slug}', [PropertyController::class, 'show']);
     Route::post('public/properties/{property:slug}/quote', [PropertyController::class, 'quote']);
     Route::post('public/properties/{property:slug}/book', [PropertyController::class, 'book']);
+    Route::get('public/properties/{property:slug}/calendar', [AvailabilityController::class, 'calendar']);
     Route::get('public/properties/{property:slug}/calendar.ics', [PropertyController::class, 'calendarExport']);
     Route::get('public/settings', [SettingController::class, 'index']);
     Route::get('public/testimonials', [TestimonialController::class, 'index'])
@@ -42,6 +44,9 @@ Route::prefix('v1')->group(function () {
         Route::post('properties/{property}/images', [PropertyImageController::class, 'store']);
         Route::patch('property-images/{image}/primary', [PropertyImageController::class, 'setPrimary']);
         Route::delete('property-images/{image}', [PropertyImageController::class, 'destroy']);
+        Route::get('properties/{property}/availability', [AvailabilityController::class, 'index']);
+        Route::post('properties/{property}/availability', [AvailabilityController::class, 'store']);
+        Route::delete('availability/{availability}', [AvailabilityController::class, 'destroy']);
 
         Route::apiResource('clients', ClientController::class);
 

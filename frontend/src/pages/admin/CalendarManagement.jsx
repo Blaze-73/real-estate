@@ -40,7 +40,7 @@ const CalendarManagement = () => {
         ]);
         if (!active) return;
         setDays(cal.days || {});
-        setBlocks(blockList.data || []);
+        setBlocks(Array.isArray(blockList) ? blockList : blockList.data || []);
       } catch (err) {
         if (active) setError(err?.response?.data?.message || 'Failed to load calendar');
       } finally {
@@ -65,7 +65,7 @@ const CalendarManagement = () => {
         availabilityService.getBlocks(propertyId),
       ]);
       setDays(cal.days || {});
-      setBlocks(blockList.data || []);
+      setBlocks(Array.isArray(blockList) ? blockList : blockList.data || []);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to block dates');
     } finally {
@@ -83,7 +83,7 @@ const CalendarManagement = () => {
         availabilityService.getBlocks(propertyId),
       ]);
       setDays(cal.days || {});
-      setBlocks(blockList.data || []);
+      setBlocks(Array.isArray(blockList) ? blockList : blockList.data || []);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to remove block');
     } finally {

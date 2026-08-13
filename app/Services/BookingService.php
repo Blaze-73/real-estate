@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Mail\BookingConfirmation;
+use App\Mail\NewBookingNotification;
 use App\Models\Property;
 use App\Models\PropertyAvailability;
 use App\Models\Reservation;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class BookingService
@@ -138,12 +142,31 @@ class BookingService
             'guest_phone' => $data['guest_phone'] ?? $client->phone,
             'channel' => $data['channel'] ?? 'direct',
             'source' => $data['source'] ?? null,
-        ]);
+        ])->load(['property', 'client']);
+
+        $this->notifyBookingCreated($reservation);
 
         return [
-            'reservation' => $reservation->load(['property', 'client']),
+            'reservation' => $reservation,
             'quote' => $quote,
         ];
+    }
+
+    private function notifyBookingCreated(Reservation $reservation): void
+    {
+        if (!empty($reservation->guest_email)) {
+            Mail::to($reservation->guest_email)->queue(new BookingConfirmation($reservation));
+        }
+
+        User::whereIn('role', ['admin', 'agent'])->each(function (User $user) use ($reservation) {
+            Mail::to($user->email)->queue(new NewBookingNotification($reservation));
+            app(NotificationService::class)->sendToUser(
+                $user,
+                'booking',
+                'New Booking ' . $reservation->booking_reference,
+                "New booking request for {$reservation->property->title} from {$reservation->check_in->format('d M Y')} to {$reservation->check_out->format('d M Y')}."
+            );
+        });
     }
 
     public function blockDates(Property $property, string $start, string $end, string $reason = 'blocked', string $source = 'manual'): PropertyAvailability

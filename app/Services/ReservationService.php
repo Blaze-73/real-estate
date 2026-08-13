@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\Payment;
 use App\Models\Reservation;
 use App\Repositories\ReservationRepository;
+use DomainException;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ReservationService
@@ -25,19 +27,49 @@ class ReservationService
 
     public function approve(Reservation $reservation): Reservation
     {
+        if ((float) ($reservation->deposit ?? 0) > 0 && $this->hasPaidDeposit($reservation) === false) {
+            throw new DomainException('Deposit must be received before approving this booking.');
+        }
+
         $reservation->update(['status' => 'approved']);
-        return $reservation->fresh();
+
+        return $reservation->fresh(['property', 'client']);
     }
 
     public function reject(Reservation $reservation): Reservation
     {
         $reservation->update(['status' => 'rejected']);
-        return $reservation->fresh();
+        $this->clearPendingDeposit($reservation);
+
+        return $reservation->fresh(['property', 'client']);
+    }
+
+    public function cancel(Reservation $reservation): Reservation
+    {
+        $reservation->update(['status' => 'cancelled']);
+        $this->clearPendingDeposit($reservation);
+
+        return $reservation->fresh(['property', 'client']);
     }
 
     public function archive(Reservation $reservation): Reservation
     {
         $reservation->update(['status' => 'archived']);
-        return $reservation->fresh();
+
+        return $reservation->fresh(['property', 'client']);
+    }
+
+    public function hasPaidDeposit(Reservation $reservation): bool
+    {
+        return Payment::where('reservation_id', $reservation->id)
+            ->where('status', 'paid')
+            ->exists();
+    }
+
+    public function clearPendingDeposit(Reservation $reservation): void
+    {
+        Payment::where('reservation_id', $reservation->id)
+            ->where('status', 'pending')
+            ->delete();
     }
 }

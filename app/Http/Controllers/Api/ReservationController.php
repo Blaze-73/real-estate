@@ -7,6 +7,7 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Models\Reservation;
 use App\Services\ReservationService;
+use DomainException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,11 @@ class ReservationController extends Controller
 
     public function approve(Reservation $reservation): JsonResponse
     {
-        $reservation = $this->reservationService->approve($reservation);
+        try {
+            $reservation = $this->reservationService->approve($reservation);
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
+        }
 
         return response()->json(new ReservationResource($reservation));
     }
@@ -55,6 +60,13 @@ class ReservationController extends Controller
     public function reject(Reservation $reservation): JsonResponse
     {
         $reservation = $this->reservationService->reject($reservation);
+
+        return response()->json(new ReservationResource($reservation));
+    }
+
+    public function cancel(Reservation $reservation): JsonResponse
+    {
+        $reservation = $this->reservationService->cancel($reservation);
 
         return response()->json(new ReservationResource($reservation));
     }

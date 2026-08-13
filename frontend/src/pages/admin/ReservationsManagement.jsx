@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchReservations, approveReservation, rejectReservation } from '../../store/slices/reservationSlice';
+import { fetchReservations, approveReservation, rejectReservation, cancelReservation } from '../../store/slices/reservationSlice';
 import { TableSkeleton } from '../../components/common/LoadingSkeleton';
 
 const statusColors = {
   pending: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400',
   approved: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400',
   rejected: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400',
+  cancelled: 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400',
+  archived: 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400',
 };
 
 const ReservationsManagement = () => {
@@ -64,6 +66,7 @@ const ReservationsManagement = () => {
                       {r.status === 'pending' && (
                         <>
                           <button onClick={() => dispatch(approveReservation(r._id || r.id))} className="px-3 py-1.5 rounded-lg text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors text-xs font-medium mr-2">Approve</button>
+                          <button onClick={() => dispatch(cancelReservation(r._id || r.id))} className="px-3 py-1.5 rounded-lg text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors text-xs font-medium mr-2">Cancel</button>
                           <button onClick={() => dispatch(rejectReservation(r._id || r.id))} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Reject</button>
                         </>
                       )}

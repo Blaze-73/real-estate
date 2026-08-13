@@ -33,6 +33,14 @@ export const rejectReservation = createAsyncThunk('reservations/reject', async (
   }
 });
 
+export const cancelReservation = createAsyncThunk('reservations/cancel', async (id, { rejectWithValue }) => {
+  try {
+    return await reservationService.cancel(id);
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || 'Failed to cancel reservation');
+  }
+});
+
 const reservationSlice = createSlice({
   name: 'reservations',
   initialState: { reservations: [], loading: false, error: null },
@@ -50,11 +58,19 @@ const reservationSlice = createSlice({
         const idx = state.reservations.findIndex((r) => r._id === updated._id || r.id === updated.id);
         if (idx !== -1) state.reservations[idx] = updated;
       })
+      .addCase(approveReservation.rejected, (state, action) => { state.error = action.payload; })
       .addCase(rejectReservation.fulfilled, (state, action) => {
         const updated = action.payload.reservation || action.payload.data || action.payload;
         const idx = state.reservations.findIndex((r) => r._id === updated._id || r.id === updated.id);
         if (idx !== -1) state.reservations[idx] = updated;
-      });
+      })
+      .addCase(rejectReservation.rejected, (state, action) => { state.error = action.payload; })
+      .addCase(cancelReservation.fulfilled, (state, action) => {
+        const updated = action.payload.reservation || action.payload.data || action.payload;
+        const idx = state.reservations.findIndex((r) => r._id === updated._id || r.id === updated.id);
+        if (idx !== -1) state.reservations[idx] = updated;
+      })
+      .addCase(cancelReservation.rejected, (state, action) => { state.error = action.payload; });
   },
 });
 

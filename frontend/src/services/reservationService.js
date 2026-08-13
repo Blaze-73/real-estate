@@ -17,6 +17,10 @@ const reservationService = {
     const { data } = await api.put(`/reservations/${id}/reject`);
     return data;
   },
+  cancel: async (id) => {
+    const { data } = await api.put(`/reservations/${id}/cancel`);
+    return data;
+  },
 };
 
 export default reservationService;

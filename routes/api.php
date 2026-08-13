@@ -53,6 +53,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('reservations', ReservationController::class)->only(['index', 'show', 'store', 'destroy']);
         Route::put('reservations/{reservation}/approve', [ReservationController::class, 'approve']);
         Route::put('reservations/{reservation}/reject', [ReservationController::class, 'reject']);
+        Route::put('reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
         Route::put('reservations/{reservation}/archive', [ReservationController::class, 'archive']);
 
         Route::get('rentals/active', [RentalController::class, 'active']);

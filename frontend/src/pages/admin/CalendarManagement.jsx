@@ -15,7 +15,9 @@ const CalendarManagement = () => {
   const [blocks, setBlocks] = useState([]);
   const [frameLoading, setFrameLoading] = useState(false);
   const [blockForm, setBlockForm] = useState({ start_date: '', end_date: '', reason: '' });
+  const [icalFile, setIcalFile] = useState(null);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
 
   const selected = properties.find((p) => String(p._id || p.id) === propertyId);
 
@@ -91,6 +93,28 @@ const CalendarManagement = () => {
     }
   };
 
+  const handleImportIcs = async (e) => {
+    e.preventDefault();
+    if (!propertyId || !icalFile) return;
+    setFrameLoading(true);
+    setError('');
+    try {
+      const res = await availabilityService.importIcs(propertyId, icalFile);
+      setNotice(res.message || `Imported ${res.created} entries`);
+      setIcalFile(null);
+      const [cal, blockList] = await Promise.all([
+        availabilityService.getCalendar(selected?.slug || propertyId, monthKey(calMonth)),
+        availabilityService.getBlocks(propertyId),
+      ]);
+      setDays(cal.days || {});
+      setBlocks(Array.isArray(blockList) ? blockList : blockList.data || []);
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to import iCal file');
+    } finally {
+      setFrameLoading(false);
+    }
+  };
+
   const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]";
 
   const counts = useMemo(() => {
@@ -118,6 +142,7 @@ const CalendarManagement = () => {
       </div>
 
       {error && <div className="p-4 mb-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-600 text-sm">{error}</div>}
+      {notice && <div className="p-4 mb-6 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 text-sm">{notice}</div>}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
@@ -177,6 +202,19 @@ const CalendarManagement = () => {
               ))}
             </div>
           )}
+
+          <div className="pt-4 mt-4 border-t border-gray-100 dark:border-gray-800">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">Import iCal</h3>
+            <form onSubmit={handleImportIcs} className="space-y-3">
+              <input
+                type="file"
+                accept=".ics,.txt,text/calendar"
+                onChange={(e) => setIcalFile(e.target.files?.[0] || null)}
+                className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 dark:file:bg-gray-800 file:text-gray-700 dark:file:text-gray-300 file:text-sm file:font-medium hover:file:bg-gray-200 dark:hover:file:bg-gray-700 transition-colors"
+              />
+              <button type="submit" disabled={frameLoading || !icalFile} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white text-sm font-semibold transition-colors disabled:opacity-50">Import calendar (.ics)</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

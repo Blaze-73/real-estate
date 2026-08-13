@@ -100,4 +100,90 @@ class AvailabilityController extends Controller
 
         return response()->json(['message' => 'Blocked dates removed successfully']);
     }
+
+    public function importIcs(Request $request, Property $property): JsonResponse
+    {
+        $validated = $request->validate([
+            'ical' => 'required|file|mimes:txt,ics,text/calendar|max:5120',
+        ]);
+
+        $ics = file_get_contents($validated['ical']->getRealPath());
+        preg_match_all('/BEGIN:VEVENT(.*?)END:VEVENT/s', $ics, $matches);
+
+        $created = 0;
+        $total = count($matches[0]);
+
+        foreach ($matches[1] as $block) {
+            $start = $this->extractDateProp($block, 'DTSTART');
+            $end = $this->extractDateProp($block, 'DTEND');
+            $summary = $this->extractProp($block, 'SUMMARY');
+
+            if (!$start) {
+                continue;
+            }
+
+            if (!$end) {
+                $end = $start;
+            }
+
+            $exists = PropertyAvailability::where('property_id', $property->id)
+                ->where('start_date', $start)
+                ->where('end_date', $end)
+                ->exists();
+
+            if ($exists) {
+                continue;
+            }
+
+            PropertyAvailability::create([
+                'property_id' => $property->id,
+                'start_date' => $start,
+                'end_date' => $end,
+                'reason' => $summary ?: 'iCal import',
+                'source' => 'ical',
+            ]);
+
+            $created++;
+        }
+
+        return response()->json([
+            'message' => "Imported {$created} of {$total} calendar entries",
+            'created' => $created,
+            'total' => $total,
+        ]);
+    }
+
+    private function extractProp(string $block, string $key): ?string
+    {
+        if (preg_match('/^' . $key . '(?:;[^:]*)?:(.*)$/mi', $block, $m)) {
+            return trim($m[1]) ?: null;
+        }
+
+        return null;
+    }
+
+    private function extractDateProp(string $block, string $key): ?string
+    {
+        $value = $this->extractProp($block, $key);
+
+        if (!$value) {
+            return null;
+        }
+
+        if (preg_match('/^\d{8}$/', $value)) {
+            $date = Carbon::createFromFormat('Ymd', $value)->toDateString();
+            // Date-only VEVENT ends are exclusive: store inclusive (minus one day)
+            if ($key === 'DTEND') {
+                $date = Carbon::parse($date)->subDay()->toDateString();
+            }
+
+            return $date;
+        }
+
+        if (preg_match('/^(\d{8})T/', $value, $m)) {
+            return Carbon::createFromFormat('Ymd', $m[1])->toDateString();
+        }
+
+        return null;
+    }
 }

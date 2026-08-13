@@ -17,6 +17,14 @@ const availabilityService = {
     const { data } = await api.delete(`/availability/${blockId}`);
     return data;
   },
+  importIcs: async (propertyId, file) => {
+    const form = new FormData();
+    form.append('ical', file);
+    const { data } = await api.post(`/properties/${propertyId}/ical-import`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return data;
+  },
 };
 
 export default availabilityService;

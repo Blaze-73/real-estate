@@ -46,6 +46,7 @@ Route::prefix('v1')->group(function () {
         Route::delete('property-images/{image}', [PropertyImageController::class, 'destroy']);
         Route::get('properties/{property}/availability', [AvailabilityController::class, 'index']);
         Route::post('properties/{property}/availability', [AvailabilityController::class, 'store']);
+        Route::post('properties/{property}/ical-import', [AvailabilityController::class, 'importIcs']);
         Route::delete('availability/{availability}', [AvailabilityController::class, 'destroy']);
 
         Route::apiResource('clients', ClientController::class);

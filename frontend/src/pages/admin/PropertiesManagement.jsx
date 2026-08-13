@@ -9,14 +9,26 @@ const PropertiesManagement = () => {
   const { properties, loading, error } = useSelector((state) => state.properties);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '', status: 'available', description: '', features: '' });
+  const [form, setForm] = useState({
+    title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
+    status: 'available', description: '', features: '',
+    nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
+    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '',
+  });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+
+  const emptyForm = () => ({
+    title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
+    status: 'available', description: '', features: '',
+    nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
+    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '',
+  });
 
   useEffect(() => { dispatch(fetchProperties()); }, [dispatch]);
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '', status: 'available', description: '', features: '' });
+    setForm(emptyForm());
     setModalOpen(true);
   };
 
@@ -33,15 +45,42 @@ const PropertiesManagement = () => {
       status: property.status || 'available',
       description: property.description || '',
       features: property.features?.join(', ') || '',
+      nightly_price: property.nightly_price ?? '',
+      monthly_price: property.monthly_price ?? '',
+      min_nights: property.min_nights || 1,
+      cleaning_fee: property.cleaning_fee || '',
+      deposit: property.deposit || '',
+      high_season_from: property.high_season?.from || '',
+      high_season_to: property.high_season?.to || '',
+      high_season_price: property.high_season?.price ?? '',
+      ical_url: property.ical_url || '',
     });
     setModalOpen(true);
   };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const num = (v) => (v === '' || v === null || v === undefined ? null : Number(v));
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = { ...form, price: Number(form.price), surface: Number(form.surface), bedrooms: Number(form.bedrooms), bathrooms: Number(form.bathrooms), features: form.features.split(',').map((f) => f.trim()).filter(Boolean) };
+    const data = {
+      ...form,
+      price: Number(form.price),
+      surface: Number(form.surface),
+      bedrooms: Number(form.bedrooms),
+      bathrooms: Number(form.bathrooms),
+      features: form.features.split(',').map((f) => f.trim()).filter(Boolean),
+      nightly_price: num(form.nightly_price),
+      monthly_price: num(form.monthly_price),
+      min_nights: num(form.min_nights) || 1,
+      cleaning_fee: num(form.cleaning_fee) || 0,
+      deposit: num(form.deposit) || 0,
+      high_season_from: form.high_season_from || null,
+      high_season_to: form.high_season_to || null,
+      high_season_price: num(form.high_season_price),
+      ical_url: form.ical_url || null,
+    };
     if (editing) {
       dispatch(updateProperty({ id: editing._id || editing.id, data }));
     } else {
@@ -145,6 +184,27 @@ const PropertiesManagement = () => {
                 <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                 <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8] resize-none" />
                 <input type="text" name="features" value={form.features} onChange={handleChange} placeholder="Features (comma separated)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+
+                <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Seasonal / Rental Pricing</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="number" name="nightly_price" value={form.nightly_price} onChange={handleChange} placeholder="Nightly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="number" name="monthly_price" value={form.monthly_price} onChange={handleChange} placeholder="Monthly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 mt-3">
+                    <input type="number" name="min_nights" value={form.min_nights} onChange={handleChange} placeholder="Min Nights" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="number" name="cleaning_fee" value={form.cleaning_fee} onChange={handleChange} placeholder="Cleaning Fee" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="number" name="deposit" value={form.deposit} onChange={handleChange} placeholder="Deposit" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 mt-3">
+                    <input type="date" name="high_season_from" value={form.high_season_from} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="date" name="high_season_to" value={form.high_season_to} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="number" name="high_season_price" value={form.high_season_price} onChange={handleChange} placeholder="High Season Price" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                  </div>
+                  <p className="text-xs text-gray-400 mt-2">High season dates &amp; price override the nightly rate during that period.</p>
+                </div>
+
+                <input type="url" name="ical_url" value={form.ical_url} onChange={handleChange} placeholder="iCal URL (Airbnb / Booking.com sync)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                 <div className="flex gap-3 pt-2">
                   <button type="submit" className="flex-1 py-2.5 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold hover:bg-[#0EA5E9] transition-colors">{editing ? 'Update' : 'Create'}</button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>

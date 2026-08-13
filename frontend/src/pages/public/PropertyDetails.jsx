@@ -7,6 +7,7 @@ import contactService from '../../services/contactService';
 import formatPrice from '../../utils/formatPrice';
 import ImageGallery from '../../components/common/ImageGallery';
 import MapComponent from '../../components/common/MapComponent';
+import BookingWidget, { BookingErrorBoundary } from '../../components/public/BookingWidget';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
 
 const PropertyDetails = () => {
@@ -21,6 +22,55 @@ const PropertyDetails = () => {
     dispatch(fetchProperty(slug));
     return () => dispatch(clearProperty());
   }, [dispatch, slug]);
+
+  useEffect(() => {
+    if (!property) return;
+
+    const description = (property.description || `${property.title} in ${property.location || 'Asilah, Morocco'}`).slice(0, 160);
+    const previousTitle = document.title;
+    document.title = `${property.title} | Asilah Real Estate`;
+
+    let meta = document.querySelector('meta[name="description"]');
+    const createdMeta = !meta;
+    if (createdMeta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'description');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', description);
+
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'Residence',
+      name: property.title,
+      description,
+      image: property.cover,
+      address: { '@type': 'PostalAddress', addressLocality: property.location || 'Asilah' },
+      numberOfRooms: property.bedrooms,
+      numberOfBathroomsTotal: property.bathrooms,
+      floorSize: property.surface ? { '@type': 'QuantitativeValue', value: property.surface, unitCode: 'MTK' } : undefined,
+      offers: {
+        '@type': 'Offer',
+        price: property.nightly_price ?? property.monthly_price ?? property.price,
+        priceCurrency: 'MAD',
+      },
+    };
+
+    let script = document.getElementById('property-jsonld');
+    if (!script) {
+      script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = 'property-jsonld';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(jsonLd);
+
+    return () => {
+      document.title = previousTitle;
+      script.remove();
+      if (createdMeta) meta.remove();
+    };
+  }, [property]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -103,7 +153,9 @@ const PropertyDetails = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-[#38BDF8]">
-                    {formatPrice(property.price, 'Contact for Price')}
+                    {formatPrice(property.nightly_price ?? property.monthly_price ?? property.price, 'Contact for Price')}
+                    {property.nightly_price && <span className="text-sm font-medium text-gray-500 dark:text-gray-400"> /night</span>}
+                    {!property.nightly_price && property.monthly_price && <span className="text-sm font-medium text-gray-500 dark:text-gray-400"> /month</span>}
                   </p>
                   {property.type && (
                     <span className="inline-block mt-1 px-3 py-1 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] text-sm">{property.type}</span>
@@ -155,8 +207,14 @@ const PropertyDetails = () => {
 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
             <div className="sticky top-24 space-y-6">
+              {(property.nightly_price || property.monthly_price) && (
+                <BookingErrorBoundary>
+                  <BookingWidget property={property} slug={slug} />
+                </BookingErrorBoundary>
+              )}
+
               <div className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Contact Owner</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{property.nightly_price || property.monthly_price ? 'Questions?' : 'Contact Owner'}</h3>
                 <form onSubmit={handleSubmit} className="space-y-3">
                   {status.sent && (
                     <p className="p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 text-sm">

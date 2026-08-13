@@ -11,7 +11,7 @@ import MapComponent from '../../components/common/MapComponent';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 
 const IMG = {
-  hero: 'https://travelourplanet.com/wp-content/uploads/2024/01/Asilah-Cosa-Vedere-Dove-Dormire-e-le-Spiagge-Piu-Belle-di-Asilah.jpg',
+  hero: '/images/asilah-hero.webp',
   mural: 'https://almanatour.com/wp-content/uploads/2024/11/arte-callejero-Asilah-1024x576.jpg',
   souks: 'https://www.revigorate.com/images/souvenirs-in-the-medina-of-Asilah.jpg',
   blue: 'https://asilah.city/wp-content/uploads/2023/05/maisons-blanches-et-bleues-au-coeur-de-la-medina-de-Asilah.jpeg',

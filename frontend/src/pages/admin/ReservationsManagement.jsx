@@ -34,9 +34,12 @@ const ReservationsManagement = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Ref</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Client</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Property</th>
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Date</th>
+                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Dates</th>
+                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Guests</th>
+                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Total</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Status</th>
                   <th className="text-right p-4 font-medium text-gray-500 dark:text-gray-400">Actions</th>
                 </tr>
@@ -44,9 +47,14 @@ const ReservationsManagement = () => {
               <tbody>
                 {reservations.map((r) => (
                   <tr key={r._id || r.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td className="p-4 text-gray-900 dark:text-white font-medium">{r.client?.name || r.name || 'N/A'}</td>
+                    <td className="p-4 font-mono text-xs text-gray-500 dark:text-gray-400">{r.booking_reference || r.reference || '—'}</td>
+                    <td className="p-4 text-gray-900 dark:text-white font-medium">{r.guest_name || r.client?.name || r.name || 'N/A'}</td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">{r.property?.title || r.propertyTitle || 'N/A'}</td>
-                    <td className="p-4 text-gray-500 dark:text-gray-400">{r.date ? new Date(r.date).toLocaleDateString() : 'N/A'}</td>
+                    <td className="p-4 text-gray-500 dark:text-gray-400">
+                      {r.check_in ? `${new Date(r.check_in).toLocaleDateString()} → ${new Date(r.check_out).toLocaleDateString()}` : (r.date ? new Date(r.date).toLocaleDateString() : 'N/A')}
+                    </td>
+                    <td className="p-4 text-gray-500 dark:text-gray-400">{r.guests || '—'}</td>
+                    <td className="p-4 text-gray-900 dark:text-white">{r.total_price != null ? `${Number(r.total_price).toLocaleString()} MAD` : '—'}</td>
                     <td className="p-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[r.status] || statusColors.pending}`}>
                         {r.status || 'pending'}

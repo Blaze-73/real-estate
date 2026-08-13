@@ -9,6 +9,14 @@ const propertyService = {
     const { data } = await api.get(`/public/properties/${slug}`);
     return data;
   },
+  quote: async (slug, dates) => {
+    const { data } = await api.post(`/public/properties/${slug}/quote`, dates);
+    return data;
+  },
+  book: async (slug, bookingData) => {
+    const { data } = await api.post(`/public/properties/${slug}/book`, bookingData);
+    return data;
+  },
   getFeatured: async () => {
     const { data } = await api.get('/public/properties/featured');
     return data;

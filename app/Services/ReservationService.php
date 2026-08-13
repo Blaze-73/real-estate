@@ -32,6 +32,7 @@ class ReservationService
         }
 
         $reservation->update(['status' => 'approved']);
+        $this->logBooking('booking.approved', $reservation);
 
         return $reservation->fresh(['property', 'client']);
     }
@@ -40,6 +41,7 @@ class ReservationService
     {
         $reservation->update(['status' => 'rejected']);
         $this->clearPendingDeposit($reservation);
+        $this->logBooking('booking.rejected', $reservation);
 
         return $reservation->fresh(['property', 'client']);
     }
@@ -48,6 +50,7 @@ class ReservationService
     {
         $reservation->update(['status' => 'cancelled']);
         $this->clearPendingDeposit($reservation);
+        $this->logBooking('booking.cancelled', $reservation);
 
         return $reservation->fresh(['property', 'client']);
     }
@@ -55,8 +58,18 @@ class ReservationService
     public function archive(Reservation $reservation): Reservation
     {
         $reservation->update(['status' => 'archived']);
+        $this->logBooking('booking.archived', $reservation);
 
         return $reservation->fresh(['property', 'client']);
+    }
+
+    private function logBooking(string $action, Reservation $reservation): void
+    {
+        app(ActivityLogService::class)->log(
+            $action,
+            "{$reservation->booking_reference} ({$reservation->property->title}) {$action}",
+            ['reference' => $reservation->booking_reference, 'property_id' => $reservation->property_id]
+        );
     }
 
     public function hasPaidDeposit(Reservation $reservation): bool

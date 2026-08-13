@@ -148,6 +148,12 @@ class BookingService
         $this->createDepositPayment($reservation, $quote['deposit']);
         $this->notifyBookingCreated($reservation);
 
+        app(ActivityLogService::class)->log(
+            'booking.created',
+            "{$reservation->booking_reference} booking created for {$property->title}",
+            ['reference' => $reservation->booking_reference, 'property_id' => $property->id]
+        );
+
         return [
             'reservation' => $reservation,
             'quote' => $quote,

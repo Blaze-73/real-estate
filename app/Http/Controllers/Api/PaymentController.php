@@ -107,6 +107,14 @@ class PaymentController extends Controller
 
         $this->confirmPendingBooking($payment);
 
+        app(\App\Services\ActivityLogService::class)->log(
+            'payment.marked_paid',
+            ($payment->reservation
+                ? $payment->reservation->booking_reference . ' '
+                : '') . 'payment of ' . $payment->amount . ' MAD marked paid',
+            ['payment_id' => $payment->id, 'reservation_id' => $payment->reservation_id, 'rental_id' => $payment->rental_id]
+        );
+
         $payment->load(['rental.property', 'reservation.property']);
 
         return response()->json(new PaymentResource($payment));

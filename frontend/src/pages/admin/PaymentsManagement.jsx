@@ -28,7 +28,7 @@ const PaymentsManagement = () => {
       setError('');
       try {
         const data = await paymentService.getAll({ per_page: 100, status: statusFilter || undefined });
-        setPayments(data.data || []);
+        setPayments(Array.isArray(data) ? data : data.data || []);
       } catch (err) {
         setError(err?.response?.data?.message || 'Failed to load payments');
       } finally {

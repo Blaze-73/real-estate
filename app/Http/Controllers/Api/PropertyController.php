@@ -3,20 +3,26 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PublicBookingRequest;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Http\Resources\PropertyDetailResource;
 use App\Http\Resources\PropertyResource;
+use App\Http\Resources\ReservationResource;
 use App\Models\Property;
+use App\Services\BookingService;
 use App\Services\PropertyService;
 use App\Support\ApiResponse;
+use DomainException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PropertyController extends Controller
 {
     public function __construct(
-        protected PropertyService $propertyService
+        protected PropertyService $propertyService,
+        protected BookingService $bookingService
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -73,5 +79,43 @@ class PropertyController extends Controller
         $property = $this->propertyService->toggleFeatured($property);
 
         return response()->json(new PropertyResource($property));
+    }
+
+    public function quote(Request $request, Property $property): JsonResponse
+    {
+        $validated = $request->validate([
+            'check_in' => 'required|date|after_or_equal:today',
+            'check_out' => 'required|date|after:check_in',
+        ]);
+
+        $quote = $this->bookingService->quote($property, $validated['check_in'], $validated['check_out']);
+
+        return response()->json($quote);
+    }
+
+    public function book(PublicBookingRequest $request, Property $property): JsonResponse
+    {
+        try {
+            $result = $this->bookingService->createBooking($property, $request->validated());
+        } catch (DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 409);
+        }
+
+        return response()->json([
+            'message' => 'Booking request submitted. Our team will confirm shortly.',
+            'booking_reference' => $result['reservation']->booking_reference,
+            'quote' => $result['quote'],
+            'reservation' => new ReservationResource($result['reservation']),
+        ], 201);
+    }
+
+    public function calendarExport(Property $property): Response
+    {
+        $ics = $this->bookingService->exportIcs($property);
+
+        return response($ics, 200, [
+            'Content-Type' => 'text/calendar; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="' . $property->slug . '-availability.ics"',
+        ]);
     }
 }

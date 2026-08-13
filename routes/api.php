@@ -27,6 +27,9 @@ Route::prefix('v1')->group(function () {
     Route::get('public/properties/featured', [PropertyController::class, 'featured']);
     Route::get('public/properties', [PropertyController::class, 'index']);
     Route::get('public/properties/{property:slug}', [PropertyController::class, 'show']);
+    Route::post('public/properties/{property:slug}/quote', [PropertyController::class, 'quote']);
+    Route::post('public/properties/{property:slug}/book', [PropertyController::class, 'book']);
+    Route::get('public/properties/{property:slug}/calendar.ics', [PropertyController::class, 'calendarExport']);
     Route::get('public/settings', [SettingController::class, 'index']);
     Route::get('public/testimonials', [TestimonialController::class, 'index'])
         ->defaults('active_only', true);

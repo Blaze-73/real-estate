@@ -17,6 +17,15 @@ class Reservation extends Model
         'check_out',
         'status',
         'message',
+        'booking_reference',
+        'total_price',
+        'deposit',
+        'guests',
+        'guest_name',
+        'guest_email',
+        'guest_phone',
+        'channel',
+        'source',
     ];
 
     protected function casts(): array
@@ -24,6 +33,8 @@ class Reservation extends Model
         return [
             'check_in' => 'date',
             'check_out' => 'date',
+            'total_price' => 'decimal:2',
+            'deposit' => 'decimal:2',
         ];
     }
 

@@ -18,6 +18,15 @@ class Property extends Model
         'description',
         'type',
         'price',
+        'nightly_price',
+        'monthly_price',
+        'min_nights',
+        'cleaning_fee',
+        'deposit',
+        'high_season_from',
+        'high_season_to',
+        'high_season_price',
+        'ical_url',
         'surface',
         'bedrooms',
         'bathrooms',
@@ -34,6 +43,13 @@ class Property extends Model
     {
         return [
             'price' => 'decimal:2',
+            'nightly_price' => 'decimal:2',
+            'monthly_price' => 'decimal:2',
+            'cleaning_fee' => 'decimal:2',
+            'deposit' => 'decimal:2',
+            'high_season_price' => 'decimal:2',
+            'high_season_from' => 'date',
+            'high_season_to' => 'date',
             'surface' => 'decimal:2',
             'latitude' => 'decimal:7',
             'longitude' => 'decimal:7',
@@ -96,6 +112,11 @@ class Property extends Model
     public function reservations()
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    public function availabilityBlocks()
+    {
+        return $this->hasMany(PropertyAvailability::class);
     }
 
     public function rentals()

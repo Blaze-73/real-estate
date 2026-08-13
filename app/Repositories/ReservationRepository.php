@@ -9,7 +9,7 @@ class ReservationRepository
 {
     public function paginate(array $filters = []): LengthAwarePaginator
     {
-        $query = Reservation::query()->with(['property', 'client']);
+        $query = Reservation::query()->with(['property', 'client', 'payments']);
 
         if (isset($filters['status'])) {
             $query->where('status', $filters['status']);

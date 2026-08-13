@@ -57,4 +57,9 @@ class Reservation extends Model
     {
         return $query->where('status', 'approved');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

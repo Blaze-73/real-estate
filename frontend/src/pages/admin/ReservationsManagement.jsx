@@ -42,6 +42,7 @@ const ReservationsManagement = () => {
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Dates</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Guests</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Total</th>
+                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Deposit</th>
                   <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Status</th>
                   <th className="text-right p-4 font-medium text-gray-500 dark:text-gray-400">Actions</th>
                 </tr>
@@ -57,6 +58,15 @@ const ReservationsManagement = () => {
                     </td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">{r.guests || '—'}</td>
                     <td className="p-4 text-gray-900 dark:text-white">{r.total_price != null ? `${Number(r.total_price).toLocaleString()} MAD` : '—'}</td>
+                    <td className="p-4">
+                      {Number(r.deposit) > 0 ? (
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${r.deposit_paid ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400'}`}>
+                          {r.deposit_paid ? 'Deposit paid' : 'Deposit pending'}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-gray-400">No deposit</span>
+                      )}
+                    </td>
                     <td className="p-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[r.status] || statusColors.pending}`}>
                         {r.status || 'pending'}

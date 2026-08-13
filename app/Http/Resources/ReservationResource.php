@@ -18,6 +18,7 @@ class ReservationResource extends JsonResource
             'message' => $this->message,
             'total_price' => $this->total_price,
             'deposit' => $this->deposit,
+            'deposit_paid' => $this->payments->contains(fn ($payment) => $payment->status === 'paid'),
             'guests' => $this->guests,
             'guest_name' => $this->guest_name,
             'guest_email' => $this->guest_email,

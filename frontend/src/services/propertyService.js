@@ -17,10 +17,6 @@ const propertyService = {
     const { data } = await api.post(`/public/properties/${slug}/book`, bookingData);
     return data;
   },
-  getFeatured: async () => {
-    const { data } = await api.get('/public/properties/featured');
-    return data;
-  },
   create: async (propertyData) => {
     const { data } = await api.post('/properties', propertyData);
     return data;
@@ -31,6 +27,22 @@ const propertyService = {
   },
   delete: async (id) => {
     const { data } = await api.delete(`/properties/${id}`);
+    return data;
+  },
+  uploadImages: async (id, files) => {
+    const form = new FormData();
+    files.forEach((file) => form.append('images[]', file));
+    const { data } = await api.post(`/properties/${id}/images`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return data;
+  },
+  setPrimaryImage: async (imageId) => {
+    const { data } = await api.patch(`/property-images/${imageId}/primary`);
+    return data;
+  },
+  deleteImage: async (imageId) => {
+    const { data } = await api.delete(`/property-images/${imageId}`);
     return data;
   },
 };

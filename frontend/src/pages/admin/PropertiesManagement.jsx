@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchProperties, createProperty, updateProperty, deleteProperty } from '../../store/slices/propertySlice';
+import propertyService from '../../services/propertyService';
 import { TableSkeleton } from '../../components/common/LoadingSkeleton';
 
 const PropertiesManagement = () => {
@@ -16,6 +17,11 @@ const PropertiesManagement = () => {
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '',
   });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [existingImages, setExistingImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [imagesLoading, setImagesLoading] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const emptyForm = () => ({
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
@@ -29,11 +35,29 @@ const PropertiesManagement = () => {
   const openCreate = () => {
     setEditing(null);
     setForm(emptyForm());
+    setExistingImages([]);
+    setNewImages([]);
+    setFormError('');
     setModalOpen(true);
   };
 
-  const openEdit = (property) => {
+  const refreshImages = async (slug) => {
+    if (!slug) return;
+    setImagesLoading(true);
+    try {
+      const detail = await propertyService.getOne(slug);
+      setExistingImages(detail.images || []);
+    } catch {
+      setExistingImages([]);
+    } finally {
+      setImagesLoading(false);
+    }
+  };
+
+  const openEdit = async (property) => {
     setEditing(property);
+    setFormError('');
+    setNewImages([]);
     setForm({
       title: property.title || '',
       type: property.type || 'apartment',
@@ -56,14 +80,17 @@ const PropertiesManagement = () => {
       ical_url: property.ical_url || '',
     });
     setModalOpen(true);
+    setExistingImages([]);
+    await refreshImages(property.slug);
   };
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const num = (v) => (v === '' || v === null || v === undefined ? null : Number(v));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
     const data = {
       ...form,
       price: Number(form.price),
@@ -81,12 +108,41 @@ const PropertiesManagement = () => {
       high_season_price: num(form.high_season_price),
       ical_url: form.ical_url || null,
     };
-    if (editing) {
-      dispatch(updateProperty({ id: editing._id || editing.id, data }));
-    } else {
-      dispatch(createProperty(data));
+    setSubmitting(true);
+    try {
+      const saved = editing
+        ? await dispatch(updateProperty({ id: editing._id || editing.id, data })).unwrap()
+        : await dispatch(createProperty(data)).unwrap();
+      const savedSlug = saved.slug || editing?.slug;
+      if (newImages.length) {
+        await propertyService.uploadImages(saved.id || saved._id, newImages);
+        if (editing) await refreshImages(savedSlug);
+      }
+      setModalOpen(false);
+      setNewImages([]);
+    } catch (err) {
+      setFormError(err?.response?.data?.message || err?.message || 'Failed to save property');
+    } finally {
+      setSubmitting(false);
     }
-    setModalOpen(false);
+  };
+
+  const handleSetPrimary = async (imageId) => {
+    try {
+      await propertyService.setPrimaryImage(imageId);
+      await refreshImages(editing.slug);
+    } catch (err) {
+      setFormError(err?.response?.data?.message || 'Failed to set primary image');
+    }
+  };
+
+  const handleDeleteImage = async (imageId) => {
+    try {
+      await propertyService.deleteImage(imageId);
+      await refreshImages(editing.slug);
+    } catch (err) {
+      setFormError(err?.response?.data?.message || 'Failed to delete image');
+    }
   };
 
   const handleDelete = (id) => {
@@ -205,8 +261,55 @@ const PropertiesManagement = () => {
                 </div>
 
                 <input type="url" name="ical_url" value={form.ical_url} onChange={handleChange} placeholder="iCal URL (Airbnb / Booking.com sync)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+
+                <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Images</p>
+                  {imagesLoading ? (
+                    <p className="text-sm text-gray-400">Loading images...</p>
+                  ) : existingImages.length > 0 ? (
+                    <div className="grid grid-cols-3 gap-3 mb-3">
+                      {existingImages.map((img) => (
+                        <div key={img.id} className="relative group rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                          <img src={img.url} alt="" className="w-full h-24 object-cover" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            {!img.is_primary && (
+                              <button type="button" onClick={() => handleSetPrimary(img.id)} className="px-2 py-1 rounded-lg bg-[#38BDF8] text-white text-xs font-medium">Main</button>
+                            )}
+                            <button type="button" onClick={() => handleDeleteImage(img.id)} className="px-2 py-1 rounded-lg bg-red-500 text-white text-xs font-medium">Remove</button>
+                          </div>
+                          {img.is_primary && <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-[#38BDF8] text-white text-[10px] font-semibold">Primary</span>}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-400 mb-3">No images yet.</p>
+                  )}
+
+                  {newImages.length > 0 && (
+                    <div className="grid grid-cols-3 gap-3 mb-3">
+                      {Array.from(newImages).map((file, i) => (
+                        <div key={file.name + i} className="relative rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                          <img src={URL.createObjectURL(file)} alt="" className="w-full h-24 object-cover" />
+                          <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-gray-900/70 text-white text-[10px] font-semibold">New</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => setNewImages(Array.from(e.target.files || []))}
+                    className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 dark:file:bg-gray-800 file:text-gray-700 dark:file:text-gray-300 file:text-sm file:font-medium hover:file:bg-gray-200 dark:hover:file:bg-gray-700 transition-colors"
+                  />
+                  <p className="text-xs text-gray-400 mt-2">First uploaded image becomes the cover. Max 2MB each (jpeg, png, webp).</p>
+                </div>
+
+                {formError && <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-600 text-sm">{formError}</div>}
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" className="flex-1 py-2.5 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold hover:bg-[#0EA5E9] transition-colors">{editing ? 'Update' : 'Create'}</button>
+                  <button type="submit" disabled={submitting} className="flex-1 py-2.5 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold hover:bg-[#0EA5E9] transition-colors disabled:opacity-60">{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}</button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>
               </form>

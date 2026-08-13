@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\PropertyImageController;
 use App\Http\Controllers\Api\RentalController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\SettingController;
@@ -38,6 +39,9 @@ Route::prefix('v1')->group(function () {
     Route::middleware(['auth:sanctum', 'role:admin,manager,agent'])->group(function () {
         Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);
         Route::put('properties/{property}/featured', [PropertyController::class, 'toggleFeatured']);
+        Route::post('properties/{property}/images', [PropertyImageController::class, 'store']);
+        Route::patch('property-images/{image}/primary', [PropertyImageController::class, 'setPrimary']);
+        Route::delete('property-images/{image}', [PropertyImageController::class, 'destroy']);
 
         Route::apiResource('clients', ClientController::class);
 

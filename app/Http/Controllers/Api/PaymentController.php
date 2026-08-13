@@ -104,9 +104,25 @@ class PaymentController extends Controller
             'payment_date' => now()->toDateString(),
             'payment_method' => $payment->payment_method ?: 'cash',
         ]);
+
+        $this->confirmPendingBooking($payment);
+
         $payment->load(['rental.property', 'reservation.property']);
 
         return response()->json(new PaymentResource($payment));
+    }
+
+    private function confirmPendingBooking(Payment $payment): void
+    {
+        if (!$payment->reservation || $payment->reservation->status !== 'pending') {
+            return;
+        }
+
+        if ((float) $payment->reservation->deposit > 0 && (float) $payment->amount < (float) $payment->reservation->deposit) {
+            return;
+        }
+
+        $payment->reservation->update(['status' => 'approved']);
     }
 
     public function destroy(Payment $payment): JsonResponse

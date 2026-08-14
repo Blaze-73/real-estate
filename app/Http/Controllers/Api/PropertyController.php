@@ -31,6 +31,7 @@ class PropertyController extends Controller
             'search', 'type', 'status', 'city',
             'min_price', 'max_price', 'min_surface', 'max_surface',
             'bedrooms', 'bathrooms', 'featured',
+            'check_in', 'check_out', 'price_mode', 'nights',
             'sort_by', 'sort_order', 'per_page',
         ]);
 

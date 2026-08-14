@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const fieldClass =
   'w-full rounded-xl border border-ink-100 bg-sand-50 px-3.5 py-3 text-sm text-ink-900 placeholder-ink-400 outline-none transition-colors focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/25 dark:border-ink-700 dark:bg-ink-800 dark:text-sand-50 dark:placeholder-ink-300';
 
+const labelClass =
+  'mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-400 dark:text-ink-300';
+
 const SearchBar = ({ onSearch, className = '' }) => {
   const { t } = useTranslation();
+  const [flexible, setFlexible] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -16,6 +22,10 @@ const SearchBar = ({ onSearch, className = '' }) => {
       bedrooms: data.get('bedrooms') || '',
       bathrooms: data.get('bathrooms') || '',
     };
+    if (!flexible) {
+      filters.check_in = data.get('check_in') || '';
+      filters.check_out = data.get('check_out') || '';
+    }
     if (onSearch) onSearch(filters);
   };
 
@@ -66,6 +76,45 @@ const SearchBar = ({ onSearch, className = '' }) => {
           ))}
         </select>
       </div>
+
+      <div className="mt-2.5 grid grid-cols-2 items-end gap-2.5 md:grid-cols-3 lg:gap-3">
+        <div>
+          <label htmlFor="search-check-in" className={labelClass}>
+            {t('search.checkIn')} <span className="normal-case tracking-normal text-ink-400/80">· {t('search.optional')}</span>
+          </label>
+          <input
+            id="search-check-in"
+            type="date"
+            name="check_in"
+            disabled={flexible}
+            className={`${fieldClass} disabled:cursor-not-allowed disabled:opacity-40`}
+            aria-label={t('search.checkIn')}
+          />
+        </div>
+        <div>
+          <label htmlFor="search-check-out" className={labelClass}>
+            {t('search.checkOut')} <span className="normal-case tracking-normal text-ink-400/80">· {t('search.optional')}</span>
+          </label>
+          <input
+            id="search-check-out"
+            type="date"
+            name="check_out"
+            disabled={flexible}
+            className={`${fieldClass} disabled:cursor-not-allowed disabled:opacity-40`}
+            aria-label={t('search.checkOut')}
+          />
+        </div>
+        <label className="col-span-2 flex cursor-pointer select-none items-center gap-2.5 rounded-xl border border-ink-100 bg-sand-50 px-3.5 py-3 text-sm text-ink-600 transition-colors hover:border-ocean-300 md:col-span-1 dark:border-ink-700 dark:bg-ink-800 dark:text-sand-100">
+          <input
+            type="checkbox"
+            checked={flexible}
+            onChange={(e) => setFlexible(e.target.checked)}
+            className="h-4 w-4 shrink-0 accent-ocean-600"
+          />
+          {t('search.imFlexible')}
+        </label>
+      </div>
+
       <motion.button
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.985 }}

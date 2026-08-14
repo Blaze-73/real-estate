@@ -43,6 +43,10 @@
     "bathrooms": "الحمّامات",
     "beds": "{{count}}+ غرف",
     "baths": "{{count}}+ حمّامات",
+    "checkIn": "الوصول",
+    "checkOut": "المغادرة",
+    "optional": "اختياري",
+    "imFlexible": "أنا مرن في المواعيد",
     "searchProperties": "ابحث عن العقارات"
   },
   "footer": {
@@ -151,7 +155,13 @@
     "noProperties": "لم يتم العثور على عقارات",
     "adjustFilters": "جرّب تعديل الفلاتر.",
     "goToPage": "الانتقال إلى الصفحة {{count}}",
-    "paginationAria": "ترقيم الصفحات"
+    "paginationAria": "ترقيم الصفحات",
+    "pricePerNight": "في الليلة",
+    "priceTotal": "الإجمالي",
+    "nightCount_one": "{{count}} ليلة",
+    "nightCount_other": "{{count}} ليالٍ",
+    "totalSuffix": "إجمالي",
+    "removeDates": "مسح التواريخ"
   },
   "propertyDetails": {
     "status": "الحالة",

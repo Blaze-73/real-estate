@@ -43,6 +43,10 @@
     "bathrooms": "Bathrooms",
     "beds": "{{count}}+ beds",
     "baths": "{{count}}+ baths",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "optional": "optional",
+    "imFlexible": "I'm flexible",
     "searchProperties": "Search properties"
   },
   "footer": {
@@ -151,7 +155,13 @@
     "noProperties": "No properties found",
     "adjustFilters": "Try adjusting your filters.",
     "goToPage": "Go to page {{count}}",
-    "paginationAria": "Pagination"
+    "paginationAria": "Pagination",
+    "pricePerNight": "Per night",
+    "priceTotal": "Total",
+    "nightCount_one": "{{count}} night",
+    "nightCount_other": "{{count}} nights",
+    "totalSuffix": "total",
+    "removeDates": "Clear dates"
   },
   "propertyDetails": {
     "status": "Status",

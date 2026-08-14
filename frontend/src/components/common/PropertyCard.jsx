@@ -14,8 +14,8 @@ const getFavorites = () => {
   }
 };
 
-const PropertyCard = ({ property }) => {
-  const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover } =
+const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
+  const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover, nightly_price, monthly_price, cleaning_fee } =
     property || {};
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -53,6 +53,19 @@ const PropertyCard = ({ property }) => {
   const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     t('propertyCard.whatsappIntro', { title })
   )}`;
+
+  const totalPrice =
+    priceMode === 'total' && nights >= 1
+      ? (() => {
+          const rate =
+            nights >= 28 && Number(monthly_price) > 0
+              ? Number(monthly_price) / 30.4375
+              : Number(nightly_price) > 0
+                ? Number(nightly_price)
+                : Number(price);
+          return rate * nights + Number(cleaning_fee || 0);
+        })()
+      : null;
 
   return (
     <motion.article
@@ -116,9 +129,20 @@ const PropertyCard = ({ property }) => {
           </button>
 
           <div className="absolute bottom-3 left-4">
-            <span className="font-display text-2xl font-semibold text-white drop-shadow-sm">
-              {formatPrice(price)}
-            </span>
+            {totalPrice !== null ? (
+              <span className="flex flex-col leading-tight">
+                <span className="font-display text-2xl font-semibold text-white drop-shadow-sm">
+                  {formatPrice(totalPrice)}
+                </span>
+                <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-sand-100/80">
+                  {t('properties.nightCount', { count: nights })} {t('properties.totalSuffix')}
+                </span>
+              </span>
+            ) : (
+              <span className="font-display text-2xl font-semibold text-white drop-shadow-sm">
+                {formatPrice(price)}
+              </span>
+            )}
           </div>
 
           <button

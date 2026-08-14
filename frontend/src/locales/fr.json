@@ -43,6 +43,10 @@
     "bathrooms": "Salles de bain",
     "beds": "{{count}}+ chambres",
     "baths": "{{count}}+ salles de bain",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "optional": "facultatif",
+    "imFlexible": "Je suis flexible",
     "searchProperties": "Rechercher des biens"
   },
   "footer": {
@@ -151,7 +155,13 @@
     "noProperties": "Aucun bien trouvé",
     "adjustFilters": "Essayez d'ajuster vos filtres.",
     "goToPage": "Aller à la page {{count}}",
-    "paginationAria": "Pagination"
+    "paginationAria": "Pagination",
+    "pricePerNight": "Par nuit",
+    "priceTotal": "Total",
+    "nightCount_one": "{{count}} nuit",
+    "nightCount_other": "{{count}} nuits",
+    "totalSuffix": "total",
+    "removeDates": "Effacer les dates"
   },
   "propertyDetails": {
     "status": "Statut",

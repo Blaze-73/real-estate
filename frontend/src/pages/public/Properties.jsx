@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,8 +8,11 @@ import PropertyCard from '../../components/common/PropertyCard';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 
-const FilterControls = ({ filters, onChange }) => {
+const TYPE_CHIPS = ['apartment', 'villa', 'house', 'studio'];
+
+const FilterControls = ({ filters, onChange, priceMode = 'night' }) => {
   const { t } = useTranslation();
+  const priceSuffix = priceMode === 'total' ? ` · ${t('properties.priceTotal')}` : '';
   return (
     <div className="space-y-4">
       <div>
@@ -24,11 +27,11 @@ const FilterControls = ({ filters, onChange }) => {
         </select>
       </div>
       <div>
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.minPrice')}</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.minPrice')}{priceSuffix}</label>
         <input type="number" name="min_price" value={filters.min_price} onChange={onChange} placeholder="0" className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
       </div>
       <div>
-        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.maxPrice')}</label>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.maxPrice')}{priceSuffix}</label>
         <input type="number" name="max_price" value={filters.max_price} onChange={onChange} placeholder={t('properties.any')} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
       </div>
       <div>
@@ -65,6 +68,20 @@ const Properties = () => {
 
   const readSort = () => searchParams.get('sort') || '-createdAt';
 
+  const check_in = searchParams.get('check_in') || '';
+  const check_out = searchParams.get('check_out') || '';
+  const rawPriceMode = searchParams.get('price_mode') === 'total' ? 'total' : 'night';
+
+  const nights = useMemo(() => {
+    if (!check_in || !check_out) return 0;
+    const start = new Date(`${check_in}T00:00:00`);
+    const end = new Date(`${check_out}T00:00:00`);
+    const diff = Math.round((end - start) / 86400000);
+    return diff > 0 ? diff : 0;
+  }, [check_in, check_out]);
+
+  const priceMode = nights >= 1 ? rawPriceMode : 'night';
+
   const filters = {
     type: searchParams.get('type') || '',
     min_price: searchParams.get('min_price') || '',
@@ -93,9 +110,17 @@ const Properties = () => {
       page,
       per_page: 9,
     };
+    if (check_in && check_out) {
+      params.check_in = check_in;
+      params.check_out = check_out;
+      if (priceMode === 'total') {
+        params.price_mode = 'total';
+        params.nights = nights;
+      }
+    }
     Object.keys(params).forEach((k) => { if (!params[k]) delete params[k]; });
     dispatch(fetchProperties(params));
-  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page]);
+  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page, check_in, check_out, priceMode, nights]);
 
   const updateParam = (name, value) => {
     const next = new URLSearchParams(searchParams);
@@ -117,6 +142,24 @@ const Properties = () => {
     setSearchParams(next);
   };
 
+  const toggleTypeChip = (value) => {
+    updateParam('type', type === value ? '' : value);
+  };
+
+  const setPriceMode = (mode) => {
+    updateParam('price_mode', mode === 'total' ? 'total' : '');
+  };
+
+  const clearDates = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('check_in');
+    next.delete('check_out');
+    next.delete('price_mode');
+    next.delete('nights');
+    next.set('page', '1');
+    setSearchParams(next);
+  };
+
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
       <Seo
@@ -130,6 +173,73 @@ const Properties = () => {
           <p className="text-gray-500 dark:text-gray-400 mt-2">{t('properties.pageSubtitle')}</p>
         </motion.div>
 
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          <span className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 mr-1">{t('properties.type')}</span>
+          {TYPE_CHIPS.map((v) => (
+            <button
+              key={v}
+              type="button"
+              onClick={() => toggleTypeChip(v)}
+              aria-pressed={type === v}
+              className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                type === v
+                  ? 'bg-[#38BDF8] text-white border-[#38BDF8]'
+                  : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#38BDF8]'
+              }`}
+            >
+              {t(`types.${v}`)}
+            </button>
+          ))}
+
+          {nights >= 1 && (
+            <>
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] text-sm font-medium border border-[#38BDF8]/20">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                {check_in} → {check_out} · {t('properties.nightCount', { count: nights })}
+                <button
+                  type="button"
+                  onClick={clearDates}
+                  aria-label={t('properties.removeDates')}
+                  className="grid h-5 w-5 place-items-center rounded-full bg-[#38BDF8]/15 text-[#38BDF8] hover:bg-[#38BDF8]/30 transition-colors"
+                >
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+
+              <div className="flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 ml-1" role="group" aria-label={t('properties.priceTotal')}>
+                <button
+                  type="button"
+                  onClick={() => setPriceMode('night')}
+                  aria-pressed={priceMode === 'night'}
+                  className={`px-3.5 py-1.5 text-sm font-medium transition-colors ${
+                    priceMode === 'night'
+                      ? 'bg-[#38BDF8] text-white'
+                      : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {t('properties.pricePerNight')}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPriceMode('total')}
+                  aria-pressed={priceMode === 'total'}
+                  className={`px-3.5 py-1.5 text-sm font-medium transition-colors border-l border-gray-200 dark:border-gray-700 ${
+                    priceMode === 'total'
+                      ? 'bg-[#38BDF8] text-white'
+                      : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {t('properties.priceTotal')}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
         <div className="flex gap-6">
           <aside className="hidden lg:block w-64 flex-shrink-0">
             <div className="sticky top-24 bg-white dark:bg-[#1E293B] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
@@ -137,7 +247,7 @@ const Properties = () => {
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('properties.filters')}</h3>
                 <button onClick={clearFilters} className="text-xs text-[#38BDF8] hover:underline">{t('properties.clearAll')}</button>
               </div>
-              <FilterControls filters={filters} onChange={handleFilterChange} />
+              <FilterControls filters={filters} onChange={handleFilterChange} priceMode={priceMode} />
             </div>
           </aside>
 
@@ -178,7 +288,7 @@ const Properties = () => {
               {loading
                 ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
                 : properties.map((property) => (
-                    <PropertyCard key={property.id || property._id} property={property} />
+                    <PropertyCard key={property.id || property._id} property={property} priceMode={priceMode} nights={nights} />
                   ))}
             </div>
 
@@ -248,6 +358,7 @@ const Properties = () => {
                 <FilterControls
                   filters={filters}
                   onChange={(e) => handleFilterChange(e)}
+                  priceMode={priceMode}
                 />
                 <button
                   onClick={clearFilters}

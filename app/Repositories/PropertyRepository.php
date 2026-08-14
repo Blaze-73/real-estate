@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Property;
+use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class PropertyRepository
@@ -32,20 +33,16 @@ class PropertyRepository
             $query->where('city', $filters['city']);
         }
 
-        if (isset($filters['min_price'])) {
-            $query->where('price', '>=', $filters['min_price']);
-        }
+        $this->applyPriceFilter($query, $filters);
 
-        if (isset($filters['max_price'])) {
-            $query->where('price', '<=', $filters['max_price']);
-        }
+        $this->applyAvailabilityFilter($query, $filters);
 
         if (isset($filters['min_surface'])) {
-            $query->where('surface', '>=', $filters['min_surface']);
+            $query->where('surface', '>=', (int) $filters['min_surface']);
         }
 
         if (isset($filters['max_surface'])) {
-            $query->where('surface', '<=', $filters['max_surface']);
+            $query->where('surface', '<=', (int) $filters['max_surface']);
         }
 
         if (isset($filters['bedrooms'])) {
@@ -73,5 +70,67 @@ class PropertyRepository
         $perPage = $filters['per_page'] ?? 15;
 
         return $query->paginate($perPage);
+    }
+
+    private function effectiveRateExpression(): string
+    {
+        return 'COALESCE(NULLIF(nightly_price, 0), price)';
+    }
+
+    private function applyPriceFilter($query, array $filters): void
+    {
+        $rateExpression = $this->effectiveRateExpression();
+
+        if (($filters['price_mode'] ?? 'night') === 'total') {
+            $nights = min(max((int) ($filters['nights'] ?? 1), 1), 90);
+            $rateExpression = sprintf(
+                '((CASE WHEN %d >= 28 AND monthly_price > 0 THEN monthly_price / 30.4375 ELSE %s END) * %d) + COALESCE(cleaning_fee, 0)',
+                $nights,
+                $rateExpression,
+                $nights
+            );
+        }
+
+        if (isset($filters['min_price'])) {
+            $query->whereRaw("{$rateExpression} >= ?", [(int) $filters['min_price']]);
+        }
+
+        if (isset($filters['max_price'])) {
+            $query->whereRaw("{$rateExpression} <= ?", [(int) $filters['max_price']]);
+        }
+    }
+
+    private function applyAvailabilityFilter($query, array $filters): void
+    {
+        if (empty($filters['check_in']) || empty($filters['check_out'])) {
+            return;
+        }
+
+        try {
+            $checkIn = Carbon::parse($filters['check_in'])->toDateString();
+            $checkOut = Carbon::parse($filters['check_out'])->toDateString();
+        } catch (\Throwable) {
+            return;
+        }
+
+        if ($checkIn >= $checkOut) {
+            return;
+        }
+
+        $query->whereDoesntHave('reservations', function ($q) use ($checkIn, $checkOut) {
+            $q->whereIn('status', ['pending', 'approved'])
+                ->where('check_in', '<', $checkOut)
+                ->where('check_out', '>', $checkIn);
+        });
+
+        $query->whereDoesntHave('availabilityBlocks', function ($q) use ($checkIn, $checkOut) {
+            $q->where('start_date', '<', $checkOut)
+                ->where('end_date', '>', $checkIn);
+        });
+
+        $nights = Carbon::parse($checkIn)->diffInDays(Carbon::parse($checkOut));
+        $query->where(function ($q) use ($nights) {
+            $q->whereNull('min_nights')->orWhere('min_nights', '<=', $nights);
+        });
     }
 }

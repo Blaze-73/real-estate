@@ -23,6 +23,7 @@ class Property extends Model
         'min_nights',
         'cleaning_fee',
         'deposit',
+        'instant_book',
         'high_season_from',
         'high_season_to',
         'high_season_price',
@@ -55,6 +56,7 @@ class Property extends Model
             'latitude' => 'decimal:7',
             'longitude' => 'decimal:7',
             'featured' => 'boolean',
+            'instant_book' => 'boolean',
         ];
     }
 

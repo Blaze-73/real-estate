@@ -36,6 +36,7 @@ class StorePropertyRequest extends FormRequest
             'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'nullable|in:available,rented,pending,maintenance',
             'featured' => 'nullable|boolean',
+            'instant_book' => 'nullable|boolean',
             'images' => 'nullable|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048',
         ];

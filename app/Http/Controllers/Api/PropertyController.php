@@ -106,8 +106,11 @@ class PropertyController extends Controller
         }
 
         return response()->json([
-            'message' => 'Booking request submitted. Our team will confirm shortly.',
+            'message' => $result['instant']
+                ? 'Booking confirmed instantly. A deposit is required to finalize.'
+                : 'Booking request submitted. Our team will confirm shortly.',
             'booking_reference' => $result['reservation']->booking_reference,
+            'instant' => $result['instant'],
             'quote' => $result['quote'],
             'reservation' => new ReservationResource($result['reservation']),
         ], 201);

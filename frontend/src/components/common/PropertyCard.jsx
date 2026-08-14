@@ -15,7 +15,7 @@ const getFavorites = () => {
 };
 
 const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
-  const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover, nightly_price, monthly_price, cleaning_fee } =
+  const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover, nightly_price, monthly_price, cleaning_fee, instant_book } =
     property || {};
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -86,16 +86,25 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-ink-950/0 to-ink-950/10" />
 
-          <div className="absolute left-3 top-3">
+          <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
             {type && (
               <span className="rounded-full bg-ink-950/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-sand-100 backdrop-blur-md">
                 {t(`types.${type}`, { defaultValue: type })}
               </span>
             )}
+
+            {instant_book && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-ocean-600/90 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur-md">
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                {t('propertyCard.instantBook')}
+              </span>
+            )}
           </div>
 
           {bookingsThisMonth >= 2 && (
-            <div className="absolute left-3 top-12">
+            <div className="absolute left-3 top-20">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-terra-500/90 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur-md">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 4h4v4M4 20l16-16M12 8V4m4 4V4" />

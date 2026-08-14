@@ -1,9 +1,15 @@
 <x-mail::message>
 # Booking Confirmed
 
+@if($booking->status === 'approved')
 Hi **{{ $booking->guest_name }}**,
 
-Your booking request for **{{ $property->title }}** has been received.
+Your booking for **{{ $property->title }}** has been **confirmed**. A deposit of **{{ number_format((float) $booking->deposit, 2) }} MAD** may be required to finalize the booking.
+@else
+Hi **{{ $booking->guest_name }}**,
+
+Your booking request for **{{ $property->title }}** has been received. Our team will confirm your stay shortly. A deposit of **{{ number_format((float) $booking->deposit, 2) }} MAD** may be required to finalize the booking.
+@endif
 
 <x-mail::table>
 | Detail | Value |
@@ -15,8 +21,6 @@ Your booking request for **{{ $property->title }}** has been received.
 | Total | {{ number_format($total, 2) }} MAD |
 | Status | {{ ucfirst($booking->status) }} |
 </x-mail::table>
-
-Our team will confirm your stay shortly. A deposit of **{{ number_format((float) $booking->deposit, 2) }} MAD** may be required to finalize the booking.
 
 <x-mail::button :url="url('/')">
 Visit our site

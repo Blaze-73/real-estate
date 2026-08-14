@@ -34,7 +34,7 @@ const BookingWidget = ({ property, slug }) => {
   const [quote, setQuote] = useState(null);
   const [quoteState, setQuoteState] = useState({ loading: false, error: '' });
   const [booking, setBooking] = useState({ name: '', email: '', phone: '' });
-  const [bookingState, setBookingState] = useState({ sending: false, done: false, error: '', reference: '' });
+  const [bookingState, setBookingState] = useState({ sending: false, done: false, error: '', reference: '', instant: false });
   const [payState, setPayState] = useState({ loading: false, error: '' });
   const [calMonth, setCalMonth] = useState(() => new Date());
   const [calendar, setCalendar] = useState({});
@@ -86,7 +86,7 @@ const BookingWidget = ({ property, slug }) => {
       return;
     }
     setQuoteState({ loading: true, error: '' });
-    setBookingState((s) => ({ ...s, done: false, reference: '', error: '' }));
+    setBookingState((s) => ({ ...s, done: false, reference: '', instant: false, error: '' }));
     try {
       const result = await propertyService.quote(slug, dates);
       setQuote(result);
@@ -107,9 +107,9 @@ const BookingWidget = ({ property, slug }) => {
         guest_email: booking.email,
         guest_phone: booking.phone,
       });
-      setBookingState({ sending: false, done: true, reference: result.booking_reference, error: '' });
+      setBookingState({ sending: false, done: true, reference: result.booking_reference, instant: !!result.instant, error: '' });
     } catch (err) {
-      setBookingState({ sending: false, done: false, reference: '', error: err.response?.data?.message || t('booking.bookingFailed') });
+      setBookingState({ sending: false, done: false, reference: '', instant: false, error: err.response?.data?.message || t('booking.bookingFailed') });
     }
   };
 
@@ -213,6 +213,14 @@ const BookingWidget = ({ property, slug }) => {
           {quote.deposit > 0 && (
             <p className="text-xs text-gray-500 dark:text-gray-400">{t('booking.depositRequired', { amount: formatPrice(quote.deposit, '') })}</p>
           )}
+          {quote.instant_book && (
+            <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0EA5E9]">
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              {t('booking.instantNote')}
+            </p>
+          )}
 
           <div className={`p-3 rounded-xl text-sm ${quote.available ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400'}`}>
             {quote.available
@@ -224,9 +232,9 @@ const BookingWidget = ({ property, slug }) => {
             <form onSubmit={handleBooking} className="pt-3 space-y-3">
               {bookingState.done && (
                 <div className="p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 text-sm space-y-1">
-                  <p className="font-semibold">{t('booking.bookingReceived')}</p>
+                  <p className="font-semibold">{bookingState.instant ? t('booking.bookingConfirmed') : t('booking.bookingReceived')}</p>
                   <p>{t('booking.yourReference', { reference: bookingState.reference })}</p>
-                  <p className="text-xs">{t('booking.confirmSoon')}</p>
+                  <p className="text-xs">{bookingState.instant ? t('booking.payToFinalize') : t('booking.confirmSoon')}</p>
                 </div>
               )}
               {bookingState.done && quote.deposit > 0 && (
@@ -253,7 +261,7 @@ const BookingWidget = ({ property, slug }) => {
                   <input type="email" value={booking.email} onChange={(e) => setBooking({ ...booking, email: e.target.value })} placeholder={t('booking.emailAddress')} className={inputCls} required />
                   <input type="tel" value={booking.phone} onChange={(e) => setBooking({ ...booking, phone: e.target.value })} placeholder={t('propertyDetails.phoneNumber')} className={inputCls} />
                   <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
-                    {bookingState.sending ? t('booking.submitting') : t('booking.requestBooking')}
+                    {bookingState.sending ? t('booking.submitting') : quote.instant_book ? t('booking.confirmBooking') : t('booking.requestBooking')}
                   </button>
                 </>
               )}

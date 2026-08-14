@@ -51,6 +51,7 @@ class BookingService
             'deposit' => $deposit,
             'total' => $total,
             'available' => $this->isAvailable($property, $start, $end),
+            'instant_book' => (bool) $property->instant_book,
         ];
     }
 
@@ -127,12 +128,14 @@ class BookingService
             ]);
         }
 
+        $instantBook = (bool) $property->instant_book;
+
         $reservation = Reservation::create([
             'property_id' => $property->id,
             'client_id' => $client->id,
             'check_in' => $checkIn->toDateString(),
             'check_out' => $checkOut->toDateString(),
-            'status' => 'pending',
+            'status' => $instantBook ? 'approved' : 'pending',
             'message' => $data['message'] ?? null,
             'booking_reference' => $this->uniqueReference(),
             'total_price' => $quote['total'],
@@ -157,6 +160,7 @@ class BookingService
         return [
             'reservation' => $reservation,
             'quote' => $quote,
+            'instant' => $instantBook,
         ];
     }
 

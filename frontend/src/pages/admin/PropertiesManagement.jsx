@@ -14,6 +14,7 @@ const PropertiesManagement = () => {
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
     status: 'available', description: '', features: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
+    instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
   });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
@@ -27,6 +28,7 @@ const PropertiesManagement = () => {
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
     status: 'available', description: '', features: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
+    instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
   });
 
@@ -74,6 +76,7 @@ const PropertiesManagement = () => {
       min_nights: property.min_nights || 1,
       cleaning_fee: property.cleaning_fee || '',
       deposit: property.deposit || '',
+      instant_book: !!property.instant_book,
       high_season_from: property.high_season?.from || '',
       high_season_to: property.high_season?.to || '',
       high_season_price: property.high_season?.price ?? '',
@@ -104,6 +107,7 @@ const PropertiesManagement = () => {
       min_nights: num(form.min_nights) || 1,
       cleaning_fee: num(form.cleaning_fee) || 0,
       deposit: num(form.deposit) || 0,
+      instant_book: !!form.instant_book,
       high_season_from: form.high_season_from || null,
       high_season_to: form.high_season_to || null,
       high_season_price: num(form.high_season_price),
@@ -254,6 +258,13 @@ const PropertiesManagement = () => {
                     <input type="number" name="cleaning_fee" value={form.cleaning_fee} onChange={handleChange} placeholder="Cleaning Fee" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                     <input type="number" name="deposit" value={form.deposit} onChange={handleChange} placeholder="Deposit" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                   </div>
+                  <label className="flex items-center justify-between mt-3 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 cursor-pointer">
+                    <span>
+                      <span className="block text-sm font-medium text-gray-900 dark:text-white">Instant booking</span>
+                      <span className="block text-xs text-gray-500 dark:text-gray-400">Guests get confirmed immediately instead of waiting for approval</span>
+                    </span>
+                    <input type="checkbox" name="instant_book" checked={!!form.instant_book} onChange={(e) => setForm({ ...form, instant_book: e.target.checked })} className="h-5 w-5 rounded accent-[#38BDF8]" />
+                  </label>
                   <div className="grid grid-cols-3 gap-3 mt-3">
                     <input type="date" name="high_season_from" value={form.high_season_from} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                     <input type="date" name="high_season_to" value={form.high_season_to} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />

@@ -30,6 +30,8 @@ class PropertyResource extends JsonResource
             'bathrooms' => $this->bathrooms,
             'city' => $this->city,
             'location' => $this->city,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
             'status' => $this->status,
             'featured' => $this->featured,
             'primary_image' => PropertyImageResource::resolveUrl($this->primaryImage?->image_path),

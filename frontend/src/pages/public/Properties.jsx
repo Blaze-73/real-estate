@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import PropertyCard from '../../components/common/PropertyCard';
+import PropertiesMap from '../../components/common/PropertiesMap';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 
@@ -55,9 +56,15 @@ const FilterControls = ({ filters, onChange, priceMode = 'night' }) => {
 const Properties = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { properties, loading, error, pagination } = useSelector((state) => state.properties);
   const [searchParams, setSearchParams] = useSearchParams();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [mapOpen, setMapOpen] = useState(false);
+  const [activeId, setActiveId] = useState(null);
+
+  const handleMapHover = useCallback((id) => setActiveId(id), []);
+  const handleMapSelect = useCallback((id) => navigate(`/properties/${id}`), [navigate]);
 
   const SORT_OPTIONS = [
     { value: '-createdAt', label: t('properties.newest') },
@@ -251,7 +258,7 @@ const Properties = () => {
             </div>
           </aside>
 
-          <div className="flex-1">
+          <div className={`flex-1 min-w-0 ${mapOpen ? 'hidden lg:block' : ''}`}>
             <div className="flex items-center justify-between mb-6 gap-3">
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {t('properties.resultsFound', { count: pagination.total || 0 })}
@@ -266,6 +273,38 @@ const Properties = () => {
                   </svg>
                   {t('properties.filters')}
                 </button>
+                <div className="hidden lg:flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700" role="group" aria-label={t('properties.map')}>
+                  <button
+                    type="button"
+                    onClick={() => setMapOpen(false)}
+                    aria-pressed={!mapOpen}
+                    className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors ${
+                      !mapOpen
+                        ? 'bg-[#38BDF8] text-white'
+                        : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    {t('properties.list')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMapOpen(true)}
+                    aria-pressed={mapOpen}
+                    className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors border-l border-gray-200 dark:border-gray-700 ${
+                      mapOpen
+                        ? 'bg-[#38BDF8] text-white'
+                        : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    {t('properties.map')}
+                  </button>
+                </div>
                 <label className="hidden lg:block text-xs text-gray-500 dark:text-gray-400">{t('properties.sort')}</label>
                 <select
                   name="sort"
@@ -284,12 +323,24 @@ const Properties = () => {
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className={`grid grid-cols-1 md:grid-cols-2 ${mapOpen ? '' : 'xl:grid-cols-3'} gap-6`}>
               {loading
                 ? Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)
-                : properties.map((property) => (
-                    <PropertyCard key={property.id || property._id} property={property} priceMode={priceMode} nights={nights} />
-                  ))}
+                : properties.map((property) => {
+                    const key = String(property.slug || property.id);
+                    return (
+                      <div
+                        key={key}
+                        onMouseEnter={() => setActiveId(key)}
+                        onMouseLeave={() => setActiveId(null)}
+                        className={`rounded-2xl transition-shadow ${
+                          activeId === key ? 'ring-2 ring-[#38BDF8] shadow-lg shadow-[#38BDF8]/10' : ''
+                        }`}
+                      >
+                        <PropertyCard property={property} priceMode={priceMode} nights={nights} />
+                      </div>
+                    );
+                  })}
             </div>
 
             {!loading && properties.length === 0 && (
@@ -322,6 +373,30 @@ const Properties = () => {
               </nav>
             )}
           </div>
+
+          <AnimatePresence>
+            {mapOpen && (
+              <motion.div
+                key="map-panel"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="w-full lg:w-[46%] shrink-0"
+              >
+                <div className="sticky top-24 h-[68vh] lg:h-[calc(100vh-8rem)] overflow-hidden rounded-2xl bg-ink-100 ring-1 ring-ink-100 dark:bg-ink-800 dark:ring-ink-800">
+                  <PropertiesMap
+                    properties={properties}
+                    activeId={activeId}
+                    onHover={handleMapHover}
+                    onSelect={handleMapSelect}
+                    priceMode={priceMode}
+                    nights={nights}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -377,6 +452,21 @@ const Properties = () => {
           </>
         )}
       </AnimatePresence>
+
+      <button
+        type="button"
+        onClick={() => setMapOpen((v) => !v)}
+        className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-[#38BDF8] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-[#38BDF8]/30 active:scale-95 transition-transform"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          {mapOpen ? (
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          ) : (
+            <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          )}
+        </svg>
+        {mapOpen ? t('properties.showList') : t('properties.showOnMap')}
+      </button>
     </div>
   );
 };

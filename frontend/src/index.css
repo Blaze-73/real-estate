@@ -126,3 +126,55 @@
     text-wrap: balance;
   }
 }
+
+/* Map search pins */
+.pm-wrap {
+  transform: translate(-50%, -100%);
+}
+.pm-wrap.is-active {
+  z-index: 500 !important;
+}
+.pm-pin {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--color-ink-950);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  border: 2px solid #fff;
+  box-shadow: 0 4px 14px rgb(11 20 27 / 0.35);
+  cursor: pointer;
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+.pm-pin::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid var(--color-ink-950);
+}
+.pm-wrap.is-active .pm-pin {
+  background: #38bdf8;
+  transform: scale(1.12);
+}
+.pm-wrap.is-active .pm-pin::after {
+  border-top-color: #38bdf8;
+}
+.pm-pin:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+.leaflet-container {
+  font-family: var(--font-sans);
+}

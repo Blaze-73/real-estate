@@ -161,7 +161,11 @@
     "nightCount_one": "{{count}} nuit",
     "nightCount_other": "{{count}} nuits",
     "totalSuffix": "total",
-    "removeDates": "Effacer les dates"
+    "removeDates": "Effacer les dates",
+    "map": "Carte",
+    "list": "Liste",
+    "showOnMap": "Voir sur la carte",
+    "showList": "Voir la liste"
   },
   "propertyDetails": {
     "status": "Statut",

@@ -161,7 +161,11 @@
     "nightCount_one": "{{count}} ليلة",
     "nightCount_other": "{{count}} ليالٍ",
     "totalSuffix": "إجمالي",
-    "removeDates": "مسح التواريخ"
+    "removeDates": "مسح التواريخ",
+    "map": "الخريطة",
+    "list": "القائمة",
+    "showOnMap": "عرض على الخريطة",
+    "showList": "عرض القائمة"
   },
   "propertyDetails": {
     "status": "الحالة",

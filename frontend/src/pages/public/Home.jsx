@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { fetchFeatured } from '../../store/slices/propertySlice';
 import PropertyCard from '../../components/common/PropertyCard';
 import SearchBar from '../../components/common/SearchBar';
@@ -32,6 +33,7 @@ const fadeUp = {
 };
 
 const Home = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { featured, loading } = useSelector((state) => state.properties);
@@ -52,8 +54,8 @@ const Home = () => {
   return (
     <div className="font-sans text-ink-900 dark:text-sand-50">
       <Seo
-        title="Riads & Beachfront Rentals in Asilah, Morocco"
-        description="Discover handpicked riads, beachfront apartments and medina houses in Asilah, Morocco. Book seasonal rentals, view prices and contact us on WhatsApp."
+        title={t('home.title')}
+        description={t('home.description')}
         canonical="/"
       />
       {/* ============ HERO ============ */}
@@ -61,7 +63,7 @@ const Home = () => {
         <div className="absolute inset-0">
           <img
             src={IMG.hero}
-            alt="The shoreline of Asilah stretching toward the Atlantic"
+            alt={t('home.heroImgAlt')}
             className="h-full w-full animate-kenburns object-cover"
             fetchPriority="high"
           />
@@ -77,7 +79,7 @@ const Home = () => {
             className="mb-5 inline-flex w-fit items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-sand-100 backdrop-blur-md"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-ocean-300" />
-            Asilah &middot; Atlantic coast, Morocco
+            {t('home.heroBadge')}
           </motion.span>
 
           <motion.h1
@@ -86,8 +88,8 @@ const Home = () => {
             transition={{ delay: 0.12, duration: 0.8, ease: easeOut }}
             className="max-w-4xl text-balance font-display text-[2.4rem] font-medium leading-[1.04] tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
-            Homes that hold
-            <span className="block italic text-ocean-300">the Atlantic light.</span>
+            {t('home.heroTitle1')}
+            <span className="block italic text-ocean-300">{t('home.heroTitle2')}</span>
           </motion.h1>
 
           <motion.p
@@ -96,8 +98,7 @@ const Home = () => {
             transition={{ delay: 0.24, duration: 0.8, ease: easeOut }}
             className="mt-6 max-w-xl text-base leading-relaxed text-sand-100/85 sm:text-lg"
           >
-            Handpicked riads, medina houses and beachfront apartments across Morocco's
-            northern coast &mdash; sourced, managed and loved by people who live here.
+            {t('home.heroSub')}
           </motion.p>
 
           <motion.div
@@ -110,7 +111,7 @@ const Home = () => {
               to="/properties"
               className="group inline-flex items-center gap-2.5 rounded-full bg-ocean-500 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-ocean-500/25 transition-all hover:bg-ocean-400 hover:shadow-ocean-400/30"
             >
-              Browse listings
+              {t('home.browseListings')}
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14m-6-6 6 6-6 6" />
               </svg>
@@ -119,7 +120,7 @@ const Home = () => {
               to="/contact"
               className="inline-flex items-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:bg-white/10"
             >
-              Talk to us
+              {t('home.talkToUs')}
             </Link>
           </motion.div>
 
@@ -136,7 +137,7 @@ const Home = () => {
                 </svg>
               ))}
             </span>
-            Rated 4.9 by 500+ residents and owners
+            {t('home.rated')}
           </motion.div>
         </div>
 
@@ -164,10 +165,10 @@ const Home = () => {
         >
           <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="font-display text-xl font-semibold tracking-tight text-ink-900 dark:text-sand-50">
-              Find your place
+              {t('home.findYourPlace')}
             </h2>
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-ink-400">
-              Rent &middot; Buy &middot; Long-stay
+              {t('home.rentBuyLong')}
             </p>
           </div>
           <SearchBar onSearch={handleSearch} />
@@ -206,23 +207,21 @@ const Home = () => {
             className="lg:col-span-6"
           >
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-600 dark:text-ocean-300">
-              The town &middot; #1 hidden gem
+              {t('home.townEyebrow')}
             </p>
             <h2 className="max-w-xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight text-ink-900 sm:text-5xl dark:text-sand-50">
-              Whitewashed streets,
-              <span className="block italic text-terra-500 dark:text-terra-300">woven with the sea.</span>
+              {t('home.townTitle1')}
+              <span className="block italic text-terra-500 dark:text-terra-300">{t('home.townTitle2')}</span>
             </h2>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-500 dark:text-ink-300">
-              A fortified medina of lime-washed walls, cobalt doors and hand-painted murals, set
-              against one of Morocco's most walkable beaches. This is the Asilah we know best &mdash;
-              and the one we'd love to open up for you.
+              {t('home.townCopy')}
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 to="/properties"
                 className="group inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink-800 dark:bg-sand-50 dark:text-ink-950 dark:hover:bg-sand-100"
               >
-                View properties
+                {t('home.viewProperties')}
                 <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M5 12h14m-6-6 6 6-6 6" />
                 </svg>
@@ -231,7 +230,7 @@ const Home = () => {
                 to="/about"
                 className="inline-flex items-center gap-2 rounded-full border border-ink-200 px-6 py-3 text-sm font-semibold text-ink-800 transition-colors hover:border-ink-900 dark:border-ink-700 dark:text-sand-100 dark:hover:border-sand-100"
               >
-                About Asilah
+                {t('home.aboutAsilah')}
               </Link>
             </div>
           </motion.div>
@@ -252,7 +251,7 @@ const Home = () => {
                 transition={{ delay: 0.1, duration: 0.7, ease: easeOut }}
                 className="col-span-2 overflow-hidden rounded-2xl"
               >
-                <img src={IMG.mural} alt="Street art murals painted on Asilah's medina walls" loading="lazy" className="h-40 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-56" />
+                <img src={IMG.mural} alt={t('home.muralImgAlt')} loading="lazy" className="h-40 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-56" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -261,7 +260,7 @@ const Home = () => {
                 transition={{ delay: 0.22, duration: 0.7, ease: easeOut }}
                 className="col-span-1 overflow-hidden rounded-2xl"
               >
-                <img src={IMG.blue} alt="Cobalt blue door in the whitewashed medina" loading="lazy" className="h-40 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-56" />
+                <img src={IMG.blue} alt={t('home.blueImgAlt')} loading="lazy" className="h-40 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-56" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -270,7 +269,7 @@ const Home = () => {
                 transition={{ delay: 0.34, duration: 0.7, ease: easeOut }}
                 className="col-span-1 overflow-hidden rounded-2xl"
               >
-                <img src={IMG.souks} alt="Handcrafts and souvenirs in the streets of the medina" loading="lazy" className="h-44 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-64" />
+                <img src={IMG.souks} alt={t('home.souksImgAlt')} loading="lazy" className="h-44 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-64" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -279,9 +278,9 @@ const Home = () => {
                 transition={{ delay: 0.46, duration: 0.7, ease: easeOut }}
                 className="col-span-2 relative overflow-hidden rounded-2xl"
               >
-                <img src={IMG.hero} alt="Atlantic beachfront seen from the ramparts" loading="lazy" className="h-44 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-64" />
+                <img src={IMG.hero} alt={t('home.beachImgAlt')} loading="lazy" className="h-44 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-64" />
                 <span className="absolute bottom-3 left-3 rounded-full bg-ink-950/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-sand-100 backdrop-blur-md">
-                  Beachfront &middot; 2 min by foot
+                  {t('home.beachfrontBadge')}
                 </span>
               </motion.div>
             </div>
@@ -295,7 +294,7 @@ const Home = () => {
             >
               <p className="font-display text-3xl font-semibold leading-none">10+</p>
               <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-sand-100/90">
-                years of local care
+                {t('home.yearsLocalCare')}
               </p>
             </motion.div>
           </motion.div>
@@ -314,16 +313,15 @@ const Home = () => {
           >
             <div>
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-600 dark:text-ocean-300">
-                Featured &middot; handpicked
+                {t('home.featuredEyebrow')}
               </p>
               <h2 className="max-w-xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight text-ink-900 sm:text-5xl dark:text-sand-50">
-                Picked for their light,<span className="italic text-terra-500 dark:text-terra-300"> land and life.</span>
+                {t('home.featuredTitle1')}<span className="italic text-terra-500 dark:text-terra-300"> {t('home.featuredTitle2')}</span>
               </h2>
             </div>
             <div className="max-w-sm">
               <p className="text-sm leading-relaxed text-ink-500 dark:text-ink-300">
-                A rotating shortlist chosen by our local team &mdash; each one visited,
-                photographed and verified before it reaches your screen.
+                {t('home.featuredCopy')}
               </p>
             </div>
           </motion.div>
@@ -339,7 +337,7 @@ const Home = () => {
               to="/properties"
               className="group inline-flex items-center gap-2.5 rounded-full border border-ink-300 px-7 py-3.5 text-sm font-semibold text-ink-900 transition-colors hover:border-ink-900 hover:bg-ink-900 hover:text-white dark:border-ink-600 dark:text-sand-50 dark:hover:border-sand-100 dark:hover:bg-sand-50 dark:hover:text-ink-950"
             >
-              View all listings
+              {t('home.viewAllListings')}
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14m-6-6 6 6-6 6" />
               </svg>
@@ -359,20 +357,19 @@ const Home = () => {
             className="lg:col-span-5"
           >
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-300">
-              Why choose us
+              {t('home.whyEyebrow')}
             </p>
             <h2 className="max-w-md text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-              Local roots.<span className="block italic text-terra-300">Honest deals.</span>
+              {t('home.whyTitle1')}<span className="block italic text-terra-300">{t('home.whyTitle2')}</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-sand-100/70">
-              We are a small Asilah team, not a faceless platform. Every listing is walked
-              through, every price is a conversation.
+              {t('home.whyCopy')}
             </p>
             <Link
               to="/about"
               className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ocean-300 transition-colors hover:text-ocean-200"
             >
-              Meet the team
+              {t('home.meetTheTeam')}
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14m-6-6 6 6-6 6" />
               </svg>
@@ -384,20 +381,20 @@ const Home = () => {
               {[
                 {
                   n: '01',
-                  title: 'Verified listings',
-                  copy: 'Each property is physically checked, ownership is confirmed and photos are taken on-site — no stock, no surprises.',
+                  title: t('home.verifiedTitle'),
+                  copy: t('home.verifiedCopy'),
                   icon: 'M9 12l2 2 4-4m5.618 4.016a4.5 4.5 0 00-2.198-5.888 4.5 4.5 0 00-5.186.364L12 6l-.104.1a4.5 4.5 0 00-6.058.507 4.5 4.5 0 002.982 7.633L9.382 18l2.618 2.5 2.618-2.5 3.382.913a4.5 4.5 0 00-1.002-8.897z',
                 },
                 {
                   n: '02',
-                  title: 'Local experts',
-                  copy: 'A season-round team on the ground in the medina and the beachfront — showing homes, managing stays and resolving issues within hours.',
+                  title: t('home.expertsTitle'),
+                  copy: t('home.expertsCopy'),
                   icon: 'M12 4.354a4 4 0 10-5.5 5.65 4 4 0 00-.167 1.5 4 4 0 005.667 1.232V21m4.5-1.5v-.5a4.5 4.5 0 013-4.215',
                 },
                 {
                   n: '03',
-                  title: 'Hassle-free booking',
-                  copy: 'Transparent contracts, secure payments and a single friendly point of contact from first message to final handover.',
+                  title: t('home.bookingTitle'),
+                  copy: t('home.bookingCopy'),
                   icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
                 },
               ].map((item) => (
@@ -444,14 +441,13 @@ const Home = () => {
             viewport={{ once: true, margin: '-80px' }}
           >
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-600 dark:text-ocean-300">
-              Find us in the medina
+              {t('home.visitEyebrow')}
             </p>
             <h2 className="max-w-xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight text-ink-900 sm:text-5xl dark:text-sand-50">
-              Come see Asilah <span className="italic text-terra-500 dark:text-terra-300">in person.</span>
+              {t('home.visitTitle1')} <span className="italic text-terra-500 dark:text-terra-300">{t('home.visitTitle2')}</span>
             </h2>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-500 dark:text-ink-300">
-              Our office sits a two-minute walk from Bab Al Kasbah. Drop by for coffee,
-              a walk-through of the port, or to see a home before anyone else does.
+              {t('home.visitCopy')}
             </p>
 
             <ul className="mt-8 space-y-4">
@@ -490,8 +486,8 @@ const Home = () => {
           >
             <MapComponent />
             <div className="absolute -bottom-5 left-6 rounded-2xl bg-white px-5 py-4 shadow-xl ring-1 ring-ink-100 dark:bg-ink-900 dark:ring-ink-800">
-              <p className="font-display text-lg font-semibold text-ink-900 dark:text-sand-50">Open daily &middot; 9:00&ndash;19:00</p>
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-ocean-600 dark:text-ocean-300">Visits by appointment</p>
+              <p className="font-display text-lg font-semibold text-ink-900 dark:text-sand-50">{t('home.openDaily')}</p>
+              <p className="text-xs font-medium uppercase tracking-[0.16em] text-ocean-600 dark:text-ocean-300">{t('home.visitsAppointment')}</p>
             </div>
           </motion.div>
         </div>
@@ -509,15 +505,14 @@ const Home = () => {
           >
             <div className="md:col-span-8">
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-600 dark:text-ocean-300">
-                Kind words
+                {t('home.kindWords')}
               </p>
               <h2 className="max-w-2xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight text-ink-900 sm:text-5xl dark:text-sand-50">
-                The people who <span className="italic text-terra-500 dark:text-terra-300">now call it home.</span>
+                {t('home.testimonialsTitle1')} <span className="italic text-terra-500 dark:text-terra-300">{t('home.testimonialsTitle2')}</span>
               </h2>
             </div>
             <p className="text-sm leading-relaxed text-ink-500 md:col-span-4 dark:text-ink-300">
-              Owners, tenants and buyers &mdash; a few of the hundreds who found their place
-              through our team.
+              {t('home.testimonialsCopy')}
             </p>
           </motion.div>
           <TestimonialCarousel />
@@ -539,17 +534,17 @@ const Home = () => {
             viewport={{ once: true, margin: '-80px' }}
           >
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-ocean-300">
-              No-fee viewings &middot; Licensed agency
+              {t('home.ctaEyebrow')}
             </p>
             <h2 className="mx-auto max-w-3xl text-balance font-display text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl">
-              Ready to find your place <span className="italic text-terra-300">in Asilah?</span>
+              {t('home.ctaTitle1')} <span className="italic text-terra-300">{t('home.ctaTitle2')}</span>
             </h2>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/properties"
                 className="group inline-flex items-center gap-2.5 rounded-full bg-ocean-500 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-ocean-500/25 transition-all hover:bg-ocean-400"
               >
-                Browse listings
+                {t('home.browseListings')}
                 <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M5 12h14m-6-6 6 6-6 6" />
                 </svg>
@@ -558,11 +553,11 @@ const Home = () => {
                 to="/contact"
                 className="inline-flex items-center gap-2 rounded-full border border-white/25 px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
-                Contact us
+                {t('home.contactUs')}
               </Link>
             </div>
             <p className="mt-8 text-xs font-medium uppercase tracking-[0.2em] text-sand-100/50">
-              Answers within 24 hours &middot; English, Arabic &amp; French
+              {t('home.answers24h')}
             </p>
           </motion.div>
         </div>

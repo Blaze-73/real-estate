@@ -1,32 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const testimonials = [
-  {
-    name: 'Ahmed Benali',
-    role: 'Property owner',
-    text: 'Exceptional service! They helped me rent my villa in Asilah within a week. Professional team and excellent management — I now travel without a second thought.',
-    rating: 5,
-  },
-  {
-    name: 'Fatima Zahra',
-    role: 'Tenant',
-    text: 'Found the perfect apartment through this platform. The process was smooth and transparent. Highly recommended!',
-    rating: 5,
-  },
-  {
-    name: 'Mohamed El Amrani',
-    role: 'Investor',
-    text: 'As a real estate investor, I appreciate their detailed property analytics and market insights. Great partner.',
-    rating: 5,
-  },
-  {
-    name: 'Sara Bennis',
-    role: 'Home buyer',
-    text: 'The team guided us through every step of buying our first home. Their expertise made all the difference.',
-    rating: 4,
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const initials = (name) =>
   name
@@ -35,17 +9,47 @@ const initials = (name) =>
     .slice(0, 2)
     .join('');
 
-const Stars = ({ count, className = 'h-4 w-4' }) => (
-  <div className="flex gap-0.5 text-gold-400" aria-label={`${count} out of 5 stars`}>
-    {Array.from({ length: 5 }).map((_, i) => (
-      <svg key={i} className={`${className} ${i < count ? '' : 'opacity-25'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-      </svg>
-    ))}
-  </div>
-);
+const Stars = ({ count, className = 'h-4 w-4' }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex gap-0.5 text-gold-400" aria-label={t('testimonials.starsOutOf', { count })}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg key={i} className={`${className} ${i < count ? '' : 'opacity-25'}`} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+};
 
 const TestimonialCarousel = () => {
+  const { t } = useTranslation();
+  const testimonials = [
+    {
+      name: 'Ahmed Benali',
+      role: t('testimonials.roleOwner'),
+      text: t('testimonials.t1'),
+      rating: 5,
+    },
+    {
+      name: 'Fatima Zahra',
+      role: t('testimonials.roleTenant'),
+      text: t('testimonials.t2'),
+      rating: 5,
+    },
+    {
+      name: 'Mohamed El Amrani',
+      role: t('testimonials.roleInvestor'),
+      text: t('testimonials.t3'),
+      rating: 5,
+    },
+    {
+      name: 'Sara Bennis',
+      role: t('testimonials.roleBuyer'),
+      text: t('testimonials.t4'),
+      rating: 4,
+    },
+  ];
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
@@ -108,7 +112,7 @@ const TestimonialCarousel = () => {
                 <button
                   type="button"
                   onClick={() => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-                  aria-label="Previous testimonial"
+                  aria-label={t('testimonials.previous')}
                   className="grid h-10 w-10 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-ocean-500 hover:text-ocean-600 dark:border-ink-700 dark:text-sand-100 dark:hover:border-ocean-300 dark:hover:text-ocean-300"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -118,7 +122,7 @@ const TestimonialCarousel = () => {
                 <button
                   type="button"
                   onClick={() => setCurrent((prev) => (prev + 1) % testimonials.length)}
-                  aria-label="Next testimonial"
+                  aria-label={t('testimonials.next')}
                   className="grid h-10 w-10 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-ocean-500 hover:text-ocean-600 dark:border-ink-700 dark:text-sand-100 dark:hover:border-ocean-300 dark:hover:text-ocean-300"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -134,7 +138,7 @@ const TestimonialCarousel = () => {
       {/* secondary list */}
       <div className="lg:col-span-5">
         <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-ink-400 dark:text-ink-300">
-          More voices
+          {t('testimonials.moreVoices')}
         </p>
         <ul className="space-y-3">
           {testimonials.map((t, idx) => {

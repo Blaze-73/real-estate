@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { fetchPropertyReviews, submitPropertyReview } from '../../services/reviewService';
 
 const Star = ({ filled, className = '' }) => (
@@ -14,6 +15,7 @@ const Star = ({ filled, className = '' }) => (
 );
 
 const ReviewsSection = ({ property }) => {
+  const { t, i18n } = useTranslation();
   const slug = property?.slug;
   const ratingScore = property?.rating_score || 0;
   const reviewsCount = property?.reviews_count || 0;
@@ -50,9 +52,9 @@ const ReviewsSection = ({ property }) => {
     try {
       await submitPropertyReview(slug, form);
       setForm({ guest_name: '', rating: 5, comment: '' });
-      setFeedback({ type: 'success', text: "Thank you! Your review will appear once approved by the owner." });
+      setFeedback({ type: 'success', text: t('reviews.thanks') });
     } catch (err) {
-      setFeedback({ type: 'error', text: err?.response?.data?.message || 'Could not submit your review. Please try again.' });
+      setFeedback({ type: 'error', text: err?.response?.data?.message || t('reviews.failed') });
     } finally {
       setSubmitting(false);
     }
@@ -61,7 +63,7 @@ const ReviewsSection = ({ property }) => {
   return (
     <section className="mb-8" aria-labelledby="reviews-heading">
       <div className="flex items-center gap-3 mb-4">
-        <h2 id="reviews-heading" className="text-xl font-semibold text-gray-900 dark:text-white">Guest Reviews</h2>
+        <h2 id="reviews-heading" className="text-xl font-semibold text-gray-900 dark:text-white">{t('reviews.title')}</h2>
         {reviewsCount > 0 && (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#38BDF8]/10 text-[#38BDF8] text-sm font-semibold">
             <Star filled />
@@ -72,7 +74,7 @@ const ReviewsSection = ({ property }) => {
       </div>
 
       {loading ? (
-        <p className="text-sm text-gray-400">Loading reviews...</p>
+        <p className="text-sm text-gray-400">{t('reviews.loading')}</p>
       ) : reviews.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2">
           {reviews.map((review, idx) => (
@@ -97,7 +99,7 @@ const ReviewsSection = ({ property }) => {
                   </div>
                 </div>
                 <span className="text-xs text-gray-400 shrink-0">
-                  {new Date(review.created_at).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
+                  {new Date(review.created_at).toLocaleDateString(i18n.language || 'en-GB', { month: 'short', year: 'numeric' })}
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">"{review.comment}"</p>
@@ -105,12 +107,12 @@ const ReviewsSection = ({ property }) => {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-gray-400">No reviews yet. Be the first to review this property!</p>
+        <p className="text-sm text-gray-400">{t('reviews.noReviews')}</p>
       )}
 
       <div className="mt-6 rounded-2xl bg-white dark:bg-[#1E293B] border border-gray-100 dark:border-gray-800 p-5">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Write a Review</h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Your review helps other travelers. It will be published after approval.</p>
+        <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{t('reviews.writeReview')}</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">{t('reviews.helpText')}</p>
 
         {feedback && (
           <p className={`mb-3 p-3 rounded-xl border text-sm ${
@@ -127,17 +129,17 @@ const ReviewsSection = ({ property }) => {
             type="text"
             value={form.guest_name}
             onChange={(e) => setForm({ ...form, guest_name: e.target.value })}
-            placeholder="Your Name"
+            placeholder={t('reviews.yourName')}
             required
             className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]"
           />
           <div className="flex items-center gap-1">
-            <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">Rating:</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">{t('reviews.rating')}:</span>
             {[1, 2, 3, 4, 5].map((n) => (
               <button
                 key={n}
                 type="button"
-                aria-label={`${n} star${n > 1 ? 's' : ''}`}
+                aria-label={t('reviews.starCount', { count: n })}
                 aria-pressed={form.rating === n}
                 onClick={() => setForm({ ...form, rating: n })}
                 className="transition-transform hover:scale-110"
@@ -149,7 +151,7 @@ const ReviewsSection = ({ property }) => {
           <textarea
             value={form.comment}
             onChange={(e) => setForm({ ...form, comment: e.target.value })}
-            placeholder="Share your experience..."
+            placeholder={t('reviews.shareExperience')}
             rows={3}
             required
             className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8] resize-none"
@@ -159,7 +161,7 @@ const ReviewsSection = ({ property }) => {
             disabled={submitting}
             className="px-6 py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {submitting ? 'Submitting...' : 'Submit Review'}
+            {submitting ? t('reviews.submitting') : t('reviews.submit')}
           </button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+import { useTranslation } from 'react-i18next';
 
 const MonthCalendar = ({
   month,
@@ -8,6 +8,8 @@ const MonthCalendar = ({
   selectable = true,
   disablePast = false,
 }) => {
+  const { t } = useTranslation();
+  const WEEKDAYS = t('monthCal.days', { returnObjects: true });
   const year = month.getFullYear();
   const m = month.getMonth();
   const daysInMonth = new Date(year, m + 1, 0).getDate();

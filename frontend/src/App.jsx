@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PublicLayout from './components/layout/PublicLayout';
 import AdminLayout from './components/layout/AdminLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -26,14 +27,17 @@ const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
 const ActivityLogs = lazy(() => import('./pages/admin/ActivityLogs'));
 const CalendarManagement = lazy(() => import('./pages/admin/CalendarManagement'));
 
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-sand-50 dark:bg-ink-950">
-    <div className="flex flex-col items-center gap-3">
-      <div className="w-10 h-10 border-4 border-ocean-500 border-t-transparent rounded-full animate-spin" />
-      <p className="text-sm text-ink-400 dark:text-ink-300">Loading...</p>
+const PageLoader = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-sand-50 dark:bg-ink-950">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-10 h-10 border-4 border-ocean-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-ink-400 dark:text-ink-300">{t('app.loading')}</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function App() {
   return (

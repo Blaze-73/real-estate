@@ -2,29 +2,35 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { logoutUser } from '../../store/slices/authSlice';
 import ThemeToggle from '../common/ThemeToggle';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 
-const Brand = () => (
-  <Link to="/" className="flex items-center gap-3" aria-label="Asilah Estates — home">
-    <span className="relative grid h-10 w-10 place-items-center rounded-xl bg-ink-950 dark:bg-white/95 shadow-lg shadow-ink-950/30">
-      <svg className="h-5 w-5 text-white dark:text-ink-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M2 12l3-3m0 0l7-7 7 7m-14 0v10a1 1 0 001 1h4m8-11l2 2m-2-2v10a1 1 0 01-1 1h-6m-4 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1" />
-      </svg>
-      <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-ocean-400 ring-2 ring-ink-950 dark:ring-white/95" />
-    </span>
-    <span className="leading-tight">
-      <span className="block font-display text-lg font-semibold tracking-tight text-white">
-        Asilah
+const Brand = () => {
+  const { t } = useTranslation();
+  return (
+    <Link to="/" className="flex items-center gap-3" aria-label={t('nav.brandAria')}>
+      <span className="relative grid h-10 w-10 place-items-center rounded-xl bg-ink-950 dark:bg-white/95 shadow-lg shadow-ink-950/30">
+        <svg className="h-5 w-5 text-white dark:text-ink-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M2 12l3-3m0 0l7-7 7 7m-14 0v10a1 1 0 001 1h4m8-11l2 2m-2-2v10a1 1 0 01-1 1h-6m-4 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1" />
+        </svg>
+        <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-ocean-400 ring-2 ring-ink-950 dark:ring-white/95" />
       </span>
-      <span className="block text-[10px] font-semibold uppercase tracking-[0.3em] text-ocean-300">
-        Estates
+      <span className="leading-tight">
+        <span className="block font-display text-lg font-semibold tracking-tight text-white">
+          Asilah
+        </span>
+        <span className="block text-[10px] font-semibold uppercase tracking-[0.3em] text-ocean-300">
+          Estates
+        </span>
       </span>
-    </span>
-  </Link>
-);
+    </Link>
+  );
+};
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { token } = useSelector((state) => state.auth);
@@ -45,10 +51,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/properties', label: 'Properties' },
-    { to: '/about', label: 'About' },
-    { to: '/contact', label: 'Contact' },
+    { to: '/', label: t('nav.home') },
+    { to: '/properties', label: t('nav.properties') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/contact', label: t('nav.contact') },
   ];
 
   const isActive = (to) => (to === '/' ? location.pathname === '/' : location.pathname.startsWith(to));
@@ -69,7 +75,7 @@ const Navbar = () => {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-ocean-500 focus:px-4 focus:py-2 focus:text-sm focus:text-white"
       >
-        Skip to content
+        {t('nav.skipToContent')}
       </a>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-3.5 md:py-4">
@@ -93,6 +99,7 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
             <ThemeToggle />
             {token ? (
               <div className="flex items-center gap-3">
@@ -100,13 +107,13 @@ const Navbar = () => {
                   to="/admin"
                   className="rounded-xl bg-ocean-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
                 >
-                  Dashboard
+                  {t('nav.dashboard')}
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="rounded-xl border border-white/20 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
                 >
-                  Logout
+                  {t('nav.logout')}
                 </button>
               </div>
             ) : (
@@ -114,7 +121,7 @@ const Navbar = () => {
                 to="/login"
                 className="rounded-xl bg-ocean-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
               >
-                Login
+                {t('nav.login')}
               </Link>
             )}
           </div>
@@ -123,7 +130,7 @@ const Navbar = () => {
             type="button"
             onClick={() => setMenuOpen((prev) => !prev)}
             className="relative z-50 grid h-11 w-11 place-items-center rounded-xl border border-white/15 bg-white/10 backdrop-blur-md text-white md:hidden"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
             aria-expanded={menuOpen}
           >
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round">
@@ -166,6 +173,7 @@ const Navbar = () => {
                 </Link>
               ))}
               <div className="flex items-center gap-3 pt-4 mt-4 border-t border-white/10">
+                <LanguageSwitcher />
                 <ThemeToggle />
                 {token ? (
                   <>
@@ -174,7 +182,7 @@ const Navbar = () => {
                       onClick={() => setMenuOpen(false)}
                       className="flex-1 rounded-xl bg-ocean-500 px-4 py-3 text-center text-sm font-semibold text-white"
                     >
-                      Dashboard
+                      {t('nav.dashboard')}
                     </Link>
                     <button
                       onClick={() => {
@@ -183,7 +191,7 @@ const Navbar = () => {
                       }}
                       className="flex-1 rounded-xl border border-white/20 px-4 py-3 text-center text-sm text-white"
                     >
-                      Logout
+                      {t('nav.logout')}
                     </button>
                   </>
                 ) : (
@@ -192,7 +200,7 @@ const Navbar = () => {
                     onClick={() => setMenuOpen(false)}
                     className="flex-1 rounded-xl bg-ocean-500 px-4 py-3 text-center text-sm font-semibold text-white"
                   >
-                    Login
+                    {t('nav.login')}
                   </Link>
                 )}
               </div>

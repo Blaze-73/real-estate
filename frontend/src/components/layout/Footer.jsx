@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
   const settings = useSelector((state) => state.settings.settings) || {};
   const {
@@ -28,24 +30,23 @@ const Footer = () => {
               </span>
               <span className="leading-tight">
                 <span className="block font-display text-lg font-semibold tracking-tight text-white">{companyName}</span>
-                <span className="block text-[10px] font-semibold uppercase tracking-[0.3em] text-ocean-300">Coastal &middot; Morocco</span>
+                <span className="block text-[10px] font-semibold uppercase tracking-[0.3em] text-ocean-300">{t('footer.coastal')}</span>
               </span>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-gray-400">
-              Premium rental and sales homes, managed professionally in the beautiful coastal city
-              of Asilah, Morocco.
+              {t('footer.tagline')}
             </p>
-            <p className="mt-4 text-sm font-medium text-ocean-300">Made in Asilah with passion.</p>
+            <p className="mt-4 text-sm font-medium text-ocean-300">{t('footer.madeIn')}</p>
           </div>
 
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">Explore</h3>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">{t('footer.explore')}</h3>
             <ul className="space-y-3">
               {[
-                { to: '/', label: 'Home' },
-                { to: '/properties', label: 'Properties' },
-                { to: '/about', label: 'About Us' },
-                { to: '/contact', label: 'Contact' },
+                { to: '/', label: t('nav.home') },
+                { to: '/properties', label: t('nav.properties') },
+                { to: '/about', label: t('footer.aboutUs') },
+                { to: '/contact', label: t('nav.contact') },
               ].map((link) => (
                 <li key={link.to}>
                   <Link
@@ -61,7 +62,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">Contact</h3>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">{t('footer.contact')}</h3>
             <ul className="space-y-4 text-sm text-gray-400">
               <li className="flex items-start gap-3">
                 <svg className="mt-0.5 h-4 w-4 shrink-0 text-ocean-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -85,7 +86,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">Follow</h3>
+            <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-white mb-5">{t('footer.follow')}</h3>
             <div className="flex gap-3">
               <a href={facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 text-gray-300 ring-1 ring-white/10 transition-all hover:bg-ocean-600 hover:text-white hover:ring-ocean-600">
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -110,10 +111,10 @@ const Footer = () => {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 sm:px-6 md:flex-row lg:px-8">
           <p className="text-sm text-gray-500">
-            &copy; {currentYear} {companyName}. All rights reserved.
+            {t('footer.rights', { year: currentYear, name: companyName })}
           </p>
           <p className="flex items-center gap-1.5 text-sm text-gray-500">
-            Made with <span className="text-terra-400" aria-hidden="true">&hearts;</span> in Asilah, Morocco
+            {t('footer.madeWith')}
           </p>
         </div>
       </div>

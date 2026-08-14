@@ -1,15 +1,17 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import useTheme from '../../hooks/useTheme';
 
 const ThemeToggle = () => {
   const { dark, toggleTheme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
       className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-      aria-label="Toggle theme"
+      aria-label={t('theme.toggle')}
     >
       {dark ? (
         <svg className="w-5 h-5 text-[#F59E0B]" fill="currentColor" viewBox="0 0 20 20">

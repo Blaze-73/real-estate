@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './store/store';
 import { loadUser } from './store/slices/authSlice';
 import App from './App';
+import './i18n';
 import './index.css';
 
 if (localStorage.getItem('token')) {

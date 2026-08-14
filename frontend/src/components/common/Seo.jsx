@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SITE_NAME = 'Asilah Real Estate';
-const DEFAULT_TITLE = `${SITE_NAME} | Properties in Asilah, Morocco`;
-const DEFAULT_DESCRIPTION = 'Handpicked rentals and sales — authentic riads, beachfront apartments and charming medina houses in Asilah, Morocco.';
 const DEFAULT_IMAGE = '/images/asilah-hero.webp';
 
 const upsertMeta = (attr, key) => {
@@ -17,11 +16,14 @@ const upsertMeta = (attr, key) => {
 const absoluteUrl = (origin, url) => (url && url.startsWith('/') ? `${origin}${url}` : url);
 
 const Seo = ({ title, description, image, canonical, noindex = false, jsonLd = null }) => {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const url = canonical || `${origin}${pathname}`;
-  const pageTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
-  const pageDescription = description || DEFAULT_DESCRIPTION;
+  const defaultTitle = t('seo.defaultTitle', `${SITE_NAME} | Properties in Asilah, Morocco`);
+  const defaultDescription = t('seo.defaultDescription', 'Handpicked rentals and sales — authentic riads, beachfront apartments and charming medina houses in Asilah, Morocco.');
+  const pageTitle = title ? `${title} | ${SITE_NAME}` : defaultTitle;
+  const pageDescription = description || defaultDescription;
   const pageImage = absoluteUrl(origin, image || DEFAULT_IMAGE);
 
   useEffect(() => {

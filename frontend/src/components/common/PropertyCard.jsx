@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { fetchWishlist, toggleWishlist } from '../../store/slices/wishlistSlice';
 import formatPrice from '../../utils/formatPrice';
 
@@ -16,6 +17,7 @@ const getFavorites = () => {
 const PropertyCard = ({ property }) => {
   const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover } =
     property || {};
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings.settings) || {};
   const isLoggedIn = useSelector((state) => !!state.auth.token);
@@ -49,7 +51,7 @@ const PropertyCard = ({ property }) => {
   };
 
   const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
-    `Hi, I'm interested in ${title}. Is it available?`
+    t('propertyCard.whatsappIntro', { title })
   )}`;
 
   return (
@@ -74,7 +76,7 @@ const PropertyCard = ({ property }) => {
           <div className="absolute left-3 top-3">
             {type && (
               <span className="rounded-full bg-ink-950/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-sand-100 backdrop-blur-md">
-                {type}
+                {t(`types.${type}`, { defaultValue: type })}
               </span>
             )}
           </div>
@@ -85,14 +87,13 @@ const PropertyCard = ({ property }) => {
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 4h4v4M4 20l16-16M12 8V4m4 4V4" />
                 </svg>
-                Booked {bookingsThisMonth}× this month
-              </span>
+                {t('propertyCard.bookedThisMonth', { count: bookingsThisMonth })}              </span>
             </div>
           )}
 
           <button
             onClick={toggleFavorite}
-            aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
+            aria-label={isFav ? t('propertyCard.removeFromFavorites') : t('propertyCard.addToFavorites')}
             aria-pressed={isFav}
             className={`absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full backdrop-blur-md transition-colors ${
               isFav
@@ -127,7 +128,7 @@ const PropertyCard = ({ property }) => {
               e.stopPropagation();
               window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
             }}
-            aria-label={`Ask about ${title} on WhatsApp`}
+            aria-label={t('propertyCard.askOnWhatsApp', { title })}
             className="absolute bottom-3 right-3 grid h-10 w-10 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform duration-300 hover:scale-110"
           >
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -138,7 +139,7 @@ const PropertyCard = ({ property }) => {
 
         <div className="flex flex-1 flex-col p-5">
           <h3 className="line-clamp-1 font-display text-lg font-semibold tracking-tight text-ink-900 dark:text-sand-50">
-            {title || 'Property'}
+            {title || t('propertyCard.property')}
           </h3>
 
           {reviewsCount > 0 && (
@@ -148,7 +149,7 @@ const PropertyCard = ({ property }) => {
               </svg>
               <span className="font-semibold text-ink-900 dark:text-sand-50">{ratingScore.toFixed(1)}</span>
               <span className="text-ink-400 dark:text-ink-400">·</span>
-              <span>{reviewsCount} review{reviewsCount > 1 ? 's' : ''}</span>
+              <span>{t('propertyCard.review', { count: reviewsCount })}</span>
             </p>
           )}
 
@@ -166,7 +167,7 @@ const PropertyCard = ({ property }) => {
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Free cancellation
+              {t('propertyCard.freeCancellation')}
             </p>
           )}
 
@@ -192,7 +193,7 @@ const PropertyCard = ({ property }) => {
               </span>
             </div>
             <span className="flex items-center gap-1 text-sm font-semibold text-ocean-600 transition-all duration-300 group-hover:translate-x-0.5 dark:text-ocean-300" aria-hidden="true">
-              Details
+              {t('propertyCard.details')}
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14m-6-6 6 6-6 6" />
               </svg>

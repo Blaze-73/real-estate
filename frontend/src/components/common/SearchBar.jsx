@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const fieldClass =
   'w-full rounded-xl border border-ink-100 bg-sand-50 px-3.5 py-3 text-sm text-ink-900 placeholder-ink-400 outline-none transition-colors focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/25 dark:border-ink-700 dark:bg-ink-800 dark:text-sand-50 dark:placeholder-ink-300';
 
 const SearchBar = ({ onSearch, className = '' }) => {
+  const { t } = useTranslation();
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -27,40 +29,40 @@ const SearchBar = ({ onSearch, className = '' }) => {
       noValidate
     >
       <div className="grid grid-cols-2 gap-2.5 md:grid-cols-5 lg:gap-3">
-        <select name="type" defaultValue="" aria-label="Property type" className={fieldClass}>
-          <option value="" disabled>Property type</option>
-          <option value="apartment">Apartment</option>
-          <option value="villa">Villa</option>
-          <option value="house">House</option>
-          <option value="studio">Studio</option>
-          <option value="office">Office</option>
+        <select name="type" defaultValue="" aria-label={t('search.propertyType')} className={fieldClass}>
+          <option value="" disabled>{t('search.propertyType')}</option>
+          <option value="apartment">{t('types.apartment')}</option>
+          <option value="villa">{t('types.villa')}</option>
+          <option value="house">{t('types.house')}</option>
+          <option value="studio">{t('types.studio')}</option>
+          <option value="office">{t('types.office')}</option>
         </select>
         <input
           type="number"
           name="min_price"
           min="0"
-          placeholder="Min price"
-          aria-label="Minimum price"
+          placeholder={t('search.minPrice')}
+          aria-label={t('search.minPrice')}
           className={fieldClass}
         />
         <input
           type="number"
           name="max_price"
           min="0"
-          placeholder="Max price"
-          aria-label="Maximum price"
+          placeholder={t('search.maxPrice')}
+          aria-label={t('search.maxPrice')}
           className={fieldClass}
         />
-        <select name="bedrooms" defaultValue="" aria-label="Number of bedrooms" className={fieldClass}>
-          <option value="" disabled>Bedrooms</option>
+        <select name="bedrooms" defaultValue="" aria-label={t('search.bedrooms')} className={fieldClass}>
+          <option value="" disabled>{t('search.bedrooms')}</option>
           {[1, 2, 3, 4, 5].map((n) => (
-            <option key={n} value={n}>{n}+ beds</option>
+            <option key={n} value={n}>{t('search.beds', { count: n })}</option>
           ))}
         </select>
-        <select name="bathrooms" defaultValue="" aria-label="Number of bathrooms" className={fieldClass}>
-          <option value="" disabled>Bathrooms</option>
+        <select name="bathrooms" defaultValue="" aria-label={t('search.bathrooms')} className={fieldClass}>
+          <option value="" disabled>{t('search.bathrooms')}</option>
           {[1, 2, 3, 4].map((n) => (
-            <option key={n} value={n}>{n}+ baths</option>
+            <option key={n} value={n}>{t('search.baths', { count: n })}</option>
           ))}
         </select>
       </div>
@@ -73,7 +75,7 @@ const SearchBar = ({ onSearch, className = '' }) => {
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
         </svg>
-        Search properties
+        {t('search.searchProperties')}
       </motion.button>
     </motion.form>
   );

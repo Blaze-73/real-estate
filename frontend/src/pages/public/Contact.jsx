@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import contactService from '../../services/contactService';
 import MapComponent from '../../components/common/MapComponent';
+import Seo from '../../components/common/Seo';
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -26,6 +27,11 @@ const Contact = () => {
 
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+      <Seo
+        title="Contact Us"
+        description="Contact Asilah Real Estate in Asilah, Morocco. Call, email or message us on WhatsApp for help finding your perfect property."
+        canonical="/contact"
+      />
       <section className="relative py-20 bg-gradient-to-r from-[#0F172A] to-[#1E293B] overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #38BDF8 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

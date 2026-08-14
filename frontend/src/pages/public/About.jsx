@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import AnimatedCounter from '../../components/common/AnimatedCounter';
+import Seo from '../../components/common/Seo';
 
 const teamMembers = [
   { name: 'Ahmed El Amrani', role: 'Founder & CEO', bio: '15+ years of experience in Moroccan real estate market' },
@@ -14,6 +15,11 @@ const About = () => {
 
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900">
+      <Seo
+        title="About Us"
+        description="Asilah Real Estate — a trusted agency in Asilah, Morocco since 2015. Your partner for buying, selling and renting properties on the Atlantic coast."
+        canonical="/about"
+      />
       <section className="relative py-20 bg-gradient-to-r from-[#0F172A] to-[#1E293B] overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #38BDF8 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

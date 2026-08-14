@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import PropertyCard from '../../components/common/PropertyCard';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
+import Seo from '../../components/common/Seo';
 
 const SORT_OPTIONS = [
   { value: '-createdAt', label: 'Newest' },
@@ -113,6 +114,11 @@ const Properties = () => {
 
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+      <Seo
+        title="Properties for Rent & Sale in Asilah, Morocco"
+        description="Browse apartments, villas, riads and medina houses for rent and sale in Asilah, Morocco. Filter by type, price, bedrooms and surface."
+        canonical="/properties"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Properties in Asilah</h1>

@@ -1,0 +1,9 @@
+# robots.txt for the Asilah Real Estate SPA build.
+# The authoritative, dynamically generated versions are served by Laravel:
+#   /robots.txt  and  /sitemap.xml
+# If this SPA is hosted at the domain root with Laravel behind /api, proxy
+# /robots.txt and /sitemap.xml to the Laravel backend (one location block).
+
+User-agent: *
+Disallow: /admin
+Disallow: /login

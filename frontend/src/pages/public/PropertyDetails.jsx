@@ -9,6 +9,68 @@ import ImageGallery from '../../components/common/ImageGallery';
 import MapComponent from '../../components/common/MapComponent';
 import BookingWidget, { BookingErrorBoundary } from '../../components/public/BookingWidget';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
+import Seo from '../../components/common/Seo';
+
+const SCHEMA_TYPES = {
+  villa: 'SingleFamilyResidence',
+  house: 'House',
+  apartment: 'Apartment',
+  studio: 'Apartment',
+  commercial: 'Office',
+};
+
+const buildJsonLd = (property, url) => {
+  const image = property.cover;
+  const price = property.nightly_price ?? property.monthly_price ?? property.price;
+  const city = property.city || 'Asilah';
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: property.title,
+    description: property.description?.slice(0, 160) || `${property.title} in ${city}, Morocco`,
+    url,
+    datePosted: property.created_at ? String(property.created_at).slice(0, 10) : undefined,
+    offers: {
+      '@type': 'Offer',
+      price,
+      priceCurrency: 'MAD',
+      businessFunction: 'https://schema.org/LeaseOut',
+      availability: property.status === 'available' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      url,
+    },
+    itemOffered: {
+      '@type': SCHEMA_TYPES[property.type] || 'Accommodation',
+      name: property.title,
+      numberOfRooms: property.bedrooms,
+      numberOfBathroomsTotal: property.bathrooms,
+      floorSize: property.surface ? { '@type': 'QuantitativeValue', value: property.surface, unitCode: 'MTK' } : undefined,
+      image,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: property.address || undefined,
+        addressLocality: city,
+        addressCountry: 'MA',
+      },
+      geo: property.latitude && property.longitude
+        ? { '@type': 'GeoCoordinates', latitude: Number(property.latitude), longitude: Number(property.longitude) }
+        : undefined,
+      containedInPlace: {
+        '@type': 'Place',
+        name: city,
+        containedInPlace: { '@type': 'Country', name: 'Morocco' },
+      },
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${window.location.origin}/` },
+        { '@type': 'ListItem', position: 2, name: 'Properties', item: `${window.location.origin}/properties` },
+        { '@type': 'ListItem', position: 3, name: property.title, item: url },
+      ],
+    },
+  };
+};
 
 const PropertyDetails = () => {
   const { slug } = useParams();
@@ -22,55 +84,6 @@ const PropertyDetails = () => {
     dispatch(fetchProperty(slug));
     return () => dispatch(clearProperty());
   }, [dispatch, slug]);
-
-  useEffect(() => {
-    if (!property) return;
-
-    const description = (property.description || `${property.title} in ${property.location || 'Asilah, Morocco'}`).slice(0, 160);
-    const previousTitle = document.title;
-    document.title = `${property.title} | Asilah Real Estate`;
-
-    let meta = document.querySelector('meta[name="description"]');
-    const createdMeta = !meta;
-    if (createdMeta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'description');
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', description);
-
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Residence',
-      name: property.title,
-      description,
-      image: property.cover,
-      address: { '@type': 'PostalAddress', addressLocality: property.location || 'Asilah' },
-      numberOfRooms: property.bedrooms,
-      numberOfBathroomsTotal: property.bathrooms,
-      floorSize: property.surface ? { '@type': 'QuantitativeValue', value: property.surface, unitCode: 'MTK' } : undefined,
-      offers: {
-        '@type': 'Offer',
-        price: property.nightly_price ?? property.monthly_price ?? property.price,
-        priceCurrency: 'MAD',
-      },
-    };
-
-    let script = document.getElementById('property-jsonld');
-    if (!script) {
-      script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.id = 'property-jsonld';
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(jsonLd);
-
-    return () => {
-      document.title = previousTitle;
-      script.remove();
-      if (createdMeta) meta.remove();
-    };
-  }, [property]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -123,6 +136,12 @@ const PropertyDetails = () => {
 
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+      <Seo
+        title={property.title}
+        description={property.description?.slice(0, 160) || `${property.title} in ${property.location || 'Asilah, Morocco'}`}
+        image={property.cover}
+        jsonLd={buildJsonLd(property, `${window.location.origin}/properties/${slug}`)}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <Link to="/properties" className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-[#38BDF8] mb-6 transition-colors">

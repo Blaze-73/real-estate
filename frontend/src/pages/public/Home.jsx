@@ -9,6 +9,7 @@ import StatisticsSection from '../../components/common/StatisticsSection';
 import TestimonialCarousel from '../../components/common/TestimonialCarousel';
 import MapComponent from '../../components/common/MapComponent';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
+import Seo from '../../components/common/Seo';
 
 const IMG = {
   hero: '/images/asilah-hero.webp',
@@ -50,6 +51,11 @@ const Home = () => {
 
   return (
     <div className="font-sans text-ink-900 dark:text-sand-50">
+      <Seo
+        title="Riads & Beachfront Rentals in Asilah, Morocco"
+        description="Discover handpicked riads, beachfront apartments and medina houses in Asilah, Morocco. Book seasonal rentals, view prices and contact us on WhatsApp."
+        canonical="/"
+      />
       {/* ============ HERO ============ */}
       <header className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink-950">
         <div className="absolute inset-0">

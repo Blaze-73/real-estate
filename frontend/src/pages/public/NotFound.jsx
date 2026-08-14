@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Seo from '../../components/common/Seo';
 
 const NotFound = () => {
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen flex items-center justify-center">
+      <Seo title="Page Not Found" noindex />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

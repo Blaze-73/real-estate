@@ -32,7 +32,7 @@ Get-CimInstance Win32_Process -Filter "Name='php.exe'" -ErrorAction SilentlyCont
 
 Write-Step "starting server on :$Port (workdir: $WorkDir)..."
 $proc = Start-Process -FilePath 'php' -ArgumentList @('artisan', 'serve', "--port=$Port") `
-    -WorkingDirectory $WorkDir -PassThru `
+    -WorkingDirectory $WorkDir -PassThru -WindowStyle Hidden `
     -RedirectStandardOutput $outLog -RedirectStandardError $errLog
 
 try {

@@ -301,3 +301,24 @@ Asilah is a **seasonal destination** — your UX and content should lean into it
 - Booking.com: persuasion/CRO teardowns (OnlineMetrics), experimentation culture & 1,000 tests/day (Digital Codex / Clarig), scarcity behavioral design (Octalysis Group), CMA 2019 + GVH 2020 regulatory outcomes (mtak.hu study), Irrational Labs test results.
 - Morocco: FNPI stat (87% start online) via Claro Digital; Mubawab/Avito market data (AIM Group, company profiles); trilingual i18n + RTL best practices (Claro Digital multilingual guide); WhatsApp-first lead capture & CMI/CMI online payment (Amine.ma, Claro Digital); agency case studies (Socco Immo, R7immo, Investpro).
 - SEO: RealEstateListing schema guidance (seobro.com, schema.org), programmatic property-location SEO (Ansly), AI-search geo layer for listings (MapAtlas), technical SEO for property sites (gogoodjuju.com), rental SEO guide (rentmy.co), FAQ rich-result removal May 2026 (seobro.com).
+
+---
+
+## 10. Deployment & Google Search Console checklist
+
+Prerendering is wired into the frontend build (`npm run build` = `vite build && node scripts/prerender-seo.mjs`). It generates static HTML + JSON-LD for `/`, `/properties`, `/about`, `/contact` and every property page, so crawlers and users both get real content. To make it work in production:
+
+- [ ] Set `APP_URL` (Laravel) to the production domain — drives the dynamic `sitemap.xml` / `robots.txt` routes.
+- [ ] Set `VITE_SITE_URL` (frontend) to the production domain — drives canonical URLs in the prerendered HTML.
+- [ ] Re-run `npm run build` after deploy so the prerendered pages + sitemap reflect current listings.
+- [ ] Static hosting must support clean URLs (e.g. nginx `try_files $uri $uri/ /index.html;`) so `/properties/{slug}` serves the prerendered `properties/{slug}/index.html`.
+- [ ] If the SPA is served at the root with Laravel behind `/api`, proxy `/sitemap.xml` and `/robots.txt` to Laravel (one `location` block), or generate them at build time.
+- [ ] Set the canonical `VITE_SITE_URL` before first crawler hit; changing it later splits authority.
+
+Then get indexed:
+1. **Verify the property in Google Search Console** (Domain property → DNS TXT). Also add Bing Webmaster Tools.
+2. **Submit `sitemap.xml`** in GSC Sitemaps; confirm "Success".
+3. Use the **URL Inspection** tool to request indexing for the homepage and top listings.
+4. Check the **Rich Results Test** on one property page — expect `RealEstateListing` to be detected and error-free.
+5. Create the **Google Business Profile** for the agency (name, address, +212 phone, hours, photos) and link it to the site.
+6. After 2–4 weeks, review **Search Console → Performance** for "location + type" queries (e.g. "Asilah riad") and add the neighborhood/type pages (see §6.3) based on what's getting impressions.

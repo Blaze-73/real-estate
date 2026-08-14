@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyImageController;
 use App\Http\Controllers\Api\RentalController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\TestimonialController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,9 @@ Route::prefix('v1')->group(function () {
     Route::get('public/settings', [SettingController::class, 'index']);
     Route::get('public/testimonials', [TestimonialController::class, 'index'])
         ->defaults('active_only', true);
+    Route::get('public/properties/{property:slug}/reviews', [ReviewController::class, 'byProperty']);
+    Route::post('public/properties/{property:slug}/reviews', [ReviewController::class, 'store'])
+        ->middleware('throttle:5,1');
     Route::post('public/contact', [ContactController::class, 'store']);
 
     Route::middleware(['auth:sanctum', 'role:admin,manager,agent'])->group(function () {
@@ -76,6 +80,10 @@ Route::prefix('v1')->group(function () {
         Route::put('contacts/{contact}/read', [ContactController::class, 'markAsRead']);
 
         Route::apiResource('testimonials', TestimonialController::class);
+
+        Route::get('reviews', [ReviewController::class, 'index']);
+        Route::put('reviews/{review}/approve', [ReviewController::class, 'approve']);
+        Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
 
         Route::get('dashboard/stats', [DashboardController::class, 'stats']);
         Route::get('dashboard/revenue', [DashboardController::class, 'revenueChart']);

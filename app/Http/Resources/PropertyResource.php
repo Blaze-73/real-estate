@@ -34,6 +34,13 @@ class PropertyResource extends JsonResource
             'featured' => $this->featured,
             'primary_image' => PropertyImageResource::resolveUrl($this->primaryImage?->image_path),
             'cover' => PropertyImageResource::resolveUrl($this->primaryImage?->image_path),
+            'cancellation_policy' => $this->cancellation_policy,
+            'reviews_count' => $this->reviews()->approved()->count(),
+            'rating_score' => round((float) ($this->reviews()->approved()->avg('rating') ?? 0), 1),
+            'bookings_this_month' => $this->reservations()
+                ->where('status', 'approved')
+                ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
+                ->count(),
             'user' => new UserResource($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

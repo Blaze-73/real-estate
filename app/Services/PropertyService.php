@@ -23,7 +23,7 @@ class PropertyService
 
     public function show(Property $property): Property
     {
-        return $property->load(['images', 'user']);
+        return $property->load(['images', 'user', 'approvedReviews']);
     }
 
     public function create(array $data): Property

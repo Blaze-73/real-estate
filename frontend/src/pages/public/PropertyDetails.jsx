@@ -8,6 +8,7 @@ import formatPrice from '../../utils/formatPrice';
 import ImageGallery from '../../components/common/ImageGallery';
 import MapComponent from '../../components/common/MapComponent';
 import BookingWidget, { BookingErrorBoundary } from '../../components/public/BookingWidget';
+import ReviewsSection from '../../components/public/ReviewsSection';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 
@@ -221,6 +222,20 @@ const PropertyDetails = () => {
                   </div>
                 </div>
               )}
+
+              {property.cancellation_policy && (
+                <div className="mb-8 flex items-start gap-3 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
+                  <svg className="w-5 h-5 text-green-600 dark:text-green-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="text-sm font-semibold text-green-700 dark:text-green-400">{property.cancellation_policy}</p>
+                    <p className="text-xs text-green-600/70 dark:text-green-500/70 mt-0.5">Flexible cancellation for peace of mind.</p>
+                  </div>
+                </div>
+              )}
+
+              <ReviewsSection property={property} />
             </motion.div>
           </div>
 

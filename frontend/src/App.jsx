@@ -19,6 +19,7 @@ const ReservationsManagement = lazy(() => import('./pages/admin/ReservationsMana
 const RentalsManagement = lazy(() => import('./pages/admin/RentalsManagement'));
 const PaymentsManagement = lazy(() => import('./pages/admin/PaymentsManagement'));
 const TestimonialsManagement = lazy(() => import('./pages/admin/TestimonialsManagement'));
+const ReviewsManagement = lazy(() => import('./pages/admin/ReviewsManagement'));
 const MessagesManagement = lazy(() => import('./pages/admin/MessagesManagement'));
 const NotificationsPage = lazy(() => import('./pages/admin/NotificationsPage'));
 const SettingsPage = lazy(() => import('./pages/admin/SettingsPage'));
@@ -58,6 +59,7 @@ function App() {
             <Route path="rentals" element={<RentalsManagement />} />
             <Route path="payments" element={<PaymentsManagement />} />
             <Route path="testimonials" element={<TestimonialsManagement />} />
+            <Route path="reviews" element={<ReviewsManagement />} />
             <Route path="messages" element={<MessagesManagement />} />
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="settings" element={<SettingsPage />} />

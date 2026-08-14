@@ -14,7 +14,7 @@ const PropertiesManagement = () => {
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
     status: 'available', description: '', features: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
-    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '',
+    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
   });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [existingImages, setExistingImages] = useState([]);
@@ -27,7 +27,7 @@ const PropertiesManagement = () => {
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
     status: 'available', description: '', features: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
-    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '',
+    high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
   });
 
   useEffect(() => { dispatch(fetchProperties()); }, [dispatch]);
@@ -78,6 +78,7 @@ const PropertiesManagement = () => {
       high_season_to: property.high_season?.to || '',
       high_season_price: property.high_season?.price ?? '',
       ical_url: property.ical_url || '',
+      cancellation_policy: property.cancellation_policy || '',
     });
     setModalOpen(true);
     setExistingImages([]);
@@ -107,6 +108,7 @@ const PropertiesManagement = () => {
       high_season_to: form.high_season_to || null,
       high_season_price: num(form.high_season_price),
       ical_url: form.ical_url || null,
+      cancellation_policy: form.cancellation_policy || null,
     };
     setSubmitting(true);
     try {
@@ -261,6 +263,16 @@ const PropertiesManagement = () => {
                 </div>
 
                 <input type="url" name="ical_url" value={form.ical_url} onChange={handleChange} placeholder="iCal URL (Airbnb / Booking.com sync)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+
+                <div>
+                  <label className="text-xs text-gray-500 dark:text-gray-400">Cancellation Policy</label>
+                  <select name="cancellation_policy" value={form.cancellation_policy} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8] mt-1">
+                    <option value="">No free cancellation</option>
+                    <option value="Free cancellation until 7 days before check-in">Free cancellation until 7 days before check-in</option>
+                    <option value="Free cancellation until 48 hours before check-in">Free cancellation until 48 hours before check-in</option>
+                    <option value="Free cancellation for 24 hours after booking">Free cancellation for 24 hours after booking</option>
+                  </select>
+                </div>
 
                 <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Images</p>

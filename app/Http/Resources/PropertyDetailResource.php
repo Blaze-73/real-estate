@@ -36,6 +36,14 @@ class PropertyDetailResource extends JsonResource
             'longitude' => $this->longitude,
             'status' => $this->status,
             'featured' => $this->featured,
+            'cancellation_policy' => $this->cancellation_policy,
+            'reviews_count' => $this->reviews()->approved()->count(),
+            'rating_score' => round((float) ($this->reviews()->approved()->avg('rating') ?? 0), 1),
+            'bookings_this_month' => $this->reservations()
+                ->where('status', 'approved')
+                ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
+                ->count(),
+            'reviews' => ReviewResource::collection($this->whenLoaded('approvedReviews')),
             'cover' => PropertyImageResource::resolveUrl($this->images->firstWhere('is_primary', true)?->image_path ?? $this->images->first()?->image_path),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),
             'user' => new UserResource($this->whenLoaded('user')),

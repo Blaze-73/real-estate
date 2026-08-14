@@ -26,6 +26,7 @@ class Property extends Model
         'high_season_from',
         'high_season_to',
         'high_season_price',
+        'cancellation_policy',
         'ical_url',
         'surface',
         'bedrooms',
@@ -117,6 +118,16 @@ class Property extends Model
     public function availabilityBlocks()
     {
         return $this->hasMany(PropertyAvailability::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function approvedReviews()
+    {
+        return $this->hasMany(Review::class)->approved();
     }
 
     public function rentals()

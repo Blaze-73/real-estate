@@ -13,7 +13,8 @@
     "contactForPrice": "Contact for Price",
     "perNight": "/night",
     "perMonth": "/month",
-    "any": "Any"
+    "any": "Any",
+    "backHome": "Back to home"
   },
   "nav": {
     "home": "Home",
@@ -217,7 +218,10 @@
     "emailAddress": "Email Address",
     "submitting": "Submitting...",
     "requestBooking": "Request Booking",
-    "bookingFailed": "Booking failed. Please try again."
+    "bookingFailed": "Booking failed. Please try again.",
+    "payDeposit": "Pay deposit online ({{amount}})",
+    "payRedirecting": "Redirecting to secure payment...",
+    "payFailed": "Could not start the payment. Please try again or contact us."
   },
   "reviews": {
     "title": "Guest Reviews",
@@ -315,5 +319,25 @@
   "seo": {
     "defaultTitle": "Asilah Real Estate | Properties in Asilah, Morocco",
     "defaultDescription": "Handpicked rentals and sales — authentic riads, beachfront apartments and charming medina houses in Asilah, Morocco."
+  },
+  "payment": {
+    "title": "Secure Deposit Payment",
+    "description": "Secure online payment for your booking deposit.",
+    "depositFor": "Pay the deposit to confirm your booking",
+    "property": "Property",
+    "bookingReference": "Booking reference",
+    "dates": "Dates",
+    "amountToPay": "Amount to pay",
+    "cardNumber": "Card number",
+    "expiry": "Expiry (MM/YY)",
+    "cvv": "CVV",
+    "sandboxNotice": "Sandbox mode — use any card number. A card ending in 0001 simulates a declined payment.",
+    "payNow": "Pay {{amount}}",
+    "processing": "Processing payment...",
+    "success": "Payment received!",
+    "successDetails": "Your deposit has been received and your booking is now confirmed. We look forward to hosting you!",
+    "viewProperty": "View property",
+    "declined": "Payment was declined. Please try another card.",
+    "invalidLink": "This payment link is invalid or expired."
   }
 }

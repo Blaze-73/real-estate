@@ -11,6 +11,7 @@ const Properties = lazy(() => import('./pages/public/Properties'));
 const PropertyDetails = lazy(() => import('./pages/public/PropertyDetails'));
 const About = lazy(() => import('./pages/public/About'));
 const Contact = lazy(() => import('./pages/public/Contact'));
+const PaymentPage = lazy(() => import('./pages/public/PaymentPage'));
 const NotFound = lazy(() => import('./pages/public/NotFound'));
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
@@ -50,6 +51,7 @@ function App() {
           <Route path="/properties/:slug" element={<PropertyDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/pay/:token" element={<PaymentPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/login" element={<Login />} />

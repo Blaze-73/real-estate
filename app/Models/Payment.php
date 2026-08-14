@@ -17,6 +17,10 @@ class Payment extends Model
         'payment_date',
         'payment_method',
         'status',
+        'gateway',
+        'gateway_reference',
+        'gateway_status',
+        'paid_at',
         'receipt_file',
         'notes',
     ];
@@ -26,6 +30,7 @@ class Payment extends Model
         return [
             'amount' => 'decimal:2',
             'payment_date' => 'date',
+            'paid_at' => 'datetime',
         ];
     }
 

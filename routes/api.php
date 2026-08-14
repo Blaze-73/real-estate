@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyImageController;
+use App\Http\Controllers\Api\PublicPaymentController;
 use App\Http\Controllers\Api\RentalController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ReviewController;
@@ -46,6 +47,10 @@ Route::prefix('v1')->group(function () {
     Route::post('public/properties/{property:slug}/reviews', [ReviewController::class, 'store'])
         ->middleware('throttle:5,1');
     Route::post('public/contact', [ContactController::class, 'store']);
+    Route::post('public/payments/checkout', [PublicPaymentController::class, 'checkout'])
+        ->middleware('throttle:10,1');
+    Route::post('public/payments/preview', [PublicPaymentController::class, 'preview']);
+    Route::post('public/payments/callback', [PublicPaymentController::class, 'callback']);
 
     Route::middleware(['auth:sanctum', 'role:admin,manager,agent'])->group(function () {
         Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);

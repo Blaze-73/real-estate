@@ -13,7 +13,8 @@
     "contactForPrice": "Contactez-nous pour le prix",
     "perNight": "/nuit",
     "perMonth": "/mois",
-    "any": "Tous"
+    "any": "Tous",
+    "backHome": "Retour à l'accueil"
   },
   "nav": {
     "home": "Accueil",
@@ -217,7 +218,10 @@
     "emailAddress": "Adresse email",
     "submitting": "Envoi...",
     "requestBooking": "Demander une réservation",
-    "bookingFailed": "Échec de la réservation. Veuillez réessayer."
+    "bookingFailed": "Échec de la réservation. Veuillez réessayer.",
+    "payDeposit": "Payer l'acompte en ligne ({{amount}})",
+    "payRedirecting": "Redirection vers le paiement sécurisé...",
+    "payFailed": "Impossible de lancer le paiement. Veuillez réessayer ou nous contacter."
   },
   "reviews": {
     "title": "Avis des voyageurs",
@@ -315,5 +319,25 @@
   "seo": {
     "defaultTitle": "Asilah Real Estate | Biens à Asilah, Maroc",
     "defaultDescription": "Locations et ventes sélectionnées — riads authentiques, appartements en bord de mer et charmantes maisons de médina à Asilah, au Maroc."
+  },
+  "payment": {
+    "title": "Paiement sécurisé de l'acompte",
+    "description": "Paiement en ligne sécurisé pour l'acompte de votre réservation.",
+    "depositFor": "Payez l'acompte pour confirmer votre réservation",
+    "property": "Bien",
+    "bookingReference": "Référence de réservation",
+    "dates": "Dates",
+    "amountToPay": "Montant à payer",
+    "cardNumber": "Numéro de carte",
+    "expiry": "Expiration (MM/AA)",
+    "cvv": "CVV",
+    "sandboxNotice": "Mode démonstration — utilisez n'importe quelle carte. Une carte finissant par 0001 simule un paiement refusé.",
+    "payNow": "Payer {{amount}}",
+    "processing": "Traitement du paiement...",
+    "success": "Paiement reçu !",
+    "successDetails": "Votre acompte a été reçu et votre réservation est maintenant confirmée. Au plaisir de vous accueillir !",
+    "viewProperty": "Voir le bien",
+    "declined": "Paiement refusé. Veuillez essayer une autre carte.",
+    "invalidLink": "Ce lien de paiement est invalide ou a expiré."
   }
 }

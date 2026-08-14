@@ -1,6 +1,7 @@
 import { Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import propertyService from '../../services/propertyService';
+import paymentService from '../../services/paymentService';
 import MonthCalendar from '../common/MonthCalendar';
 import formatPrice from '../../utils/formatPrice';
 
@@ -34,6 +35,7 @@ const BookingWidget = ({ property, slug }) => {
   const [quoteState, setQuoteState] = useState({ loading: false, error: '' });
   const [booking, setBooking] = useState({ name: '', email: '', phone: '' });
   const [bookingState, setBookingState] = useState({ sending: false, done: false, error: '', reference: '' });
+  const [payState, setPayState] = useState({ loading: false, error: '' });
   const [calMonth, setCalMonth] = useState(() => new Date());
   const [calendar, setCalendar] = useState({});
   const [calLoading, setCalLoading] = useState(false);
@@ -108,6 +110,16 @@ const BookingWidget = ({ property, slug }) => {
       setBookingState({ sending: false, done: true, reference: result.booking_reference, error: '' });
     } catch (err) {
       setBookingState({ sending: false, done: false, reference: '', error: err.response?.data?.message || t('booking.bookingFailed') });
+    }
+  };
+
+  const handlePayDeposit = async () => {
+    setPayState({ loading: true, error: '' });
+    try {
+      const checkout = await paymentService.checkout(bookingState.reference);
+      window.location.href = checkout.checkout_url;
+    } catch (err) {
+      setPayState({ loading: false, error: err.response?.data?.message || t('booking.payFailed') });
     }
   };
 
@@ -215,6 +227,21 @@ const BookingWidget = ({ property, slug }) => {
                   <p className="font-semibold">{t('booking.bookingReceived')}</p>
                   <p>{t('booking.yourReference', { reference: bookingState.reference })}</p>
                   <p className="text-xs">{t('booking.confirmSoon')}</p>
+                </div>
+              )}
+              {bookingState.done && quote.deposit > 0 && (
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={handlePayDeposit}
+                    disabled={payState.loading}
+                    className="w-full py-2.5 rounded-xl bg-[#0EA5E9] hover:bg-[#0284C7] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {payState.loading ? t('booking.payRedirecting') : t('booking.payDeposit', { amount: formatPrice(quote.deposit, '') })}
+                  </button>
+                  {payState.error && (
+                    <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-xs">{payState.error}</p>
+                  )}
                 </div>
               )}
               {bookingState.error && (

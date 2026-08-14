@@ -42,8 +42,11 @@ class PropertyController extends Controller
     public function show(Property $property): JsonResponse
     {
         $property = $this->propertyService->show($property);
+        $similar = $this->propertyService->similar($property);
 
-        return response()->json(new PropertyDetailResource($property));
+        return (new PropertyDetailResource($property))
+            ->additional(['similar' => PropertyResource::collection($similar)])
+            ->response();
     }
 
     public function store(StorePropertyRequest $request): JsonResponse

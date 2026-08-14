@@ -55,6 +55,7 @@ const propertySlice = createSlice({
   initialState: {
     properties: [],
     property: null,
+    similar: [],
     featured: [],
     loading: false,
     error: null,
@@ -74,7 +75,11 @@ const propertySlice = createSlice({
       })
       .addCase(fetchProperties.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(fetchProperty.pending, (state) => { state.loading = true; state.error = null; })
-      .addCase(fetchProperty.fulfilled, (state, action) => { state.loading = false; state.property = action.payload.property || action.payload.data || action.payload; })
+      .addCase(fetchProperty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.property = action.payload.property || action.payload.data || action.payload;
+        state.similar = action.payload.similar || [];
+      })
       .addCase(fetchProperty.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(fetchFeatured.pending, (state) => { state.loading = true; })
       .addCase(fetchFeatured.fulfilled, (state, action) => { state.loading = false; state.featured = action.payload.properties || action.payload.data || action.payload || []; })

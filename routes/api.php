@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\TestimonialController;
+use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -25,6 +26,10 @@ Route::prefix('v1')->group(function () {
         Route::get('auth/profile', [AuthController::class, 'me']);
         Route::put('auth/profile', [AuthController::class, 'updateProfile']);
         Route::post('auth/logout', [AuthController::class, 'logout']);
+
+        Route::get('wishlist', [WishlistController::class, 'index']);
+        Route::post('wishlist/{property:slug}', [WishlistController::class, 'toggle']);
+        Route::delete('wishlist/{property:slug}', [WishlistController::class, 'destroy']);
     });
 
     Route::get('public/properties/featured', [PropertyController::class, 'featured']);

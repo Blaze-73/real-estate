@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWishlist, toggleWishlist } from '../../store/slices/wishlistSlice';
 import formatPrice from '../../utils/formatPrice';
 
 const getFavorites = () => {
@@ -15,7 +16,11 @@ const getFavorites = () => {
 const PropertyCard = ({ property }) => {
   const { id, title, slug, price, type, bedrooms, bathrooms, surface, location, images, cover } =
     property || {};
+  const dispatch = useDispatch();
   const settings = useSelector((state) => state.settings.settings) || {};
+  const isLoggedIn = useSelector((state) => !!state.auth.token);
+  const wishlistSlugs = useSelector((state) => state.wishlist.slugs);
+  const wishlistLoaded = useSelector((state) => state.wishlist.loaded);
   const whatsapp = settings?.whatsapp_number || '212XXXXXXXXX';
   const ratingScore = property?.rating_score || 0;
   const reviewsCount = property?.reviews_count || 0;
@@ -25,11 +30,19 @@ const PropertyCard = ({ property }) => {
   const coverImage = cover || images?.[0] || 'https://placehold.co/600x400/0B141B/D7C7A9?text=Asilah';
   const [favorites, setFavorites] = useState(getFavorites);
   const key = slug || id;
-  const isFav = favorites.includes(key);
+  const isFav = isLoggedIn ? wishlistSlugs.includes(key) : favorites.includes(key);
+
+  useEffect(() => {
+    if (isLoggedIn && !wishlistLoaded) dispatch(fetchWishlist());
+  }, [isLoggedIn, wishlistLoaded, dispatch]);
 
   const toggleFavorite = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (isLoggedIn) {
+      dispatch(toggleWishlist(key));
+      return;
+    }
     const next = isFav ? favorites.filter((k) => k !== key) : [...favorites, key];
     localStorage.setItem('favorites', JSON.stringify(next));
     setFavorites(next);

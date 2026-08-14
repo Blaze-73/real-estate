@@ -9,6 +9,7 @@ import ImageGallery from '../../components/common/ImageGallery';
 import MapComponent from '../../components/common/MapComponent';
 import BookingWidget, { BookingErrorBoundary } from '../../components/public/BookingWidget';
 import ReviewsSection from '../../components/public/ReviewsSection';
+import PropertyCard from '../../components/common/PropertyCard';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 
@@ -76,7 +77,7 @@ const buildJsonLd = (property, url) => {
 const PropertyDetails = () => {
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const { property, loading, error } = useSelector((state) => state.properties);
+  const { property, loading, error, similar } = useSelector((state) => state.properties);
   const settings = useSelector((state) => state.settings.settings);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState({ sending: false, sent: false, error: '' });
@@ -290,6 +291,35 @@ const PropertyDetails = () => {
             </div>
           </motion.div>
         </div>
+
+        {similar?.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mt-16"
+            aria-label="Similar properties"
+          >
+            <div className="flex items-end justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">You might also like</h2>
+                <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">Similar stays in {property.city || 'Asilah'}</p>
+              </div>
+              <Link to="/properties" className="inline-flex items-center gap-1 text-sm font-semibold text-[#38BDF8] hover:text-[#0EA5E9] transition-colors shrink-0">
+                View all
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {similar.map((item) => (
+                <PropertyCard key={item.id ?? item.slug} property={item} />
+              ))}
+            </div>
+          </motion.section>
+        )}
       </div>
     </div>
   );

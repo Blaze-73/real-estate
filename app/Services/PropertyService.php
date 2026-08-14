@@ -26,6 +26,20 @@ class PropertyService
         return $property->load(['images', 'user', 'approvedReviews']);
     }
 
+    public function similar(Property $property, int $limit = 3): Collection
+    {
+        return Property::available()
+            ->where('id', '!=', $property->id)
+            ->where(function ($query) use ($property) {
+                $query->where('type', $property->type)
+                    ->orWhere('city', $property->city);
+            })
+            ->with('primaryImage')
+            ->orderBy('featured', 'desc')
+            ->limit($limit)
+            ->get();
+    }
+
     public function create(array $data): Property
     {
         $data['slug'] = Property::makeUniqueSlug($data['title']);

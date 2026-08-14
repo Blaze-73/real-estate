@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->hasMany(Property::class);
     }
 
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class);

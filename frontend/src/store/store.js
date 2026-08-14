@@ -6,6 +6,7 @@ import clientReducer from './slices/clientSlice';
 import dashboardReducer from './slices/dashboardSlice';
 import notificationReducer from './slices/notificationSlice';
 import settingReducer from './slices/settingSlice';
+import wishlistReducer from './slices/wishlistSlice';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     dashboard: dashboardReducer,
     notifications: notificationReducer,
     settings: settingReducer,
+    wishlist: wishlistReducer,
   },
 });
 

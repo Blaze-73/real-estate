@@ -101,7 +101,7 @@ class SavedSearchController extends Controller
 
     private function cleanFilters(array $filters): array
     {
-        $allowed = ['search', 'type', 'city', 'min_price', 'max_price', 'min_surface', 'max_surface', 'bedrooms', 'bathrooms', 'featured', 'check_in', 'check_out', 'price_mode', 'nights', 'sort_by', 'sort_order'];
+        $allowed = ['search', 'type', 'city', 'min_price', 'max_price', 'min_surface', 'max_surface', 'bedrooms', 'bathrooms', 'featured', 'amenities', 'check_in', 'check_out', 'price_mode', 'nights', 'sort_by', 'sort_order'];
 
         return array_filter(
             collect($filters)->only($allowed)->all(),

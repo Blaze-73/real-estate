@@ -5,6 +5,11 @@ const contactService = {
     const { data } = await api.post('/public/contact', contactData);
     return data;
   },
+
+  revealPhone: async (slug, contactData) => {
+    const { data } = await api.post(`/public/properties/${slug}/reveal-phone`, contactData);
+    return data;
+  },
 };
 
 export default contactService;

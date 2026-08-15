@@ -13,6 +13,7 @@ import ReviewsSection from '../../components/public/ReviewsSection';
 import PropertyCard from '../../components/common/PropertyCard';
 import { TextSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
+import { amenityIcon, youtubeEmbedUrl } from '../../constants/amenities';
 
 const SCHEMA_TYPES = {
   villa: 'SingleFamilyResidence',
@@ -83,6 +84,9 @@ const PropertyDetails = () => {
   const settings = useSelector((state) => state.settings.settings);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState({ sending: false, sent: false, error: '' });
+  const [reveal, setReveal] = useState({ revealed: false, loading: false, error: '', phone: '', name: '', email: '', visitorPhone: '' });
+  const [viewing, setViewing] = useState({ name: '', email: '', phone: '', date: '', time: '', message: '' });
+  const [viewingStatus, setViewingStatus] = useState({ sending: false, sent: false, error: '' });
 
   useEffect(() => {
     dispatch(fetchProperty(slug));
@@ -90,6 +94,7 @@ const PropertyDetails = () => {
   }, [dispatch, slug]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleViewingChange = (e) => setViewing({ ...viewing, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,6 +109,42 @@ const PropertyDetails = () => {
       setTimeout(() => setStatus((s) => ({ ...s, sent: false })), 5000);
     } catch (err) {
       setStatus({ sending: false, sent: false, error: err.response?.data?.message || 'Failed to send. Please try again.' });
+    }
+  };
+
+  const handleReveal = async (e) => {
+    e.preventDefault();
+    setReveal((r) => ({ ...r, loading: true, error: '' }));
+    try {
+      const data = await contactService.revealPhone(slug, {
+        name: reveal.name,
+        email: reveal.email,
+        phone: reveal.visitorPhone,
+      });
+      setReveal((r) => ({ ...r, revealed: true, loading: false, phone: data.phone }));
+    } catch (err) {
+      setReveal((r) => ({ ...r, loading: false, error: err.response?.data?.message || t('common.error') }));
+    }
+  };
+
+  const handleViewing = async (e) => {
+    e.preventDefault();
+    setViewingStatus({ sending: true, sent: false, error: '' });
+    try {
+      const when = [viewing.date, viewing.time].filter(Boolean).join(' Ã‚Â· ');
+      const message = viewing.message || t('propertyDetails.viewingDefaultMessage', { when: when || t('common.asap') });
+      await contactService.send({
+        name: viewing.name,
+        email: viewing.email,
+        phone: viewing.phone,
+        subject: t('propertyDetails.viewingSubject', { title: property?.title || 'property' }),
+        message: `${message}\n${t('propertyDetails.preferredTimeLabel', { when: when || t('common.asap') })}`,
+      });
+      setViewingStatus({ sending: false, sent: true, error: '' });
+      setViewing({ name: '', email: '', phone: '', date: '', time: '', message: '' });
+      setTimeout(() => setViewingStatus((s) => ({ ...s, sent: false })), 5000);
+    } catch (err) {
+      setViewingStatus({ sending: false, sent: false, error: err.response?.data?.message || t('common.error') });
     }
   };
 
@@ -190,7 +231,7 @@ const PropertyDetails = () => {
                 {[
                   { label: t('propertyDetails.bedrooms'), value: property.bedrooms || 0, icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
                   { label: t('propertyDetails.bathrooms'), value: property.bathrooms || 0, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-                  { label: t('propertyDetails.surface'), value: `${property.surface || 0} m²`, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5' },
+                  { label: t('propertyDetails.surface'), value: `${property.surface || 0} mÃ‚Â²`, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5' },
                   { label: t('propertyDetails.status'), value: property.status === 'available' ? t('propertyDetails.available') : property.status, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
                 ].map((item, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-100 dark:border-gray-800 text-center">
@@ -226,6 +267,38 @@ const PropertyDetails = () => {
                 </div>
               )}
 
+              {property.amenities?.length > 0 && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{t('propertyDetails.amenities')}</h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                    {property.amenities.map((key) => (
+                      <div key={key} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-100 dark:border-gray-800 px-3 py-2">
+                        <svg className="w-4 h-4 text-[#38BDF8] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={amenityIcon(key)} />
+                        </svg>
+                        {t(`amenities.${key}`, { defaultValue: key })}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {property.video_url && youtubeEmbedUrl(property.video_url) && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{t('propertyDetails.videoTour')}</h2>
+                  <div className="aspect-video rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 bg-ink-950">
+                    <iframe
+                      src={youtubeEmbedUrl(property.video_url)}
+                      title={t('propertyDetails.videoTour')}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
+
               {property.cancellation_policy && (
                 <div className="mb-8 flex items-start gap-3 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                   <svg className="w-5 h-5 text-green-600 dark:text-green-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -249,6 +322,90 @@ const PropertyDetails = () => {
                   <BookingWidget property={property} slug={slug} />
                 </BookingErrorBoundary>
               )}
+
+              <div className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-[#38BDF8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.3a1 1 0 01-.5 1.23l-1.55.78a11.03 11.03 0 006.25 6.25l.78-1.55a1 1 0 011.23-.5l3.3 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+                  </svg>
+                  {t('propertyDetails.callOwner')}
+                </h3>
+                {reveal.revealed ? (
+                  <div className="space-y-3">
+                    <p className="flex items-center justify-between gap-2 p-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                      <span dir="ltr" className="font-semibold text-gray-900 dark:text-white">{reveal.phone}</span>
+                      <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </p>
+                    <a
+                      href={`tel:${reveal.phone}`}
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.3a1 1 0 01-.5 1.23l-1.55.78a11.03 11.03 0 006.25 6.25l.78-1.55a1 1 0 011.23-.5l3.3 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
+                      </svg>
+                      {t('propertyDetails.callNow')}
+                    </a>
+                    <a
+                      href={`https://wa.me/${reveal.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(t('propertyDetails.whatsappIntro', { title: property.title }))}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1DA851] text-white font-semibold transition-colors text-sm"
+                    >
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
+                      {t('propertyDetails.whatsapp')}
+                    </a>
+                  </div>
+                ) : (
+                  <form onSubmit={handleReveal} className="space-y-3">
+                    {reveal.error && (
+                      <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">{reveal.error}</p>
+                    )}
+                    <input type="text" name="name" value={reveal.name} onChange={(e) => setReveal((r) => ({ ...r, name: e.target.value }))} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" required />
+                    <input type="email" name="email" value={reveal.email} onChange={(e) => setReveal((r) => ({ ...r, email: e.target.value }))} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" required />
+                    <input type="tel" name="visitorPhone" value={reveal.visitorPhone} onChange={(e) => setReveal((r) => ({ ...r, visitorPhone: e.target.value }))} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <p className="text-xs text-gray-400 dark:text-gray-500">{t('propertyDetails.revealNotice')}</p>
+                    <button type="submit" disabled={reveal.loading} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                      {reveal.loading ? t('common.sending') : t('propertyDetails.showNumber')}
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              <div className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-[#38BDF8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {t('propertyDetails.scheduleViewing')}
+                </h3>
+                <form onSubmit={handleViewing} className="space-y-3">
+                  {viewingStatus.sent && (
+                    <p className="p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 text-sm">
+                      {t('common.messageSent')}
+                    </p>
+                  )}
+                  {viewingStatus.error && (
+                    <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">
+                      {viewingStatus.error}
+                    </p>
+                  )}
+                  <input type="text" name="name" value={viewing.name} onChange={handleViewingChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" required />
+                  <input type="email" name="email" value={viewing.email} onChange={handleViewingChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" required />
+                  <input type="tel" name="phone" value={viewing.phone} onChange={handleViewingChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="date" name="date" value={viewing.date} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                    <input type="time" name="time" value={viewing.time} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+                  </div>
+                  <textarea name="message" value={viewing.message} onChange={handleViewingChange} placeholder={t('propertyDetails.viewingMessagePlaceholder')} rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8] resize-none" />
+                  <button type="submit" disabled={viewingStatus.sending} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    {viewingStatus.sending ? t('common.sending') : t('propertyDetails.requestViewing')}
+                  </button>
+                </form>
+              </div>
 
               <div className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{property.nightly_price || property.monthly_price ? t('propertyDetails.questions') : t('propertyDetails.contactOwner')}</h3>
@@ -328,3 +485,4 @@ const PropertyDetails = () => {
 };
 
 export default PropertyDetails;
+

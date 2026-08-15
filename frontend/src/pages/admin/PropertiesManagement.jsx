@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fetchProperties, createProperty, updateProperty, deleteProperty } from '../../store/slices/propertySlice';
 import propertyService from '../../services/propertyService';
 import { TableSkeleton } from '../../components/common/LoadingSkeleton';
+import { AMENITIES } from '../../constants/amenities';
 
 const PropertiesManagement = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const PropertiesManagement = () => {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
-    status: 'available', description: '', features: '',
+    status: 'available', description: '', features: '', amenities: [], video_url: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
     instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
@@ -26,7 +27,7 @@ const PropertiesManagement = () => {
 
   const emptyForm = () => ({
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
-    status: 'available', description: '', features: '',
+    status: 'available', description: '', features: '', amenities: [], video_url: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
     instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
@@ -71,6 +72,8 @@ const PropertiesManagement = () => {
       status: property.status || 'available',
       description: property.description || '',
       features: property.features?.join(', ') || '',
+      amenities: property.amenities || [],
+      video_url: property.video_url || '',
       nightly_price: property.nightly_price ?? '',
       monthly_price: property.monthly_price ?? '',
       min_nights: property.min_nights || 1,
@@ -102,6 +105,8 @@ const PropertiesManagement = () => {
       bedrooms: Number(form.bedrooms),
       bathrooms: Number(form.bathrooms),
       features: form.features.split(',').map((f) => f.trim()).filter(Boolean),
+      amenities: form.amenities,
+      video_url: form.video_url || null,
       nightly_price: num(form.nightly_price),
       monthly_price: num(form.monthly_price),
       min_nights: num(form.min_nights) || 1,
@@ -246,6 +251,40 @@ const PropertiesManagement = () => {
                 <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
                 <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8] resize-none" />
                 <input type="text" name="features" value={form.features} onChange={handleChange} placeholder="Features (comma separated)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Amenities</p>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {AMENITIES.map((a) => {
+                      const active = form.amenities.includes(a.key);
+                      return (
+                        <button
+                          key={a.key}
+                          type="button"
+                          onClick={() =>
+                            setForm({
+                              ...form,
+                              amenities: active ? form.amenities.filter((k) => k !== a.key) : [...form.amenities, a.key],
+                            })
+                          }
+                          aria-pressed={active}
+                          className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium border transition-colors text-left ${
+                            active
+                              ? 'bg-[#38BDF8]/10 text-[#0EA5E9] border-[#38BDF8]/40'
+                              : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#38BDF8]'
+                          }`}
+                        >
+                          <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={a.icon} />
+                          </svg>
+                          <span className="truncate">{a.key}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <input type="url" name="video_url" value={form.video_url} onChange={handleChange} placeholder="Video tour URL (YouTube / Vimeo)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
 
                 <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Seasonal / Rental Pricing</p>

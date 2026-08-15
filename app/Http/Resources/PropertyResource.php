@@ -35,6 +35,7 @@ class PropertyResource extends JsonResource
             'status' => $this->status,
             'featured' => $this->featured,
             'instant_book' => (bool) $this->instant_book,
+            'amenities' => $this->amenities ?? [],
             'primary_image' => PropertyImageResource::resolveUrl($this->primaryImage?->image_path),
             'cover' => PropertyImageResource::resolveUrl($this->primaryImage?->image_path),
             'cancellation_policy' => $this->cancellation_policy,

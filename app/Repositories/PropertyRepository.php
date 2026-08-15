@@ -57,6 +57,12 @@ class PropertyRepository
             $query->where('featured', $filters['featured']);
         }
 
+        if (!empty($filters['amenities'])) {
+            foreach ((array) $filters['amenities'] as $amenity) {
+                $query->whereJsonContains('amenities', $amenity);
+            }
+        }
+
         $sortField = $filters['sort_by'] ?? 'created_at';
         $sortOrder = $filters['sort_order'] ?? 'desc';
         $allowedSortFields = ['price', 'created_at', 'title', 'surface', 'bedrooms'];

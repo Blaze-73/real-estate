@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AvailabilityController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\DealController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
@@ -51,6 +52,8 @@ Route::prefix('v1')->group(function () {
     Route::post('public/properties/{property:slug}/reviews', [ReviewController::class, 'store'])
         ->middleware('throttle:5,1');
     Route::post('public/contact', [ContactController::class, 'store']);
+    Route::post('public/properties/{property:slug}/reveal-phone', [ContactController::class, 'revealPhone'])
+        ->middleware('throttle:5,1');
     Route::post('public/payments/checkout', [PublicPaymentController::class, 'checkout'])
         ->middleware('throttle:10,1');
     Route::post('public/payments/preview', [PublicPaymentController::class, 'preview']);
@@ -92,6 +95,9 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
         Route::put('contacts/{contact}/read', [ContactController::class, 'markAsRead']);
+
+        Route::get('deals/stats', [DealController::class, 'stats']);
+        Route::apiResource('deals', DealController::class);
 
         Route::apiResource('testimonials', TestimonialController::class);
 

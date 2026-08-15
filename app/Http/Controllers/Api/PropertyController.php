@@ -30,7 +30,7 @@ class PropertyController extends Controller
         $filters = $request->only([
             'search', 'type', 'status', 'city',
             'min_price', 'max_price', 'min_surface', 'max_surface',
-            'bedrooms', 'bathrooms', 'featured',
+            'bedrooms', 'bathrooms', 'featured', 'amenities',
             'check_in', 'check_out', 'price_mode', 'nights',
             'sort_by', 'sort_order', 'per_page',
         ]);

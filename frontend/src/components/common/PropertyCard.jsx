@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { fetchWishlist, toggleWishlist } from '../../store/slices/wishlistSlice';
 import formatPrice from '../../utils/formatPrice';
+import { amenityIcon } from '../../constants/amenities';
 
 const getFavorites = () => {
   try {
@@ -202,6 +203,23 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
               </svg>
               {t('propertyCard.freeCancellation')}
             </p>
+          )}
+
+          {(property?.amenities?.length > 0) && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {property.amenities.slice(0, 3).map((key) => (
+                <span
+                  key={key}
+                  className="inline-flex items-center gap-1 rounded-full bg-ocean-50 px-2 py-0.5 text-[11px] font-medium text-ocean-700 dark:bg-ink-800 dark:text-ocean-300"
+                  title={t(`amenities.${key}`, { defaultValue: key })}
+                >
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d={amenityIcon(key)} />
+                  </svg>
+                  {t(`amenities.${key}`, { defaultValue: key })}
+                </span>
+              ))}
+            </div>
           )}
 
           <div className="mt-4 flex items-center border-t border-ink-100 pt-4 dark:border-ink-800">

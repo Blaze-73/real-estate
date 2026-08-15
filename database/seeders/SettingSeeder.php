@@ -15,6 +15,8 @@ class SettingSeeder extends Seeder
             ['key' => 'company_phone', 'value' => '+212 5XX XXX XXX'],
             ['key' => 'company_address', 'value' => 'Asilah, Morocco'],
             ['key' => 'whatsapp_number', 'value' => '2126XXXXXXX'],
+            ['key' => 'commission_sale_rate', 'value' => '2.5'],
+            ['key' => 'commission_rent_rate', 'value' => '10'],
             ['key' => 'social_facebook', 'value' => '#'],
             ['key' => 'social_instagram', 'value' => '#'],
             ['key' => 'social_whatsapp', 'value' => '#'],

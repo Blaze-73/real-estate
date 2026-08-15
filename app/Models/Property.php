@@ -29,6 +29,8 @@ class Property extends Model
         'high_season_price',
         'cancellation_policy',
         'ical_url',
+        'video_url',
+        'amenities',
         'surface',
         'bedrooms',
         'bathrooms',
@@ -57,6 +59,7 @@ class Property extends Model
             'longitude' => 'decimal:7',
             'featured' => 'boolean',
             'instant_book' => 'boolean',
+            'amenities' => 'array',
         ];
     }
 

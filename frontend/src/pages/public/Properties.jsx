@@ -9,10 +9,11 @@ import PropertiesMap from '../../components/common/PropertiesMap';
 import savedSearchService from '../../services/savedSearchService';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
+import { AMENITIES } from '../../constants/amenities';
 
 const TYPE_CHIPS = ['apartment', 'villa', 'house', 'studio'];
 
-const FilterControls = ({ filters, onChange, priceMode = 'night' }) => {
+const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities = [], priceMode = 'night' }) => {
   const { t } = useTranslation();
   const priceSuffix = priceMode === 'total' ? ` · ${t('properties.priceTotal')}` : '';
   return (
@@ -50,6 +51,32 @@ const FilterControls = ({ filters, onChange, priceMode = 'night' }) => {
           {[1, 2, 3, 4].map((n) => <option key={n} value={n}>{n}+</option>)}
         </select>
       </div>
+      <div>
+        <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 block">{t('properties.amenities')}</label>
+        <div className="grid grid-cols-2 gap-1.5">
+          {AMENITIES.map((a) => {
+            const active = selectedAmenities.includes(a.key);
+            return (
+              <button
+                key={a.key}
+                type="button"
+                onClick={() => onAmenityToggle?.(a.key)}
+                aria-pressed={active}
+                className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium border transition-colors text-left ${
+                  active
+                    ? 'bg-[#38BDF8]/10 text-[#0EA5E9] dark:text-[#38BDF8] border-[#38BDF8]/40'
+                    : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#38BDF8]'
+                }`}
+              >
+                <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={a.icon} />
+                </svg>
+                <span className="truncate">{t(`amenities.${a.key}`, { defaultValue: a.key })}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
@@ -81,6 +108,7 @@ const Properties = () => {
   const check_in = searchParams.get('check_in') || '';
   const check_out = searchParams.get('check_out') || '';
   const rawPriceMode = searchParams.get('price_mode') === 'total' ? 'total' : 'night';
+  const amenities = searchParams.getAll('amenities[]');
 
   const nights = useMemo(() => {
     if (!check_in || !check_out) return 0;
@@ -115,6 +143,7 @@ const Properties = () => {
       max_price,
       bedrooms,
       bathrooms,
+      amenities,
       sort_by,
       sort_order,
       page,
@@ -130,7 +159,7 @@ const Properties = () => {
     }
     Object.keys(params).forEach((k) => { if (!params[k]) delete params[k]; });
     dispatch(fetchProperties(params));
-  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page, check_in, check_out, priceMode, nights]);
+  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page, check_in, check_out, priceMode, nights, amenities]);
 
   const updateParam = (name, value) => {
     const next = new URLSearchParams(searchParams);
@@ -145,6 +174,19 @@ const Properties = () => {
 
   const handleFilterChange = (e) => {
     updateParam(e.target.name, e.target.value);
+  };
+
+  const toggleAmenity = (key) => {
+    const next = new URLSearchParams(searchParams);
+    const current = next.getAll('amenities[]');
+    next.delete('amenities[]');
+    if (current.includes(key)) {
+      current.filter((k) => k !== key).forEach((k) => next.append('amenities[]', k));
+    } else {
+      [...current, key].forEach((k) => next.append('amenities[]', k));
+    }
+    next.set('page', '1');
+    setSearchParams(next);
   };
 
   const clearFilters = () => {
@@ -164,6 +206,7 @@ const Properties = () => {
       max_price: max_price || undefined,
       bedrooms: bedrooms || undefined,
       bathrooms: bathrooms || undefined,
+      amenities: amenities.length ? amenities : undefined,
       check_in: check_in || undefined,
       check_out: check_out || undefined,
       price_mode: priceMode === 'total' ? 'total' : undefined,
@@ -286,7 +329,7 @@ const Properties = () => {
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('properties.filters')}</h3>
                 <button onClick={clearFilters} className="text-xs text-[#38BDF8] hover:underline">{t('properties.clearAll')}</button>
               </div>
-              <FilterControls filters={filters} onChange={handleFilterChange} priceMode={priceMode} />
+              <FilterControls filters={filters} onChange={handleFilterChange} onAmenityToggle={toggleAmenity} selectedAmenities={amenities} priceMode={priceMode} />
             </div>
           </aside>
 
@@ -482,6 +525,8 @@ const Properties = () => {
                 <FilterControls
                   filters={filters}
                   onChange={(e) => handleFilterChange(e)}
+                  onAmenityToggle={toggleAmenity}
+                  selectedAmenities={amenities}
                   priceMode={priceMode}
                 />
                 <button

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import AnimatedCounter from '../../components/common/AnimatedCounter';
 import Seo from '../../components/common/Seo';
 
 const teamMembers = [
@@ -15,13 +14,6 @@ const About = () => {
   const { t } = useTranslation();
   const settings = useSelector((state) => state.settings.settings) || {};
 
-  const stats = [
-    { end: 150, suffix: '+', label: t('about.statProperties') },
-    { end: 500, suffix: '+', label: t('about.statClients') },
-    { end: 10, suffix: '+', label: t('about.statYears') },
-    { end: 98, suffix: '%', label: t('about.statSatisfaction') },
-  ];
-
   return (
     <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900">
       <Seo
@@ -30,7 +22,6 @@ const About = () => {
         canonical="/about"
       />
       <section className="relative py-20 bg-gradient-to-r from-[#0F172A] to-[#1E293B] overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, #38BDF8 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold text-white mb-4">
             {t('about.h1')}
@@ -43,23 +34,15 @@ const About = () => {
 
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <div className="mx-auto max-w-3xl text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <span className="text-[#38BDF8] font-semibold text-sm uppercase tracking-wider">{t('about.ourStory')}</span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6">{t('about.decadeTitle')}</h2>
-              <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed">
+              <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed text-left sm:text-center">
                 <p>{settings.about_us || t('about.p1')}</p>
                 <p>{t('about.p2')}</p>
                 <p>{t('about.p3')}</p>
               </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid grid-cols-2 gap-4">
-              {stats.map((stat, idx) => (
-                <div key={idx} className="p-6 rounded-2xl bg-white dark:bg-[#1E293B] shadow-sm border border-gray-100 dark:border-gray-800 text-center">
-                  <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{stat.label}</p>
-                </div>
-              ))}
             </motion.div>
           </div>
         </div>

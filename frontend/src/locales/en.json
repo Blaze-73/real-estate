@@ -54,7 +54,7 @@
     "searchProperties": "Search properties"
   },
   "footer": {
-    "tagline": "Premium rental and sales homes, managed professionally in the beautiful coastal city of Asilah, Morocco.",
+    "tagline": "Rentals and sales in Asilah — homes looked after by a local team on the Atlantic coast.",
     "madeIn": "Made in Asilah with passion.",
     "explore": "Explore",
     "contact": "Contact",
@@ -304,31 +304,27 @@
   },
   "about": {
     "title": "About Us",
-    "description": "Asilah Real Estate — a trusted agency in Asilah, Morocco since 2015. Your partner for buying, selling and renting properties on the Atlantic coast.",
+    "description": "Asilah Real Estate — a local agency in Asilah, Morocco. Your partner for buying, selling and renting properties on the Atlantic coast.",
     "h1": "About Asilah Real Estate",
-    "subtitle": "Your trusted partner in Asilah's real estate market since 2015",
+    "subtitle": "A local team on the ground in Asilah's medina and the beachfront",
     "ourStory": "Our Story",
-    "decadeTitle": "A Decade of Excellence",
-    "p1": "Premium real estate agency in Asilah, offering exceptional properties and rental services across Northern Morocco.",
-    "p2": "Our deep understanding of the local market, combined with professional management practices, allows us to offer unparalleled service to property owners and tenants alike.",
-    "p3": "We specialize in rental properties, from beachfront apartments to traditional Moroccan riads, ensuring each property is managed with the utmost care and professionalism.",
-    "statProperties": "Properties Managed",
-    "statClients": "Happy Clients",
-    "statYears": "Years Experience",
-    "statSatisfaction": "Satisfaction Rate",
+    "decadeTitle": "An Asilah story",
+    "p1": "We are a small agency based in Asilah. We look after holiday rentals, long-term lets and sales along the northern coast — mostly for people we know by name.",
+    "p2": "Because we live here, we know the buildings, the owners and the seasons. That's how we keep properties rented and in good hands without the runaround.",
+    "p3": "We work with beachfront apartments, medina riads and houses near Rmel Bay. Every property is visited before it's listed, and every key handover happens in person.",
     "ourMission": "Our Mission",
-    "mission": "To provide exceptional real estate services that connect people with their perfect properties in Asilah, ensuring transparent, professional, and hassle-free experiences for property owners and tenants.",
+    "mission": "To manage properties the way we'd manage our own — honest pricing, clear contracts and someone on the ground who picks up when guests call.",
     "ourVision": "Our Vision",
-    "vision": "To become the most trusted and innovative real estate platform in Northern Morocco, setting new standards for property management and client satisfaction.",
+    "vision": "To stay a small, known team — trusted by the owners who leave us their keys and by the guests who keep coming back.",
     "meetOurTeam": "Meet Our Team",
     "roleFounder": "Founder & CEO",
     "roleOps": "Operations Director",
     "roleAgent": "Senior Agent",
     "roleMarketing": "Marketing Manager",
-    "bioFounder": "15+ years of experience in Moroccan real estate market",
-    "bioOps": "Expert in property management and client relations",
-    "bioAgent": "Specializing in luxury properties and international clients",
-    "bioMarketing": "Digital marketing strategist with a passion for real estate"
+    "bioFounder": "Grew up in Asilah, runs the day-to-day and still does most key handovers himself.",
+    "bioOps": "Handles the cleaning teams, the check-ins and the month-end numbers.",
+    "bioAgent": "Shows the homes and walks buyers through the paperwork in French, Arabic and English.",
+    "bioMarketing": "Keeps the listings honest and the social channels in Arabic, French and English."
   },
   "contact": {
     "title": "Contact Us",
@@ -349,15 +345,6 @@
     "h1": "Page Not Found",
     "copy": "The page you are looking for doesn't exist or may have been moved.",
     "backHome": "Back to Home"
-  },
-  "stats": {
-    "eyebrow": "Asilah Estates · in numbers",
-    "heading1": "A quiet decade of helping people",
-    "heading2": "move north.",
-    "labelProperties": "Properties on our books",
-    "labelClients": "Happy clients",
-    "labelYears": "Years in Asilah",
-    "labelSatisfaction": "Satisfaction rate"
   },
   "testimonials": {
     "moreVoices": "More voices",

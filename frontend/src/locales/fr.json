@@ -54,7 +54,7 @@
     "searchProperties": "Rechercher des biens"
   },
   "footer": {
-    "tagline": "Maisons en location et à la vente, gérées professionnellement dans la belle ville côtière d'Asilah, au Maroc.",
+    "tagline": "Locations et ventes à Asilah — des biens gérés par une équipe locale sur la côte atlantique.",
     "madeIn": "Fait à Asilah avec passion.",
     "explore": "Explorer",
     "contact": "Contact",
@@ -304,31 +304,27 @@
   },
   "about": {
     "title": "À propos",
-    "description": "Asilah Real Estate — une agence de confiance à Asilah, au Maroc, depuis 2015. Votre partenaire pour acheter, vendre et louer des biens sur la côte atlantique.",
+    "description": "Asilah Real Estate — une agence locale à Asilah, au Maroc. Votre partenaire pour acheter, vendre et louer des biens sur la côte atlantique.",
     "h1": "À propos d'Asilah Real Estate",
-    "subtitle": "Votre partenaire de confiance sur le marché immobilier d'Asilah depuis 2015",
+    "subtitle": "Une petite équipe locale, présente dans la médina et sur le front de mer d'Asilah",
     "ourStory": "Notre histoire",
-    "decadeTitle": "Une décennie d'excellence",
-    "p1": "Agence immobilière haut de gamme à Asilah, offrant des biens d'exception et des services de location dans tout le nord du Maroc.",
-    "p2": "Notre connaissance approfondie du marché local, associée à des pratiques de gestion professionnelles, nous permet d'offrir un service incomparable aux propriétaires comme aux locataires.",
-    "p3": "Nous sommes spécialisés dans la location, des appartements en bord de mer aux riads marocains traditionnels, en garantissant une gestion soignée et professionnelle de chaque bien.",
-    "statProperties": "Biens gérés",
-    "statClients": "Clients satisfaits",
-    "statYears": "Années d'expérience",
-    "statSatisfaction": "Taux de satisfaction",
+    "decadeTitle": "Une histoire d'Asilah",
+    "p1": "Nous sommes une petite agence basée à Asilah. Nous gérons des locations de vacances, des locations longue durée et des ventes le long de la côte nord — pour des gens que nous connaissons la plupart du temps par leur nom.",
+    "p2": "Parce que nous vivons ici, nous connaissons les immeubles, les propriétaires et les saisons. C'est ainsi que nous gardons les biens loués et bien entretenus, sans tracas.",
+    "p3": "Nous travaillons avec des appartements en bord de mer, des riads de la médina et des maisons près de Rmel Bay. Chaque bien est visité avant d'être publié, et chaque remise des clés se fait en personne.",
     "ourMission": "Notre mission",
-    "mission": "Offrir des services immobiliers exceptionnels qui connectent les personnes à leurs biens idéaux à Asilah, avec des expériences transparentes, professionnelles et sans tracas pour propriétaires et locataires.",
+    "mission": "Gérer les biens comme nous gérerions les nôtres — des prix honnêtes, des contrats clairs et quelqu'un sur place qui répond quand les voyageurs appellent.",
     "ourVision": "Notre vision",
-    "vision": "Devenir la plateforme immobilière la plus fiable et innovante du nord du Maroc, en fixant de nouvelles normes de gestion et de satisfaction client.",
+    "vision": "Rester une petite équipe connue — celle à qui les propriétaires confient leurs clés et vers laquelle les voyageurs reviennent.",
     "meetOurTeam": "Rencontrez notre équipe",
     "roleFounder": "Fondateur & PDG",
     "roleOps": "Directrice des opérations",
     "roleAgent": "Agent senior",
     "roleMarketing": "Responsable marketing",
-    "bioFounder": "Plus de 15 ans d'expérience sur le marché immobilier marocain",
-    "bioOps": "Experte en gestion de biens et relations clients",
-    "bioAgent": "Spécialisé dans les biens de luxe et la clientèle internationale",
-    "bioMarketing": "Stratège en marketing digital passionnée par l'immobilier"
+    "bioFounder": "A grandi à Asilah, gère le quotidien et fait encore lui-même la plupart des remises de clés.",
+    "bioOps": "Gère les équipes de ménage, les arrivées et les chiffres de fin de mois.",
+    "bioAgent": "Fait visiter les biens et accompagne les acheteurs dans les papiers en français, en arabe et en anglais.",
+    "bioMarketing": "Maintient les annonces honnêtes et les réseaux sociaux en arabe, en français et en anglais."
   },
   "contact": {
     "title": "Contactez-nous",
@@ -349,15 +345,6 @@
     "h1": "Page introuvable",
     "copy": "La page que vous recherchez n'existe pas ou a été déplacée.",
     "backHome": "Retour à l'accueil"
-  },
-  "stats": {
-    "eyebrow": "Asilah Estates · en chiffres",
-    "heading1": "Une décennie à aider les gens",
-    "heading2": "à se rapprocher du nord.",
-    "labelProperties": "Biens en portefeuille",
-    "labelClients": "Clients satisfaits",
-    "labelYears": "Années à Asilah",
-    "labelSatisfaction": "Taux de satisfaction"
   },
   "testimonials": {
     "moreVoices": "D'autres avis",

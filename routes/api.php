@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PublicPaymentController;
 use App\Http\Controllers\Api\RentalController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\SavedSearchController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\WishlistController;
@@ -31,6 +32,9 @@ Route::prefix('v1')->group(function () {
         Route::get('wishlist', [WishlistController::class, 'index']);
         Route::post('wishlist/{property:slug}', [WishlistController::class, 'toggle']);
         Route::delete('wishlist/{property:slug}', [WishlistController::class, 'destroy']);
+
+        Route::apiResource('saved-searches', SavedSearchController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::get('saved-searches/{savedSearch}/preview', [SavedSearchController::class, 'preview']);
     });
 
     Route::get('public/properties/featured', [PropertyController::class, 'featured']);

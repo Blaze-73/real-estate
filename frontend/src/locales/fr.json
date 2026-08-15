@@ -14,7 +14,8 @@
     "perNight": "/nuit",
     "perMonth": "/mois",
     "any": "Tous",
-    "backHome": "Retour à l'accueil"
+    "backHome": "Retour à l'accueil",
+    "error": "Une erreur est survenue. Veuillez réessayer."
   },
   "nav": {
     "home": "Accueil",
@@ -24,6 +25,7 @@
     "login": "Connexion",
     "logout": "Déconnexion",
     "dashboard": "Tableau de bord",
+    "myAlerts": "Mes alertes",
     "skipToContent": "Aller au contenu",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
@@ -167,7 +169,27 @@
     "map": "Carte",
     "list": "Liste",
     "showOnMap": "Voir sur la carte",
-    "showList": "Voir la liste"
+    "showList": "Voir la liste",
+    "saveSearch": "Enregistrer la recherche",
+    "savingSearch": "Enregistrement...",
+    "saveSearchTitle": "Enregistrez cette recherche et recevez un e-mail quand de nouveaux biens correspondent",
+    "searchSaved": "Recherche enregistrée — nous vous enverrons un e-mail quand de nouveaux biens correspondent."
+  },
+  "savedSearches": {
+    "title": "Mes recherches enregistrées",
+    "subtitle": "Gérez vos alertes. Nous vous enverrons un e-mail quand de nouveaux biens correspondent.",
+    "empty": "Aucune recherche enregistrée",
+    "emptyHint": "Enregistrez une recherche depuis la page Biens pour recevoir des alertes.",
+    "browse": "Voir les biens",
+    "viewResults": "Voir les résultats",
+    "active": "Active",
+    "paused": "En pause",
+    "pause": "Mettre en pause",
+    "resume": "Reprendre",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cette recherche ? Vous ne recevrez plus ces alertes.",
+    "lastAlert": "Dernière alerte",
+    "allProperties": "Tous les biens"
   },
   "propertyDetails": {
     "status": "Statut",

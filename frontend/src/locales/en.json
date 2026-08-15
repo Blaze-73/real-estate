@@ -14,7 +14,8 @@
     "perNight": "/night",
     "perMonth": "/month",
     "any": "Any",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "error": "Something went wrong. Please try again."
   },
   "nav": {
     "home": "Home",
@@ -24,6 +25,7 @@
     "login": "Login",
     "logout": "Logout",
     "dashboard": "Dashboard",
+    "myAlerts": "My alerts",
     "skipToContent": "Skip to content",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
@@ -167,7 +169,27 @@
     "map": "Map",
     "list": "List",
     "showOnMap": "Show on map",
-    "showList": "Show list"
+    "showList": "Show list",
+    "saveSearch": "Save search",
+    "savingSearch": "Saving...",
+    "saveSearchTitle": "Save this search and get email alerts when new properties match",
+    "searchSaved": "Search saved — we'll email you when new properties match."
+  },
+  "savedSearches": {
+    "title": "My Saved Searches",
+    "subtitle": "Manage your search alerts. We'll email you when new properties match.",
+    "empty": "No saved searches yet",
+    "emptyHint": "Save a search from the Properties page to get instant alerts.",
+    "browse": "Browse properties",
+    "viewResults": "View results",
+    "active": "Active",
+    "paused": "Paused",
+    "pause": "Pause",
+    "resume": "Resume",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this saved search? You will stop receiving these alerts.",
+    "lastAlert": "Last alert",
+    "allProperties": "All properties"
   },
   "propertyDetails": {
     "status": "Status",

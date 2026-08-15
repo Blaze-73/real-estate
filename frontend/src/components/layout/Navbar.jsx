@@ -104,6 +104,12 @@ const Navbar = () => {
             {token ? (
               <div className="flex items-center gap-3">
                 <Link
+                  to="/account/saved-searches"
+                  className="rounded-xl border border-white/20 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
+                >
+                  {t('nav.myAlerts')}
+                </Link>
+                <Link
                   to="/admin"
                   className="rounded-xl bg-ocean-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
                 >
@@ -177,6 +183,13 @@ const Navbar = () => {
                 <ThemeToggle />
                 {token ? (
                   <>
+                    <Link
+                      to="/account/saved-searches"
+                      onClick={() => setMenuOpen(false)}
+                      className="rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-medium text-white"
+                    >
+                      {t('nav.myAlerts')}
+                    </Link>
                     <Link
                       to="/admin"
                       onClick={() => setMenuOpen(false)}

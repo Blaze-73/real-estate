@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import PropertyCard from '../../components/common/PropertyCard';
 import PropertiesMap from '../../components/common/PropertiesMap';
+import savedSearchService from '../../services/savedSearchService';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 
@@ -62,6 +63,8 @@ const Properties = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const token = useSelector((state) => state.auth?.token);
+  const [saveState, setSaveState] = useState({ status: 'idle', message: '' });
 
   const handleMapHover = useCallback((id) => setActiveId(id), []);
   const handleMapSelect = useCallback((id) => navigate(`/properties/${id}`), [navigate]);
@@ -147,6 +150,35 @@ const Properties = () => {
   const clearFilters = () => {
     const next = new URLSearchParams();
     setSearchParams(next);
+  };
+
+  const handleSaveSearch = async () => {
+    if (!token) {
+      navigate(`/login?from=${encodeURIComponent(`/properties?${searchParams.toString()}`)}`);
+      return;
+    }
+    setSaveState({ status: 'saving', message: '' });
+    const payload = {
+      type: type || undefined,
+      min_price: min_price || undefined,
+      max_price: max_price || undefined,
+      bedrooms: bedrooms || undefined,
+      bathrooms: bathrooms || undefined,
+      check_in: check_in || undefined,
+      check_out: check_out || undefined,
+      price_mode: priceMode === 'total' ? 'total' : undefined,
+      nights: priceMode === 'total' ? nights : undefined,
+      sort_by,
+      sort_order,
+    };
+    Object.keys(payload).forEach((k) => { if (!payload[k]) delete payload[k]; });
+    try {
+      const saved = await savedSearchService.store({ filters: payload });
+      setSaveState({ status: 'done', message: t('properties.searchSaved', { name: saved.name || '' }) });
+      window.setTimeout(() => setSaveState({ status: 'idle', message: '' }), 4000);
+    } catch (err) {
+      setSaveState({ status: 'error', message: err.response?.data?.message || t('common.error') });
+    }
   };
 
   const toggleTypeChip = (value) => {
@@ -263,7 +295,7 @@ const Properties = () => {
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {t('properties.resultsFound', { count: pagination.total || 0 })}
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap lg:flex-nowrap">
                 <button
                   onClick={() => setDrawerOpen(true)}
                   className="lg:hidden px-3 py-1.5 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm font-medium flex items-center gap-2"
@@ -273,6 +305,23 @@ const Properties = () => {
                   </svg>
                   {t('properties.filters')}
                 </button>
+                <button
+                  type="button"
+                  onClick={handleSaveSearch}
+                  disabled={saveState.status === 'saving'}
+                  title={t('properties.saveSearchTitle')}
+                  className="px-3 py-1.5 rounded-xl bg-[#38BDF8]/10 text-[#0EA5E9] dark:text-[#38BDF8] border border-[#38BDF8]/40 text-sm font-medium flex items-center gap-1.5 hover:bg-[#38BDF8]/20 transition-colors disabled:opacity-50"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M5 3h14a1 1 0 011 1v17l-8-4.5L4 21V4a1 1 0 011-1z" />
+                  </svg>
+                  {saveState.status === 'saving' ? t('properties.savingSearch') : t('properties.saveSearch')}
+                </button>
+                {saveState.message && (
+                  <span className={`text-xs ${saveState.status === 'error' ? 'text-red-500' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                    {saveState.message}
+                  </span>
+                )}
                 <div className="hidden lg:flex rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700" role="group" aria-label={t('properties.map')}>
                   <button
                     type="button"

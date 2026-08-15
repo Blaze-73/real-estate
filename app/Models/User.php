@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->hasMany(Wishlist::class);
     }
 
+    public function savedSearches()
+    {
+        return $this->hasMany(SavedSearch::class);
+    }
+
     public function notifications()
     {
         return $this->hasMany(Notification::class);

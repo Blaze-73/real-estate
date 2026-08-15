@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { login, clearError } from '../../store/slices/authSlice';
@@ -8,11 +8,15 @@ const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { token, loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (token) navigate('/admin');
-  }, [token, navigate]);
+    if (token) {
+      const from = searchParams.get('from');
+      navigate(from ? decodeURIComponent(from) : '/admin');
+    }
+  }, [token, navigate, searchParams]);
 
   useEffect(() => {
     dispatch(clearError());

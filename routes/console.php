@@ -9,3 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('ical:sync')->hourly();
+Schedule::command('saved-search:alerts')->dailyAt('06:00');

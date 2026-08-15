@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { fetchFeatured } from '../../store/slices/propertySlice';
 import PropertyCard from '../../components/common/PropertyCard';
 import SearchBar from '../../components/common/SearchBar';
-import StatisticsSection from '../../components/common/StatisticsSection';
 import TestimonialCarousel from '../../components/common/TestimonialCarousel';
 import MapComponent from '../../components/common/MapComponent';
 import { CardSkeleton } from '../../components/common/LoadingSkeleton';
@@ -124,22 +123,7 @@ const Home = () => {
             </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.8 }}
-            className="mt-12 hidden items-center gap-3 text-sm text-sand-100/70 md:flex"
-          >
-            <span className="flex items-center gap-1 text-gold-400" aria-hidden="true">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg key={i} className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
-            </span>
-            {t('home.rated')}
-          </motion.div>
-        </div>
+          </div>
 
         {/* scroll cue */}
         <motion.div
@@ -292,7 +276,7 @@ const Home = () => {
               transition={{ delay: 0.3, duration: 0.7, ease: easeOut }}
               className="absolute -left-3 -top-5 rounded-2xl bg-terra-500 px-5 py-4 text-white shadow-xl shadow-terra-500/30 sm:-left-6 sm:-top-7"
             >
-              <p className="font-display text-3xl font-semibold leading-none">10+</p>
+              <p className="font-display text-3xl font-semibold leading-none">100%</p>
               <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-sand-100/90">
                 {t('home.yearsLocalCare')}
               </p>
@@ -429,8 +413,6 @@ const Home = () => {
         </div>
       </section>
 
-      <StatisticsSection />
-
       {/* ============ VISIT US ============ */}
       <section className="bg-sand-50 py-20 lg:py-28 dark:bg-ink-950">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:px-10">
@@ -524,7 +506,6 @@ const Home = () => {
         <div className="absolute inset-0" aria-hidden="true">
           <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-ocean-600/25 blur-3xl" />
           <div className="absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-terra-500/20 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(rgba(244,240,232,0.06)_1px,transparent_1px)] [background-size:22px_22px]" />
         </div>
         <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
           <motion.div

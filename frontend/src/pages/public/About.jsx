@@ -3,13 +3,6 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Seo from '../../components/common/Seo';
 
-const teamMembers = [
-  { name: 'Ahmed El Amrani', roleKey: 'roleFounder', bioKey: 'bioFounder' },
-  { name: 'Fatima Bennis', roleKey: 'roleOps', bioKey: 'bioOps' },
-  { name: 'Youssef Benali', roleKey: 'roleAgent', bioKey: 'bioAgent' },
-  { name: 'Nadia Oufkir', roleKey: 'roleMarketing', bioKey: 'bioMarketing' },
-];
-
 const About = () => {
   const { t } = useTranslation();
   const settings = useSelector((state) => state.settings.settings) || {};
@@ -50,7 +43,7 @@ const About = () => {
 
       <section className="py-16 bg-white dark:bg-[#1E293B]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="p-8 rounded-2xl bg-gradient-to-br from-[#38BDF8]/5 to-transparent border border-[#38BDF8]/10">
               <div className="w-12 h-12 rounded-xl bg-[#38BDF8]/10 flex items-center justify-center mb-4">
                 <svg className="w-6 h-6 text-[#38BDF8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,29 +61,6 @@ const About = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">{t('about.ourVision')}</h3>
               <p className="text-gray-500 dark:text-gray-400">{settings.vision || t('about.vision')}</p>
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-10">{t('about.meetOurTeam')}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teamMembers.map((member, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="p-6 rounded-2xl bg-white dark:bg-[#1E293B] shadow-sm border border-gray-100 dark:border-gray-800 text-center group hover:border-[#38BDF8]/30 transition-all"
-                >
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#38BDF8] to-[#0EA5E9] flex items-center justify-center text-white text-2xl font-bold">
-                    {member.name.charAt(0)}
-                  </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{member.name}</h3>
-                  <p className="text-sm text-[#38BDF8] mb-2">{t(`about.${member.roleKey}`)}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t(`about.${member.bioKey}`)}</p>
-                </motion.div>
-              ))}
             </div>
           </motion.div>
         </div>

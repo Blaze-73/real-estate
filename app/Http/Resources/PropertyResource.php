@@ -45,6 +45,7 @@ class PropertyResource extends JsonResource
                 ->where('status', 'approved')
                 ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
                 ->count(),
+            'free_nights_next_month' => $this->freeNightsNextMonth(),
             'user' => new UserResource($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

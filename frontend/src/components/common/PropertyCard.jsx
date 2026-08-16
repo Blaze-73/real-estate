@@ -27,7 +27,8 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
   const whatsapp = settings?.whatsapp_number || '212XXXXXXXXX';
   const ratingScore = property?.rating_score || 0;
   const reviewsCount = property?.reviews_count || 0;
-  const bookingsThisMonth = property?.bookings_this_month || 0;
+  const bookingThisMonth = property?.bookings_this_month || 0;
+  const freeNightsNextMonth = property?.free_nights_next_month || 0;
   const cancellationPolicy = property?.cancellation_policy || '';
   const hasFreeCancellation = /free/i.test(cancellationPolicy);
   const coverImage = cover || images?.[0] || 'https://placehold.co/600x400/0B141B/D7C7A9?text=Asilah';
@@ -104,13 +105,24 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
             )}
           </div>
 
-          {bookingsThisMonth >= 2 && (
+          {bookingThisMonth >= 2 && (
             <div className="absolute left-3 top-20">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-terra-500/90 px-3 py-1.5 text-[11px] font-semibold text-white backdrop-blur-md">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M16 4h4v4M4 20l16-16M12 8V4m4 4V4" />
                 </svg>
-                {t('propertyCard.bookedThisMonth', { count: bookingsThisMonth })}              </span>
+                {t('propertyCard.bookedThisMonth', { count: bookingThisMonth })}              </span>
+            </div>
+          )}
+
+          {freeNightsNextMonth >= 1 && freeNightsNextMonth <= 10 && (
+            <div className="absolute left-3 top-[8.5rem]">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-ink-950/80 px-3 py-1.5 text-[11px] font-semibold text-sand-100 backdrop-blur-md">
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {t('propertyCard.fewNightsLeft', { count: freeNightsNextMonth })}
+              </span>
             </div>
           )}
 

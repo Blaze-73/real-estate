@@ -67,6 +67,8 @@
   },
   "propertyCard": {
     "bookedThisMonth": "Booked {{count}}× this month",
+    "fewNightsLeft_one": "Only {{count}} free night left in the next month",
+    "fewNightsLeft_other": "Only {{count}} free nights left in the next month",
     "addToFavorites": "Add to favorites",
     "removeFromFavorites": "Remove from favorites",
     "askOnWhatsApp": "Ask about {{title}} on WhatsApp",

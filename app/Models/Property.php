@@ -140,6 +140,54 @@ class Property extends Model
         return $this->hasMany(Rental::class);
     }
 
+    public function freeNightsNextMonth(): int
+    {
+        if (!$this->nightly_price) {
+            return 0;
+        }
+
+        $start = now()->startOfDay();
+        $end = $start->copy()->addDays(29);
+
+        $blocked = [];
+        $this->availabilityBlocks()
+            ->whereDate('start_date', '<=', $end->toDateString())
+            ->whereDate('end_date', '>=', $start->toDateString())
+            ->get()
+            ->each(function ($block) use (&$blocked, $start, $end) {
+                $from = $block->start_date->greaterThan($start) ? $block->start_date : $start;
+                $to = $block->end_date->lessThan($end) ? $block->end_date : $end;
+                for ($day = $from->copy(); $day->lte($to); $day->addDay()) {
+                    $blocked[$day->toDateString()] = true;
+                }
+            });
+
+        $reservations = $this->reservations()
+            ->whereIn('status', ['pending', 'approved'])
+            ->where('check_in', '<', $end->copy()->addDay()->toDateString())
+            ->where('check_out', '>', $start->toDateString())
+            ->get(['check_in', 'check_out']);
+
+        $free = 0;
+        for ($day = $start->copy(); $day->lte($end); $day->addDay()) {
+            $date = $day->toDateString();
+
+            if (isset($blocked[$date])) {
+                continue;
+            }
+
+            foreach ($reservations as $reservation) {
+                if ($date >= $reservation->check_in->toDateString() && $date < $reservation->check_out->toDateString()) {
+                    continue 2;
+                }
+            }
+
+            $free++;
+        }
+
+        return $free;
+    }
+
     public function scopeFeatured($query)
     {
         return $query->where('featured', true);

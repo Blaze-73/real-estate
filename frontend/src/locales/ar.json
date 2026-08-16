@@ -67,6 +67,8 @@
   },
   "propertyCard": {
     "bookedThisMonth": "محجوز {{count}}× هذا الشهر",
+    "fewNightsLeft_one": "بقي {{count}} ليلة واحدة فقط في الشهر المقبل",
+    "fewNightsLeft_other": "بقي {{count}} ليالٍ فقط في الشهر المقبل",
     "addToFavorites": "أضف إلى المفضلة",
     "removeFromFavorites": "أزل من المفضلة",
     "askOnWhatsApp": "اسأل عن {{title}} عبر واتساب",

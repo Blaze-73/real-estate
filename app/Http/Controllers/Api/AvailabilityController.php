@@ -24,8 +24,8 @@ class AvailabilityController extends Controller
         $end = $start->copy()->endOfMonth();
 
         $blocks = PropertyAvailability::where('property_id', $property->id)
-            ->where('start_date', '<=', $end->toDateString())
-            ->where('end_date', '>=', $start->toDateString())
+            ->whereDate('start_date', '<=', $end->toDateString())
+            ->whereDate('end_date', '>=', $start->toDateString())
             ->get();
 
         $reservations = Reservation::where('property_id', $property->id)

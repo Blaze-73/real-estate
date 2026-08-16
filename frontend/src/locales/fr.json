@@ -67,6 +67,8 @@
   },
   "propertyCard": {
     "bookedThisMonth": "Réservé {{count}}× ce mois-ci",
+    "fewNightsLeft_one": "Plus que {{count}} nuit libre dans le mois à venir",
+    "fewNightsLeft_other": "Plus que {{count}} nuits libres dans le mois à venir",
     "addToFavorites": "Ajouter aux favoris",
     "removeFromFavorites": "Retirer des favoris",
     "askOnWhatsApp": "Poser une question sur {{title}} via WhatsApp",

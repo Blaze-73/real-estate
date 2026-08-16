@@ -46,6 +46,7 @@ class PropertyDetailResource extends JsonResource
                 ->where('status', 'approved')
                 ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
                 ->count(),
+            'free_nights_next_month' => $this->freeNightsNextMonth(),
             'reviews' => ReviewResource::collection($this->whenLoaded('approvedReviews')),
             'cover' => PropertyImageResource::resolveUrl($this->images->firstWhere('is_primary', true)?->image_path ?? $this->images->first()?->image_path),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),

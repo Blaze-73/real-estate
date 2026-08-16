@@ -298,7 +298,12 @@
     "deposit": "Deposit",
     "printConfirmation": "Print / save PDF",
     "consentLabel": "Also keep me posted — seasonal availability and local tips by WhatsApp or email.",
-    "consentNote": "We'll keep you posted on seasonal availability and local tips."
+    "consentNote": "We'll keep you posted on seasonal availability and local tips.",
+    "promoApplied": "{{name}}",
+    "promoPercent": "{{value}}% off",
+    "promoPercentNights": "{{value}}% off for {{nights}}+ nights",
+    "promoFixed": "{{value}} off",
+    "promoFixedNights": "{{value}} off for {{nights}}+ nights"
   },
   "reviews": {
     "title": "Guest Reviews",

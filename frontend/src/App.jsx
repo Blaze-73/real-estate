@@ -19,6 +19,7 @@ const Login = lazy(() => import('./pages/Auth/Login'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard'));
 const PropertiesManagement = lazy(() => import('./pages/admin/PropertiesManagement'));
 const DealsManagement = lazy(() => import('./pages/admin/DealsManagement'));
+const PromotionsManagement = lazy(() => import('./pages/admin/PromotionsManagement'));
 const ClientsManagement = lazy(() => import('./pages/admin/ClientsManagement'));
 const ReservationsManagement = lazy(() => import('./pages/admin/ReservationsManagement'));
 const RentalsManagement = lazy(() => import('./pages/admin/RentalsManagement'));
@@ -65,6 +66,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="properties" element={<PropertiesManagement />} />
 <Route path="deals" element={<DealsManagement />} />
+            <Route path="promotions" element={<PromotionsManagement />} />
             <Route path="clients" element={<ClientsManagement />} />
             <Route path="reservations" element={<ReservationsManagement />} />
             <Route path="calendar" element={<CalendarManagement />} />

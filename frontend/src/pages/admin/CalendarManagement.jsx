@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import availabilityService from '../../services/availabilityService';
@@ -115,7 +115,7 @@ const CalendarManagement = () => {
     }
   };
 
-  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]";
+  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]";
 
   const counts = useMemo(() => {
     const values = Object.values(days);
@@ -146,7 +146,7 @@ const CalendarManagement = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
+          <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
             {loading || frameLoading ? (
               <p className="text-sm text-gray-400 py-10 text-center">Loading...</p>
             ) : !propertyId ? (
@@ -155,16 +155,16 @@ const CalendarManagement = () => {
               <>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">‹</button>
+                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">â€¹</button>
                     <span className="text-base font-semibold text-gray-900 dark:text-white min-w-[170px] text-center">
                       {calMonth.toLocaleString('en', { month: 'long', year: 'numeric' })}
                     </span>
-                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">›</button>
+                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">â€º</button>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                     <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-sky-500/15 border border-sky-300 dark:border-sky-700" />{counts.booked} booked</span>
                     <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700" />{counts.blocked} blocked</span>
-                    <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700" />{counts.free} free</span>
+                    <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700" />{counts.free} free</span>
                   </div>
                 </div>
                 <MonthCalendar month={calMonth} dayStatus={days} selectable={false} />
@@ -172,29 +172,29 @@ const CalendarManagement = () => {
             )}
           </div>
 
-          <div className="bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 mt-6">
+          <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 mt-6">
             <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Block Dates</h2>
             <form onSubmit={handleSubmitBlock} className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <input type="date" value={blockForm.start_date} onChange={(e) => setBlockForm({ ...blockForm, start_date: e.target.value })} className={inputCls} required />
               <input type="date" min={blockForm.start_date || undefined} value={blockForm.end_date} onChange={(e) => setBlockForm({ ...blockForm, end_date: e.target.value })} className={inputCls} required />
               <input type="text" value={blockForm.reason} onChange={(e) => setBlockForm({ ...blockForm, reason: e.target.value })} placeholder="Reason (optional)" className={inputCls} />
               <div className="md:col-span-3">
-                <button type="submit" disabled={frameLoading} className="px-5 py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white text-sm font-semibold transition-colors disabled:opacity-50">Block selected range</button>
+                <button type="submit" disabled={frameLoading} className="px-5 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50">Block selected range</button>
               </div>
             </form>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 h-fit">
+        <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6 h-fit">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Upcoming Blocks</h2>
           {blocks.length === 0 ? (
             <p className="text-sm text-gray-400">No blocked dates.</p>
           ) : (
             <div className="space-y-3">
               {blocks.map((b) => (
-                <div key={b.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                <div key={b.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-100 dark:border-gray-700">
                   <div>
-                    <p className="text-sm text-gray-900 dark:text-white font-medium">{b.start_date} → {b.end_date}</p>
+                    <p className="text-sm text-gray-900 dark:text-white font-medium">{b.start_date} â†’ {b.end_date}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{b.reason || 'No reason'}</p>
                   </div>
                   <button type="button" onClick={() => handleUnblock(b.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Unblock</button>
@@ -212,7 +212,7 @@ const CalendarManagement = () => {
                 onChange={(e) => setIcalFile(e.target.files?.[0] || null)}
                 className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 dark:file:bg-gray-800 file:text-gray-700 dark:file:text-gray-300 file:text-sm file:font-medium hover:file:bg-gray-200 dark:hover:file:bg-gray-700 transition-colors"
               />
-              <button type="submit" disabled={frameLoading || !icalFile} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white text-sm font-semibold transition-colors disabled:opacity-50">Import calendar (.ics)</button>
+              <button type="submit" disabled={frameLoading || !icalFile} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50">Import calendar (.ics)</button>
             </form>
           </div>
         </div>

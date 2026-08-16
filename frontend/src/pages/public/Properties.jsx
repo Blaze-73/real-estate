@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+﻿import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,12 +15,12 @@ const TYPE_CHIPS = ['apartment', 'villa', 'house', 'studio'];
 
 const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities = [], priceMode = 'night' }) => {
   const { t } = useTranslation();
-  const priceSuffix = priceMode === 'total' ? ` · ${t('properties.priceTotal')}` : '';
+  const priceSuffix = priceMode === 'total' ? ` Â· ${t('properties.priceTotal')}` : '';
   return (
     <div className="space-y-4">
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.type')}</label>
-        <select name="type" value={filters.type} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]">
+        <select name="type" value={filters.type} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
           <option value="">{t('properties.allTypes')}</option>
           <option value="apartment">{t('types.apartment')}</option>
           <option value="villa">{t('types.villa')}</option>
@@ -31,22 +31,22 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.minPrice')}{priceSuffix}</label>
-        <input type="number" name="min_price" value={filters.min_price} onChange={onChange} placeholder="0" className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+        <input type="number" name="min_price" value={filters.min_price} onChange={onChange} placeholder="0" className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.maxPrice')}{priceSuffix}</label>
-        <input type="number" name="max_price" value={filters.max_price} onChange={onChange} placeholder={t('properties.any')} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]" />
+        <input type="number" name="max_price" value={filters.max_price} onChange={onChange} placeholder={t('properties.any')} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.bedrooms')}</label>
-        <select name="bedrooms" value={filters.bedrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]">
+        <select name="bedrooms" value={filters.bedrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
           <option value="">{t('properties.any')}</option>
           {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}+</option>)}
         </select>
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.bathrooms')}</label>
-        <select name="bathrooms" value={filters.bathrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]">
+        <select name="bathrooms" value={filters.bathrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
           <option value="">{t('properties.any')}</option>
           {[1, 2, 3, 4].map((n) => <option key={n} value={n}>{n}+</option>)}
         </select>
@@ -64,8 +64,8 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
                 aria-pressed={active}
                 className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium border transition-colors text-left ${
                   active
-                    ? 'bg-[#38BDF8]/10 text-[#0EA5E9] dark:text-[#38BDF8] border-[#38BDF8]/40'
-                    : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#38BDF8]'
+                    ? 'bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border-[#1f94af]/40'
+                    : 'bg-gray-50 dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#1f94af]'
                 }`}
               >
                 <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,7 +243,7 @@ const Properties = () => {
   };
 
   return (
-    <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+    <div className="pt-24 pb-16 bg-sand-50 dark:bg-ink-950 min-h-screen">
       <Seo
         title={t('properties.title')}
         description={t('properties.description')}
@@ -265,8 +265,8 @@ const Properties = () => {
               aria-pressed={type === v}
               className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-colors ${
                 type === v
-                  ? 'bg-[#38BDF8] text-white border-[#38BDF8]'
-                  : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#38BDF8]'
+                  ? 'bg-[#1f94af] text-white border-[#1f94af]'
+                  : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#1f94af]'
               }`}
             >
               {t(`types.${v}`)}
@@ -275,16 +275,16 @@ const Properties = () => {
 
           {nights >= 1 && (
             <>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#38BDF8]/10 text-[#38BDF8] text-sm font-medium border border-[#38BDF8]/20">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1f94af]/10 text-[#1f94af] text-sm font-medium border border-[#1f94af]/20">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                {check_in} → {check_out} · {t('properties.nightCount', { count: nights })}
+                {check_in} â†’ {check_out} Â· {t('properties.nightCount', { count: nights })}
                 <button
                   type="button"
                   onClick={clearDates}
                   aria-label={t('properties.removeDates')}
-                  className="grid h-5 w-5 place-items-center rounded-full bg-[#38BDF8]/15 text-[#38BDF8] hover:bg-[#38BDF8]/30 transition-colors"
+                  className="grid h-5 w-5 place-items-center rounded-full bg-[#1f94af]/15 text-[#1f94af] hover:bg-[#1f94af]/30 transition-colors"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 18L18 6M6 6l12 12" />
@@ -299,8 +299,8 @@ const Properties = () => {
                   aria-pressed={priceMode === 'night'}
                   className={`px-3.5 py-1.5 text-sm font-medium transition-colors ${
                     priceMode === 'night'
-                      ? 'bg-[#38BDF8] text-white'
-                      : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'bg-[#1f94af] text-white'
+                      : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
                 >
                   {t('properties.pricePerNight')}
@@ -311,8 +311,8 @@ const Properties = () => {
                   aria-pressed={priceMode === 'total'}
                   className={`px-3.5 py-1.5 text-sm font-medium transition-colors border-l border-gray-200 dark:border-gray-700 ${
                     priceMode === 'total'
-                      ? 'bg-[#38BDF8] text-white'
-                      : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                      ? 'bg-[#1f94af] text-white'
+                      : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
                 >
                   {t('properties.priceTotal')}
@@ -324,10 +324,10 @@ const Properties = () => {
 
         <div className="flex gap-6">
           <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-24 bg-white dark:bg-[#1E293B] rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+            <div className="sticky top-24 bg-white dark:bg-ink-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('properties.filters')}</h3>
-                <button onClick={clearFilters} className="text-xs text-[#38BDF8] hover:underline">{t('properties.clearAll')}</button>
+                <button onClick={clearFilters} className="text-xs text-[#1f94af] hover:underline">{t('properties.clearAll')}</button>
               </div>
               <FilterControls filters={filters} onChange={handleFilterChange} onAmenityToggle={toggleAmenity} selectedAmenities={amenities} priceMode={priceMode} />
             </div>
@@ -341,7 +341,7 @@ const Properties = () => {
               <div className="flex items-center gap-2 flex-wrap lg:flex-nowrap">
                 <button
                   onClick={() => setDrawerOpen(true)}
-                  className="lg:hidden px-3 py-1.5 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm font-medium flex items-center gap-2"
+                  className="lg:hidden px-3 py-1.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm font-medium flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4h18M6 12h12M10 20h4" />
@@ -353,7 +353,7 @@ const Properties = () => {
                   onClick={handleSaveSearch}
                   disabled={saveState.status === 'saving'}
                   title={t('properties.saveSearchTitle')}
-                  className="px-3 py-1.5 rounded-xl bg-[#38BDF8]/10 text-[#0EA5E9] dark:text-[#38BDF8] border border-[#38BDF8]/40 text-sm font-medium flex items-center gap-1.5 hover:bg-[#38BDF8]/20 transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-xl bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border border-[#1f94af]/40 text-sm font-medium flex items-center gap-1.5 hover:bg-[#1f94af]/20 transition-colors disabled:opacity-50"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 3h14a1 1 0 011 1v17l-8-4.5L4 21V4a1 1 0 011-1z" />
@@ -372,8 +372,8 @@ const Properties = () => {
                     aria-pressed={!mapOpen}
                     className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors ${
                       !mapOpen
-                        ? 'bg-[#38BDF8] text-white'
-                        : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                        ? 'bg-[#1f94af] text-white'
+                        : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -387,8 +387,8 @@ const Properties = () => {
                     aria-pressed={mapOpen}
                     className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors border-l border-gray-200 dark:border-gray-700 ${
                       mapOpen
-                        ? 'bg-[#38BDF8] text-white'
-                        : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                        ? 'bg-[#1f94af] text-white'
+                        : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -402,7 +402,7 @@ const Properties = () => {
                   name="sort"
                   value={filters.sort}
                   onChange={handleFilterChange}
-                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]"
+                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]"
                 >
                   {SORT_OPTIONS.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                 </select>
@@ -426,7 +426,7 @@ const Properties = () => {
                         onMouseEnter={() => setActiveId(key)}
                         onMouseLeave={() => setActiveId(null)}
                         className={`rounded-2xl transition-shadow ${
-                          activeId === key ? 'ring-2 ring-[#38BDF8] shadow-lg shadow-[#38BDF8]/10' : ''
+                          activeId === key ? 'ring-2 ring-[#1f94af] shadow-lg shadow-[#1f94af]/10' : ''
                         }`}
                       >
                         <PropertyCard property={property} priceMode={priceMode} nights={nights} />
@@ -455,8 +455,8 @@ const Properties = () => {
                     aria-current={filters.page === i + 1 ? 'page' : undefined}
                     className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${
                       filters.page === i + 1
-                        ? 'bg-[#38BDF8] text-white'
-                        : 'bg-white dark:bg-[#1E293B] text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                        ? 'bg-[#1f94af] text-white'
+                        : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                     }`}
                   >
                     {i + 1}
@@ -507,13 +507,13 @@ const Properties = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.25 }}
-              className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-[#0F172A] z-50 overflow-y-auto lg:hidden"
+              className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white dark:bg-ink-950 z-50 overflow-y-auto lg:hidden"
             >
               <div className="p-5 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('properties.filters')}</h3>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300"
+                  className="w-9 h-9 rounded-full bg-gray-100 dark:bg-ink-900 flex items-center justify-center text-gray-600 dark:text-gray-300"
                   aria-label={t('properties.closeFilters')}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -537,7 +537,7 @@ const Properties = () => {
                 </button>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="mt-2 w-full py-2.5 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold"
+                  className="mt-2 w-full py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold"
                 >
                   {t('properties.showResults')}
                 </button>
@@ -550,7 +550,7 @@ const Properties = () => {
       <button
         type="button"
         onClick={() => setMapOpen((v) => !v)}
-        className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-[#38BDF8] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-[#38BDF8]/30 active:scale-95 transition-transform"
+        className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-[#1f94af] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-[#1f94af]/30 active:scale-95 transition-transform"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           {mapOpen ? (

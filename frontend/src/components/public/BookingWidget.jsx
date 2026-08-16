@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from 'react';
+﻿import { Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import propertyService from '../../services/propertyService';
 import paymentService from '../../services/paymentService';
@@ -125,13 +125,13 @@ const BookingWidget = ({ property, slug }) => {
     }
   };
 
-  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]";
+  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]";
   const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
 
   return (
-    <div className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+    <div className="bg-white dark:bg-ink-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
       <div className="flex items-baseline justify-between mb-4">
-        <p className="text-3xl font-bold text-[#38BDF8]">
+        <p className="text-3xl font-bold text-[#1f94af]">
           {formatPrice(quote?.rate ?? property.nightly_price ?? property.monthly_price ?? property.price, t('common.contactForPrice'))}
         </p>
         {(property.nightly_price || property.monthly_price) && (
@@ -140,6 +140,25 @@ const BookingWidget = ({ property, slug }) => {
           </span>
         )}
       </div>
+
+      {property.promotions?.length > 0 && !quote && (
+        <div className="mb-4 space-y-1.5">
+          {property.promotions.map((promo) => (
+            <p key={promo.id} className="inline-flex items-center gap-1.5 text-xs font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg px-2.5 py-1.5 mr-2">
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.83z" />
+              </svg>
+              {promo.type === 'percent'
+                ? promo.min_nights
+                  ? t('booking.promoPercentNights', { value: promo.value, nights: promo.min_nights })
+                  : t('booking.promoPercent', { value: promo.value })
+                : promo.min_nights
+                  ? t('booking.promoFixedNights', { value: formatPrice(promo.value, ''), nights: promo.min_nights })
+                  : t('booking.promoFixed', { value: formatPrice(promo.value, '') })}
+            </p>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={handleQuote} className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
@@ -162,11 +181,11 @@ const BookingWidget = ({ property, slug }) => {
           <div className="flex items-center justify-between mb-2">
             <p className={labelCls}>{t('booking.availabilityCalendar')}</p>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={() => shiftMonth(-1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">‹</button>
+              <button type="button" onClick={() => shiftMonth(-1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">â€¹</button>
               <span className="text-xs font-medium text-gray-600 dark:text-gray-300 min-w-[110px] text-center">
                 {calMonth.toLocaleString(i18n.language || 'en', { month: 'long', year: 'numeric' })}
               </span>
-              <button type="button" onClick={() => shiftMonth(1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">›</button>
+              <button type="button" onClick={() => shiftMonth(1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">â€º</button>
             </div>
           </div>
           {calLoading ? (
@@ -183,7 +202,7 @@ const BookingWidget = ({ property, slug }) => {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-[11px] text-gray-500 dark:text-gray-400">
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-sky-500/15 border border-sky-300 dark:border-sky-700" />{t('booking.booked')}</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700" />{t('booking.blocked')}</span>
-            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700" />{t('booking.selectable')}</span>
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700" />{t('booking.selectable')}</span>
           </div>
         </div>
 
@@ -191,7 +210,7 @@ const BookingWidget = ({ property, slug }) => {
           <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">{quoteState.error}</p>
         )}
 
-        <button type="submit" disabled={quoteState.loading} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" disabled={quoteState.loading} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
           {quoteState.loading ? t('booking.checking') : t('booking.checkAvailability')}
         </button>
       </form>
@@ -202,6 +221,12 @@ const BookingWidget = ({ property, slug }) => {
             <span>{formatPrice(quote.rate, '')} x {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
             <span>{formatPrice(quote.subtotal, '')}</span>
           </div>
+          {quote.discount > 0 && quote.promotion && (
+            <div className="flex items-center justify-between text-sm text-green-600 dark:text-green-400">
+              <span>{t('booking.promoApplied', { name: quote.promotion.name })}</span>
+              <span>âˆ’{formatPrice(quote.discount, '')}</span>
+            </div>
+          )}
           {quote.cleaning_fee > 0 && (
             <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
               <span>{t('booking.cleaningFee')}</span>
@@ -216,7 +241,7 @@ const BookingWidget = ({ property, slug }) => {
             <p className="text-xs text-gray-500 dark:text-gray-400">{t('booking.depositRequired', { amount: formatPrice(quote.deposit, '') })}</p>
           )}
           {quote.instant_book && (
-            <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#0EA5E9]">
+            <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#117490]">
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
@@ -241,18 +266,24 @@ const BookingWidget = ({ property, slug }) => {
                       <span>{t('booking.yourDates')}</span>
                       <span className="text-right">
                         {new Date(quote.check_in + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        {' → '}
+                        {' â†’ '}
                         {new Date(quote.check_out + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
-                      <span>{t('booking.nightsCount', { count: quote.nights })} · {t('booking.guestCount', { count: guests })}</span>
+                      <span>{t('booking.nightsCount', { count: quote.nights })} Â· {t('booking.guestCount', { count: guests })}</span>
                     </div>
                     <p className="pt-1 text-xs font-semibold uppercase tracking-[0.14em]">{t('booking.priceBreakdown')}</p>
                     <div className="flex items-center justify-between gap-3">
-                      <span>{formatPrice(quote.rate, '')} × {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
+                      <span>{formatPrice(quote.rate, '')} Ã— {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
                       <span>{formatPrice(quote.subtotal, '')}</span>
                     </div>
+                    {quote.discount > 0 && quote.promotion && (
+                      <div className="flex items-center justify-between gap-3 text-green-600 dark:text-green-400">
+                        <span>{t('booking.promoApplied', { name: quote.promotion.name })}</span>
+                        <span>âˆ’{formatPrice(quote.discount, '')}</span>
+                      </div>
+                    )}
                     {quote.cleaning_fee > 0 && (
                       <div className="flex items-center justify-between gap-3">
                         <span>{t('booking.cleaningFee')}</span>
@@ -290,7 +321,7 @@ const BookingWidget = ({ property, slug }) => {
                     type="button"
                     onClick={handlePayDeposit}
                     disabled={payState.loading}
-                    className="w-full py-2.5 rounded-xl bg-[#0EA5E9] hover:bg-[#0284C7] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-2.5 rounded-xl bg-[#117490] hover:bg-[#0e5d75] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {payState.loading ? t('booking.payRedirecting') : t('booking.payDeposit', { amount: formatPrice(quote.deposit, '') })}
                   </button>
@@ -312,11 +343,11 @@ const BookingWidget = ({ property, slug }) => {
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#38BDF8]"
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#1f94af]"
                     />
                     <span>{t('booking.consentLabel')}</span>
                   </label>
-                  <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                  <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     {bookingState.sending ? t('booking.submitting') : quote.instant_book ? t('booking.confirmBooking') : t('booking.requestBooking')}
                   </button>
                 </>

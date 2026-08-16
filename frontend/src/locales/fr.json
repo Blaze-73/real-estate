@@ -298,7 +298,12 @@
     "deposit": "Acompte",
     "printConfirmation": "Imprimer / enregistrer en PDF",
     "consentLabel": "Tenez-moi aussi au courant — disponibilités saisonnières et bons plans locaux par WhatsApp ou e-mail.",
-    "consentNote": "Nous vous tiendrons au courant des disponibilités saisonnières et des bons plans locaux."
+    "consentNote": "Nous vous tiendrons au courant des disponibilités saisonnières et des bons plans locaux.",
+    "promoApplied": "{{name}}",
+    "promoPercent": "{{value}}% de réduction",
+    "promoPercentNights": "{{value}}% de réduction dès {{nights}} nuits",
+    "promoFixed": "{{value}} de réduction",
+    "promoFixedNights": "{{value}} de réduction dès {{nights}} nuits"
   },
   "reviews": {
     "title": "Avis des voyageurs",

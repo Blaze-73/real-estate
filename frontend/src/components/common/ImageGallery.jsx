@@ -1,15 +1,15 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ImageGallery = ({ images = [] }) => {
   const [current, setCurrent] = useState(0);
-  const gallery = images.length > 0 ? images : ['https://placehold.co/800x500/0F172A/38BDF8?text=Asilah'];
+  const gallery = images.length > 0 ? images : ['https://placehold.co/800x500/0B141B/1f94af?text=Asilah'];
 
   const next = () => setCurrent((prev) => (prev + 1) % gallery.length);
   const prev = () => setCurrent((prev) => (prev - 1 + gallery.length) % gallery.length);
 
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-[#0F172A]">
+    <div className="relative rounded-2xl overflow-hidden bg-ink-950">
       <div className="relative h-[400px] md:h-[500px]">
         <AnimatePresence mode="wait">
           <motion.img
@@ -41,7 +41,7 @@ const ImageGallery = ({ images = [] }) => {
       {gallery.length > 1 && (
         <div className="flex gap-2 p-3 overflow-x-auto">
           {gallery.map((img, idx) => (
-            <button key={idx} onClick={() => setCurrent(idx)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${idx === current ? 'border-[#38BDF8]' : 'border-transparent'}`}>
+            <button key={idx} onClick={() => setCurrent(idx)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${idx === current ? 'border-[#1f94af]' : 'border-transparent'}`}>
               <img src={img} alt="" className="w-full h-full object-cover" />
             </button>
           ))}
@@ -52,3 +52,4 @@ const ImageGallery = ({ images = [] }) => {
 };
 
 export default ImageGallery;
+

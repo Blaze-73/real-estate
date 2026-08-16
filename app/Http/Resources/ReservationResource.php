@@ -18,6 +18,11 @@ class ReservationResource extends JsonResource
             'message' => $this->message,
             'total_price' => $this->total_price,
             'deposit' => $this->deposit,
+            'discount' => $this->discount,
+            'promotion' => $this->whenLoaded('promotion', fn () => $this->promotion ? [
+                'id' => $this->promotion->id,
+                'name' => $this->promotion->name,
+            ] : null),
             'deposit_paid' => $this->payments->contains(fn ($payment) => $payment->status === 'paid'),
             'guests' => $this->guests,
             'guest_name' => $this->guest_name,

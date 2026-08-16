@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import contactService from '../../services/contactService';
 
 const MessagesManagement = () => {
@@ -86,7 +86,7 @@ const MessagesManagement = () => {
           <p className="text-gray-500 dark:text-gray-400 text-sm">Inbound inquiries from the contact form, viewing requests and phone reveals</p>
         </div>
         <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-          <input type="checkbox" checked={unreadOnly} onChange={(e) => setUnreadOnly(e.target.checked)} className="w-4 h-4 accent-[#38BDF8]" />
+          <input type="checkbox" checked={unreadOnly} onChange={(e) => setUnreadOnly(e.target.checked)} className="w-4 h-4 accent-[#1f94af]" />
           Unread only
         </label>
       </div>
@@ -98,9 +98,9 @@ const MessagesManagement = () => {
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-1 bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div className="lg:col-span-1 bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
           {loading ? (
-            <div className="p-8 text-center text-gray-400 text-sm">Loading messages…</div>
+            <div className="p-8 text-center text-gray-400 text-sm">Loading messagesâ€¦</div>
           ) : messages.length === 0 ? (
             <div className="p-6 text-center text-gray-400 text-sm">No messages</div>
           ) : (
@@ -109,11 +109,11 @@ const MessagesManagement = () => {
                 <button
                   key={m.id}
                   onClick={() => openMessage(m)}
-                  className={`w-full p-4 text-left border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors ${selected?.id === m.id ? 'bg-gray-50 dark:bg-gray-800' : ''}`}
+                  className={`w-full p-4 text-left border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors ${selected?.id === m.id ? 'bg-gray-50 dark:bg-ink-900' : ''}`}
                 >
                   <div className="flex items-start justify-between mb-1">
                     <span className={`text-sm font-medium truncate ${m.is_read ? 'text-gray-600 dark:text-gray-300' : 'text-gray-900 dark:text-white'}`}>{m.name}</span>
-                    {!m.is_read && <span className="w-2 h-2 rounded-full bg-[#38BDF8] shrink-0 mt-1" />}
+                    {!m.is_read && <span className="w-2 h-2 rounded-full bg-[#1f94af] shrink-0 mt-1" />}
                   </div>
                   <p className="text-xs text-gray-400 truncate">{m.subject}</p>
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mt-1">{m.type === 'phone_reveal' ? 'Phone reveal' : 'Contact form'}</p>
@@ -122,16 +122,16 @@ const MessagesManagement = () => {
               ))}
               {meta.last_page > 1 && (
                 <div className="flex items-center justify-between p-3">
-                  <button type="button" disabled={page <= 1} onClick={() => load(page - 1)} className="px-3 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Prev</button>
+                  <button type="button" disabled={page <= 1} onClick={() => load(page - 1)} className="px-3 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Prev</button>
                   <span className="text-xs text-gray-400">Page {page} / {meta.last_page}</span>
-                  <button type="button" disabled={page >= meta.last_page} onClick={() => load(page + 1)} className="px-3 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Next</button>
+                  <button type="button" disabled={page >= meta.last_page} onClick={() => load(page + 1)} className="px-3 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Next</button>
                 </div>
               )}
             </>
           )}
         </div>
 
-        <div className="lg:col-span-2 bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
+        <div className="lg:col-span-2 bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-6">
           {selected ? (
             <div>
               <div className="flex items-start justify-between mb-4">
@@ -139,7 +139,7 @@ const MessagesManagement = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{selected.subject}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     From: {selected.name} ({selected.email})
-                    {selected.phone ? ` · Phone: ${selected.phone}` : ''}
+                    {selected.phone ? ` Â· Phone: ${selected.phone}` : ''}
                   </p>
                   <p className="text-xs text-gray-400">{new Date(selected.created_at).toLocaleString()}</p>
                 </div>
@@ -147,11 +147,11 @@ const MessagesManagement = () => {
                   Delete
                 </button>
               </div>
-              <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+              <div className="p-4 rounded-xl bg-gray-50 dark:bg-ink-900">
                 <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{selected.message}</p>
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href={replyHref} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold hover:bg-[#0EA5E9] transition-colors">
+                <a href={replyHref} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M3 8l9-5 9 5v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm0 0l9 5 9-5" />
                   </svg>

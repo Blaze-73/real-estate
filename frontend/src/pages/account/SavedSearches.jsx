@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -24,13 +24,13 @@ const summaryFor = (t, filters = {}) => {
   const parts = [];
   if (filters.type) parts.push(t(`types.${filters.type}`));
   if (filters.city) parts.push(filters.city);
-  if (filters.min_price && filters.max_price) parts.push(`${filters.min_price}–${filters.max_price}`);
+  if (filters.min_price && filters.max_price) parts.push(`${filters.min_price}â€“${filters.max_price}`);
   else if (filters.min_price) parts.push(`${filters.min_price}+`);
-  else if (filters.max_price) parts.push(`≤ ${filters.max_price}`);
+  else if (filters.max_price) parts.push(`â‰¤ ${filters.max_price}`);
   if (filters.bedrooms) parts.push(`${filters.bedrooms}+ ${t('properties.bedrooms').toLowerCase()}`);
   if (filters.bathrooms) parts.push(`${filters.bathrooms}+ ${t('properties.bathrooms').toLowerCase()}`);
-  if (filters.check_in && filters.check_out) parts.push(`${filters.check_in} → ${filters.check_out}`);
-  return parts.length ? parts.join(' · ') : t('savedSearches.allProperties');
+  if (filters.check_in && filters.check_out) parts.push(`${filters.check_in} â†’ ${filters.check_out}`);
+  return parts.length ? parts.join(' Â· ') : t('savedSearches.allProperties');
 };
 
 const SavedSearches = () => {
@@ -106,7 +106,7 @@ const SavedSearches = () => {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-2xl bg-gray-100 dark:bg-[#1E293B] animate-pulse" />
+            <div key={i} className="h-24 rounded-2xl bg-gray-100 dark:bg-ink-900 animate-pulse" />
           ))}
         </div>
       ) : items.length === 0 ? (
@@ -116,14 +116,14 @@ const SavedSearches = () => {
           </svg>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('savedSearches.empty')}</h3>
           <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{t('savedSearches.emptyHint')}</p>
-          <Link to="/properties" className="inline-block px-5 py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white text-sm font-medium transition-colors">
+          <Link to="/properties" className="inline-block px-5 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-medium transition-colors">
             {t('savedSearches.browse')}
           </Link>
         </div>
       ) : (
         <ul className="space-y-4">
           {items.map((item) => (
-            <li key={item.id} className="rounded-2xl bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 p-5">
+            <li key={item.id} className="rounded-2xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 p-5">
               <div className="flex flex-col md:flex-row md:items-center gap-4">
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-gray-900 dark:text-white truncate">{item.name}</h3>
@@ -139,13 +139,13 @@ const SavedSearches = () => {
                       <span className={`w-1.5 h-1.5 rounded-full ${item.active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
                       {item.active ? t('savedSearches.active') : t('savedSearches.paused')}
                     </span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">{t('savedSearches.lastAlert')}: {item.last_alert_at || '—'}</span>
+                    <span className="text-xs text-gray-400 dark:text-gray-500">{t('savedSearches.lastAlert')}: {item.last_alert_at || 'â€”'}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Link
                     to={buildResultsUrl(item.filters)}
-                    className="px-4 py-2 rounded-xl bg-[#38BDF8]/10 text-[#0EA5E9] dark:text-[#38BDF8] border border-[#38BDF8]/40 text-sm font-medium hover:bg-[#38BDF8]/20 transition-colors"
+                    className="px-4 py-2 rounded-xl bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border border-[#1f94af]/40 text-sm font-medium hover:bg-[#1f94af]/20 transition-colors"
                   >
                     {t('savedSearches.viewResults')}
                   </Link>
@@ -153,7 +153,7 @@ const SavedSearches = () => {
                     type="button"
                     onClick={() => toggleActive(item)}
                     disabled={busyId === item.id}
-                    className="px-4 py-2 rounded-xl bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50"
                   >
                     {item.active ? t('savedSearches.pause') : t('savedSearches.resume')}
                   </button>

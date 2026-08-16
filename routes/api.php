@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\PropertyImageController;
+use App\Http\Controllers\Api\PromotionController;
 use App\Http\Controllers\Api\PublicPaymentController;
 use App\Http\Controllers\Api\RentalController;
 use App\Http\Controllers\Api\ReservationController;
@@ -98,6 +99,8 @@ Route::prefix('v1')->group(function () {
 
         Route::get('deals/stats', [DealController::class, 'stats']);
         Route::apiResource('deals', DealController::class);
+
+        Route::apiResource('promotions', PromotionController::class);
 
         Route::apiResource('testimonials', TestimonialController::class);
 

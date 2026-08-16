@@ -298,7 +298,12 @@
     "deposit": "الوديعة",
     "printConfirmation": "طباعة / حفظ PDF",
     "consentLabel": "أبقني على اطلاع أيضًا — التوفر الموسمي ونصائح محلية عبر واتساب أو البريد الإلكتروني.",
-    "consentNote": "سنبقيك على اطلاع بالتوفر الموسمي والنصائح المحلية."
+    "consentNote": "سنبقيك على اطلاع بالتوفر الموسمي والنصائح المحلية.",
+    "promoApplied": "{{name}}",
+    "promoPercent": "خصم {{value}}%",
+    "promoPercentNights": "خصم {{value}}% للحد الأدنى {{nights}} ليالٍ",
+    "promoFixed": "خصم {{value}}",
+    "promoFixedNights": "خصم {{value}} للحد الأدنى {{nights}} ليالٍ"
   },
   "reviews": {
     "title": "آراء الضيوف",

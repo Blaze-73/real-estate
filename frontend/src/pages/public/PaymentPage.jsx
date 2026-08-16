@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ const CardInput = ({ label, value, onChange, placeholder, type = 'text', maxLeng
       maxLength={maxLength}
       inputMode={inputMode}
       autoComplete="off"
-      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]"
+      className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]"
     />
   </div>
 );
@@ -65,7 +65,7 @@ const PaymentPage = () => {
 
   if (loading) {
     return (
-      <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+      <div className="pt-24 pb-16 bg-sand-50 dark:bg-ink-950 min-h-screen">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <TextSkeleton />
           <TextSkeleton />
@@ -76,10 +76,10 @@ const PaymentPage = () => {
 
   if (invalid || !preview) {
     return (
-      <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+      <div className="pt-24 pb-16 bg-sand-50 dark:bg-ink-950 min-h-screen">
         <div className="max-w-md mx-auto px-4 text-center mt-16">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{t('payment.invalidLink')}</h1>
-          <Link to="/" className="inline-block mt-2 text-sm font-semibold text-[#38BDF8] hover:underline">{t('common.backHome')}</Link>
+          <Link to="/" className="inline-block mt-2 text-sm font-semibold text-[#1f94af] hover:underline">{t('common.backHome')}</Link>
         </div>
       </div>
     );
@@ -88,10 +88,10 @@ const PaymentPage = () => {
   const amount = Number(preview.payment?.amount ?? 0);
 
   return (
-    <div className="pt-24 pb-16 bg-[#F8FAFC] dark:bg-gray-900 min-h-screen">
+    <div className="pt-24 pb-16 bg-sand-50 dark:bg-ink-950 min-h-screen">
       <Seo title={t('payment.title')} description={t('payment.description')} noindex />
-      <section className="relative py-14 bg-gradient-to-r from-[#0F172A] to-[#1E293B] overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #38BDF8 0%, transparent 50%)' }} />
+      <section className="relative py-14 bg-gradient-to-r from-ink-950 to-ink-900 overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #1f94af 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold text-white mb-3">{t('payment.title')}</motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-400">{t('payment.depositFor')}</motion.p>
@@ -100,11 +100,11 @@ const PaymentPage = () => {
 
       <section className="py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-[#1E293B] rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+          <div className="bg-white dark:bg-ink-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
             <div className="p-6 space-y-4 border-b border-gray-100 dark:border-gray-800">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-500 dark:text-gray-400">{t('payment.property')}</span>
-                <Link to={`/properties/${preview.property_slug}`} className="text-sm font-semibold text-gray-900 dark:text-white hover:text-[#38BDF8] transition-colors text-right">
+                <Link to={`/properties/${preview.property_slug}`} className="text-sm font-semibold text-gray-900 dark:text-white hover:text-[#1f94af] transition-colors text-right">
                   {preview.property_title}
                 </Link>
               </div>
@@ -116,13 +116,13 @@ const PaymentPage = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500 dark:text-gray-400">{t('payment.dates')}</span>
                   <span className="text-sm font-medium text-gray-900 dark:text-white">
-                    {new Date(preview.check_in).toLocaleDateString()} → {new Date(preview.check_out).toLocaleDateString()}
+                    {new Date(preview.check_in).toLocaleDateString()} â†’ {new Date(preview.check_out).toLocaleDateString()}
                   </span>
                 </div>
               )}
               <div className="flex items-center justify-between pt-2">
                 <span className="text-base font-semibold text-gray-900 dark:text-white">{t('payment.amountToPay')}</span>
-                <span className="text-2xl font-bold text-[#38BDF8]">{formatPrice(amount, '')}</span>
+                <span className="text-2xl font-bold text-[#1f94af]">{formatPrice(amount, '')}</span>
               </div>
             </div>
 
@@ -134,7 +134,7 @@ const PaymentPage = () => {
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('payment.success')}</h2>
                 <p className="text-sm text-gray-500 dark:text-gray-400">{t('payment.successDetails')}</p>
                 {preview.property_slug && (
-                  <Link to={`/properties/${preview.property_slug}`} className="inline-block mt-2 px-5 py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm">
+                  <Link to={`/properties/${preview.property_slug}`} className="inline-block mt-2 px-5 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm">
                     {t('payment.viewProperty')}
                   </Link>
                 )}
@@ -178,7 +178,7 @@ const PaymentPage = () => {
                 <button
                   type="submit"
                   disabled={state.processing || card.number.length < 12 || card.expiry.length < 4 || card.cvv.length < 3}
-                  className="w-full py-3 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {state.processing ? t('payment.processing') : t('payment.payNow', { amount: formatPrice(amount, '') })}
                 </button>

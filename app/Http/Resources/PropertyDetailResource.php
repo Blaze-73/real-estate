@@ -47,6 +47,13 @@ class PropertyDetailResource extends JsonResource
                 ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
                 ->count(),
             'free_nights_next_month' => $this->freeNightsNextMonth(),
+            'promotions' => $this->activePromotions()->map(fn ($p) => [
+                'id' => $p->id,
+                'name' => $p->name,
+                'type' => $p->type,
+                'value' => (float) $p->value,
+                'min_nights' => $p->min_nights,
+            ])->values(),
             'reviews' => ReviewResource::collection($this->whenLoaded('approvedReviews')),
             'cover' => PropertyImageResource::resolveUrl($this->images->firstWhere('is_primary', true)?->image_path ?? $this->images->first()?->image_path),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import settingService from '../../services/settingService';
 
@@ -60,7 +60,7 @@ const SettingsPage = () => {
     }
   };
 
-  const inputCls = 'w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#38BDF8]';
+  const inputCls = 'w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]';
 
   const renderField = ([key, field, label, type]) => {
     if (type === 'textarea') {
@@ -92,7 +92,7 @@ const SettingsPage = () => {
         <p className="text-gray-400 text-sm">Loading settings...</p>
       ) : (
         <form onSubmit={handleSubmit} className="max-w-2xl space-y-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-[#1E293B] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white dark:bg-ink-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Company Information</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {renderField(FIELD_MAP[0])}
@@ -102,7 +102,7 @@ const SettingsPage = () => {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white dark:bg-[#1E293B] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-white dark:bg-ink-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Social Media & WhatsApp</h3>
             <div className="space-y-3">
               {renderField(FIELD_MAP[4])}
@@ -112,7 +112,7 @@ const SettingsPage = () => {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-[#1E293B] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-white dark:bg-ink-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Commission Rates</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">Default commission applied when a deal is closed on a sale or rental.</p>
             <div className="grid grid-cols-2 gap-3">
@@ -121,7 +121,7 @@ const SettingsPage = () => {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white dark:bg-[#1E293B] rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-white dark:bg-ink-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <h3 className="font-semibold text-gray-900 dark:text-white mb-4">About Content</h3>
             <div className="space-y-3">
               {renderField(FIELD_MAP[8])}
@@ -130,7 +130,7 @@ const SettingsPage = () => {
             </div>
           </motion.div>
 
-          <button type="submit" className="px-6 py-2.5 rounded-xl bg-[#38BDF8] text-white text-sm font-semibold hover:bg-[#0EA5E9] transition-colors">
+          <button type="submit" className="px-6 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
             {saved ? 'Saved!' : 'Save Settings'}
           </button>
         </form>

@@ -20,6 +20,8 @@ class Reservation extends Model
         'booking_reference',
         'total_price',
         'deposit',
+        'promotion_id',
+        'discount',
         'guests',
         'guest_name',
         'guest_email',
@@ -36,6 +38,7 @@ class Reservation extends Model
             'check_out' => 'date',
             'total_price' => 'decimal:2',
             'deposit' => 'decimal:2',
+            'discount' => 'decimal:2',
             'marketing_consent' => 'boolean',
         ];
     }
@@ -43,6 +46,11 @@ class Reservation extends Model
     public function property()
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
     }
 
     public function client()

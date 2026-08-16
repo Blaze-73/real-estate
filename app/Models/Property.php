@@ -140,6 +140,21 @@ class Property extends Model
         return $this->hasMany(Rental::class);
     }
 
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class);
+    }
+
+    public function activePromotions()
+    {
+        return Promotion::active()
+            ->where(function ($query) {
+                $query->whereNull('property_id')->orWhere('property_id', $this->id);
+            })
+            ->orderBy('value', 'desc')
+            ->get();
+    }
+
     public function freeNightsNextMonth(): int
     {
         if (!$this->nightly_price) {

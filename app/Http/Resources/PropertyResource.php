@@ -46,6 +46,13 @@ class PropertyResource extends JsonResource
                 ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
                 ->count(),
             'free_nights_next_month' => $this->freeNightsNextMonth(),
+            'promotions' => $this->activePromotions()->map(fn ($p) => [
+                'id' => $p->id,
+                'name' => $p->name,
+                'type' => $p->type,
+                'value' => (float) $p->value,
+                'min_nights' => $p->min_nights,
+            ])->values(),
             'user' => new UserResource($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

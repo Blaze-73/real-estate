@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\BookingConfirmation;
 use App\Mail\NewBookingNotification;
+use App\Models\Promotion;
 use App\Models\Property;
 use App\Models\PropertyAvailability;
 use App\Models\Reservation;
@@ -37,7 +38,10 @@ class BookingService
 
         $cleaningFee = (float) $property->cleaning_fee;
         $deposit = (float) $property->deposit;
-        $total = round($subtotal + $cleaningFee, 2);
+
+        $promotion = $this->bestPromotion($property, $nights, $start, $end);
+        $discount = $promotion ? $promotion->discountFor($subtotal) : 0.0;
+        $total = round($subtotal - $discount + $cleaningFee, 2);
 
         return [
             'check_in' => $start->toDateString(),
@@ -49,10 +53,32 @@ class BookingService
             'subtotal' => $subtotal,
             'cleaning_fee' => $cleaningFee,
             'deposit' => $deposit,
+            'discount' => round($discount, 2),
+            'promotion' => $promotion ? [
+                'id' => $promotion->id,
+                'name' => $promotion->name,
+                'type' => $promotion->type,
+                'value' => (float) $promotion->value,
+            ] : null,
             'total' => $total,
             'available' => $this->isAvailable($property, $start, $end),
             'instant_book' => (bool) $property->instant_book,
         ];
+    }
+
+    public function bestPromotion(Property $property, int $nights, Carbon $checkIn, Carbon $checkOut): ?Promotion
+    {
+        $checkIn = $checkIn->toDateString();
+        $checkOut = $checkOut->toDateString();
+
+        $promotion = Promotion::active()
+            ->forProperty($property)
+            ->get()
+            ->filter(fn (Promotion $promotion) => $promotion->appliesTo($nights, $checkIn, $checkOut))
+            ->sortByDesc(fn (Promotion $promotion) => $promotion->discountFor(1000))
+            ->first();
+
+        return $promotion;
     }
 
     public function rateForNight(Property $property, Carbon $date): float
@@ -140,6 +166,8 @@ class BookingService
             'booking_reference' => $this->uniqueReference(),
             'total_price' => $quote['total'],
             'deposit' => $quote['deposit'],
+            'promotion_id' => $quote['promotion']['id'] ?? null,
+            'discount' => $quote['discount'],
             'guests' => $data['guests'] ?? null,
             'guest_name' => $data['guest_name'] ?? $client->name,
             'guest_email' => $data['guest_email'] ?? $client->email,

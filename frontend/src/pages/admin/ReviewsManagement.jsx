@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchAdminReviews, approveReview, deleteReview } from '../../services/reviewService';
 
@@ -63,14 +63,14 @@ const ReviewsManagement = () => {
           className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${
             pendingOnly
               ? 'bg-amber-500 text-white'
-              : 'bg-white dark:bg-[#1E293B] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+              : 'bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
           }`}
         >
           {pendingOnly ? 'Showing pending' : 'Show pending only'}
         </button>
       </div>
 
-      <div className="bg-white dark:bg-[#1E293B] rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+      <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-gray-400">Loading...</div>
         ) : reviews.length === 0 ? (
@@ -100,7 +100,7 @@ const ReviewsManagement = () => {
                   {!r.is_approved && (
                     <button
                       onClick={() => handleApprove(r.id)}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#38BDF8] text-white hover:bg-[#0EA5E9] transition-colors"
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1f94af] text-white hover:bg-[#117490] transition-colors"
                     >
                       Approve
                     </button>
@@ -121,7 +121,7 @@ const ReviewsManagement = () => {
       <AnimatePresence>
         {confirmDelete && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setConfirmDelete(null)}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-[#1E293B] rounded-2xl p-6 w-full max-w-sm shadow-2xl text-center" onClick={(e) => e.stopPropagation()}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-ink-900 rounded-2xl p-6 w-full max-w-sm shadow-2xl text-center" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Delete this review?</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">This action cannot be undone.</p>
               <div className="flex gap-3">

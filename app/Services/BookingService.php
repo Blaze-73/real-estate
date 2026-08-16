@@ -146,6 +146,7 @@ class BookingService
             'guest_phone' => $data['guest_phone'] ?? $client->phone,
             'channel' => $data['channel'] ?? 'direct',
             'source' => $data['source'] ?? null,
+            'marketing_consent' => (bool) ($data['marketing_consent'] ?? false),
         ])->load(['property', 'client']);
 
         $this->createDepositPayment($reservation, $quote['deposit']);

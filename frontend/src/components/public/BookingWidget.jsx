@@ -35,6 +35,7 @@ const BookingWidget = ({ property, slug }) => {
   const [quoteState, setQuoteState] = useState({ loading: false, error: '' });
   const [booking, setBooking] = useState({ name: '', email: '', phone: '' });
   const [bookingState, setBookingState] = useState({ sending: false, done: false, error: '', reference: '', instant: false });
+  const [consent, setConsent] = useState(false);
   const [payState, setPayState] = useState({ loading: false, error: '' });
   const [calMonth, setCalMonth] = useState(() => new Date());
   const [calendar, setCalendar] = useState({});
@@ -106,6 +107,7 @@ const BookingWidget = ({ property, slug }) => {
         guest_name: booking.name,
         guest_email: booking.email,
         guest_phone: booking.phone,
+        marketing_consent: consent,
       });
       setBookingState({ sending: false, done: true, reference: result.booking_reference, instant: !!result.instant, error: '' });
     } catch (err) {
@@ -231,10 +233,55 @@ const BookingWidget = ({ property, slug }) => {
           {quote.available && (
             <form onSubmit={handleBooking} className="pt-3 space-y-3">
               {bookingState.done && (
-                <div className="p-3 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 text-sm space-y-1">
-                  <p className="font-semibold">{bookingState.instant ? t('booking.bookingConfirmed') : t('booking.bookingReceived')}</p>
-                  <p>{t('booking.yourReference', { reference: bookingState.reference })}</p>
+                <div id="booking-confirmation" className="p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm space-y-1">
+                  <p className="font-semibold text-base">{bookingState.instant ? t('booking.bookingConfirmed') : t('booking.bookingReceived')}</p>
+                  <p className="font-semibold">{t('booking.yourReference', { reference: bookingState.reference })}</p>
+                  <div className="mt-2 border-t border-green-200 dark:border-green-800 pt-2 space-y-1.5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span>{t('booking.yourDates')}</span>
+                      <span className="text-right">
+                        {new Date(quote.check_in + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        {' → '}
+                        {new Date(quote.check_out + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>{t('booking.nightsCount', { count: quote.nights })} · {t('booking.guestCount', { count: guests })}</span>
+                    </div>
+                    <p className="pt-1 text-xs font-semibold uppercase tracking-[0.14em]">{t('booking.priceBreakdown')}</p>
+                    <div className="flex items-center justify-between gap-3">
+                      <span>{formatPrice(quote.rate, '')} × {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
+                      <span>{formatPrice(quote.subtotal, '')}</span>
+                    </div>
+                    {quote.cleaning_fee > 0 && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span>{t('booking.cleaningFee')}</span>
+                        <span>{formatPrice(quote.cleaning_fee, '')}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between gap-3 font-semibold">
+                      <span>{t('booking.total')}</span>
+                      <span>{formatPrice(quote.total, '')}</span>
+                    </div>
+                    {quote.deposit > 0 && (
+                      <div className="flex items-center justify-between gap-3">
+                        <span>{t('booking.deposit')}</span>
+                        <span>{formatPrice(quote.deposit, '')}</span>
+                      </div>
+                    )}
+                  </div>
                   <p className="text-xs">{bookingState.instant ? t('booking.payToFinalize') : t('booking.confirmSoon')}</p>
+                  {consent && <p className="text-xs">{t('booking.consentNote')}</p>}
+                  <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="print:hidden mt-2 inline-flex items-center gap-1.5 rounded-lg border border-green-300 dark:border-green-700 px-3 py-1.5 text-xs font-semibold transition-colors hover:bg-green-100 dark:hover:bg-green-900/30"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z" />
+                    </svg>
+                    {t('booking.printConfirmation')}
+                  </button>
                 </div>
               )}
               {bookingState.done && quote.deposit > 0 && (
@@ -260,6 +307,15 @@ const BookingWidget = ({ property, slug }) => {
                   <input type="text" value={booking.name} onChange={(e) => setBooking({ ...booking, name: e.target.value })} placeholder={t('booking.fullName')} className={inputCls} required />
                   <input type="email" value={booking.email} onChange={(e) => setBooking({ ...booking, email: e.target.value })} placeholder={t('booking.emailAddress')} className={inputCls} required />
                   <input type="tel" value={booking.phone} onChange={(e) => setBooking({ ...booking, phone: e.target.value })} placeholder={t('propertyDetails.phoneNumber')} className={inputCls} />
+                  <label className="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-300">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#38BDF8]"
+                    />
+                    <span>{t('booking.consentLabel')}</span>
+                  </label>
                   <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#38BDF8] hover:bg-[#0EA5E9] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     {bookingState.sending ? t('booking.submitting') : quote.instant_book ? t('booking.confirmBooking') : t('booking.requestBooking')}
                   </button>

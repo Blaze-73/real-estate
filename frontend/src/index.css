@@ -178,3 +178,28 @@
 .leaflet-container {
   font-family: var(--font-sans);
 }
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #booking-confirmation,
+  #booking-confirmation * {
+    visibility: visible;
+  }
+  #booking-confirmation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+}

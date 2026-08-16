@@ -289,7 +289,16 @@
     "bookingFailed": "Échec de la réservation. Veuillez réessayer.",
     "payDeposit": "Payer l'acompte en ligne ({{amount}})",
     "payRedirecting": "Redirection vers le paiement sécurisé...",
-    "payFailed": "Impossible de lancer le paiement. Veuillez réessayer ou nous contacter."
+    "payFailed": "Impossible de lancer le paiement. Veuillez réessayer ou nous contacter.",
+    "yourDates": "Vos dates",
+    "nightsCount": "{{count}} nuit(s)",
+    "guestCount": "{{count}} voyageur(s)",
+    "priceBreakdown": "Détail du prix",
+    "subtotal": "Sous-total",
+    "deposit": "Acompte",
+    "printConfirmation": "Imprimer / enregistrer en PDF",
+    "consentLabel": "Tenez-moi aussi au courant — disponibilités saisonnières et bons plans locaux par WhatsApp ou e-mail.",
+    "consentNote": "Nous vous tiendrons au courant des disponibilités saisonnières et des bons plans locaux."
   },
   "reviews": {
     "title": "Avis des voyageurs",

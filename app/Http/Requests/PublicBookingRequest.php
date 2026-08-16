@@ -23,6 +23,7 @@ class PublicBookingRequest extends FormRequest
             'message' => 'nullable|string|max:1000',
             'channel' => 'nullable|in:direct,airbnb,booking,other',
             'source' => 'nullable|string|max:255',
+            'marketing_consent' => 'nullable|boolean',
         ];
     }
 }

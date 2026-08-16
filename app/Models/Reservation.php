@@ -26,6 +26,7 @@ class Reservation extends Model
         'guest_phone',
         'channel',
         'source',
+        'marketing_consent',
     ];
 
     protected function casts(): array
@@ -35,6 +36,7 @@ class Reservation extends Model
             'check_out' => 'date',
             'total_price' => 'decimal:2',
             'deposit' => 'decimal:2',
+            'marketing_consent' => 'boolean',
         ];
     }
 

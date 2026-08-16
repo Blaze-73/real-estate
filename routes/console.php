@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('ical:sync')->hourly();
 Schedule::command('saved-search:alerts')->dailyAt('06:00');
+Schedule::command('lead-followups')->dailyAt('09:00');

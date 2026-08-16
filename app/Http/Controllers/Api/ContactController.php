@@ -50,6 +50,7 @@ class ContactController extends Controller
             'phone' => $validated['phone'] ?? null,
             'subject' => __('Phone number requested — :title', ['title' => $property->title]),
             'message' => __('This visitor requested direct contact with the owner of ":title".', ['title' => $property->title]),
+            'type' => 'phone_reveal',
         ]);
 
         $phone = $property->user?->phone

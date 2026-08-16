@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { logoutUser } from '../../store/slices/authSlice';
+import { fetchWishlist } from '../../store/slices/wishlistSlice';
 import ThemeToggle from '../common/ThemeToggle';
 import LanguageSwitcher from '../common/LanguageSwitcher';
 
@@ -34,10 +35,16 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { token } = useSelector((state) => state.auth);
+  const wishlistCount = useSelector((state) => state.wishlist.slugs.length);
+  const wishlistLoaded = useSelector((state) => state.wishlist.loaded);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  useEffect(() => {
+    if (token && !wishlistLoaded) dispatch(fetchWishlist());
+  }, [token, wishlistLoaded, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -103,6 +110,20 @@ const Navbar = () => {
             <ThemeToggle />
             {token ? (
               <div className="flex items-center gap-3">
+                <Link
+                  to="/account/favorites"
+                  aria-label={t('nav.favorites')}
+                  className="relative grid h-11 w-11 place-items-center rounded-xl border border-white/20 text-white transition-colors hover:bg-white/10"
+                >
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  {wishlistCount > 0 && (
+                    <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-terra-500 px-1 text-[10px] font-bold text-white ring-2 ring-ink-950">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Link>
                 <Link
                   to="/account/saved-searches"
                   className="rounded-xl border border-white/20 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
@@ -183,6 +204,21 @@ const Navbar = () => {
                 <ThemeToggle />
                 {token ? (
                   <>
+                    <Link
+                      to="/account/favorites"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-medium text-white"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                      {t('nav.favorites')}
+                      {wishlistCount > 0 && (
+                        <span className="grid h-5 min-w-5 place-items-center rounded-full bg-terra-500 px-1 text-[10px] font-bold text-white">
+                          {wishlistCount}
+                        </span>
+                      )}
+                    </Link>
                     <Link
                       to="/account/saved-searches"
                       onClick={() => setMenuOpen(false)}

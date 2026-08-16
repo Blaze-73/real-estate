@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import testimonialService from '../../services/testimonialService';
 
 const initials = (name) =>
   name
-    .split(' ')
+    ?.split(' ')
     .map((n) => n[0])
     .slice(0, 2)
-    .join('');
+    .join('') || '?';
 
 const Stars = ({ count, className = 'h-4 w-4' }) => {
   const { t } = useTranslation();
@@ -22,45 +23,59 @@ const Stars = ({ count, className = 'h-4 w-4' }) => {
   );
 };
 
-const TestimonialCarousel = () => {
+const Avatar = ({ name, photo, className }) => {
+  if (photo) {
+    return <img src={photo} alt={name} className={`${className} object-cover`} loading="lazy" />;
+  }
+  return <span className={className}>{initials(name)}</span>;
+};
+
+const TestimonialCarousel = ({ onLoaded }) => {
   const { t } = useTranslation();
-  const testimonials = [
-    {
-      name: 'Ahmed Benali',
-      role: t('testimonials.roleOwner'),
-      text: t('testimonials.t1'),
-      rating: 5,
-    },
-    {
-      name: 'Fatima Zahra',
-      role: t('testimonials.roleTenant'),
-      text: t('testimonials.t2'),
-      rating: 5,
-    },
-    {
-      name: 'Mohamed El Amrani',
-      role: t('testimonials.roleInvestor'),
-      text: t('testimonials.t3'),
-      rating: 5,
-    },
-    {
-      name: 'Sara Bennis',
-      role: t('testimonials.roleBuyer'),
-      text: t('testimonials.t4'),
-      rating: 4,
-    },
-  ];
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
+  const lengthRef = useRef(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    testimonialService
+      .getAll()
+      .then((data) => {
+        if (cancelled) return;
+        const items = (Array.isArray(data) ? data : []).slice(0, 8);
+        setTestimonials(items);
+        lengthRef.current = items.length;
+        onLoaded?.(items.length);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setTestimonials([]);
+          lengthRef.current = 0;
+          onLoaded?.(0);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [onLoaded]);
 
   useEffect(() => {
     if (paused) return;
     timerRef.current = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % testimonials.length);
+      setCurrent((prev) => (prev + 1) % (lengthRef.current || 1));
     }, 6000);
     return () => clearInterval(timerRef.current);
-  }, [paused, current]);
+  }, [paused]);
+
+  if (loading || testimonials.length === 0) {
+    return null;
+  }
 
   const active = testimonials[current];
 
@@ -91,16 +106,17 @@ const TestimonialCarousel = () => {
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="mt-6 font-display text-2xl font-medium leading-snug tracking-tight text-ink-900 sm:text-[1.7rem] dark:text-sand-50"
               >
-                &ldquo;{active.text}&rdquo;
+                &ldquo;{active.content}&rdquo;
               </motion.blockquote>
             </AnimatePresence>
             <div className="mt-8 flex items-center gap-4">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ocean-600 text-sm font-bold uppercase tracking-wide text-white">
-                {initials(active.name)}
-              </span>
+              <Avatar
+                name={active.client_name}
+                photo={active.client_photo}
+                className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-ocean-600 text-sm font-bold uppercase tracking-wide text-white"
+              />
               <div>
-                <p className="font-display text-lg font-semibold text-ink-900 dark:text-sand-50">{active.name}</p>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-400">{active.role}</p>
+                <p className="font-display text-lg font-semibold text-ink-900 dark:text-sand-50">{active.client_name}</p>
               </div>
             </div>
 
@@ -141,10 +157,10 @@ const TestimonialCarousel = () => {
           {t('testimonials.moreVoices')}
         </p>
         <ul className="space-y-3">
-          {testimonials.map((t, idx) => {
+          {testimonials.map((item, idx) => {
             const isActive = idx === current;
             return (
-              <li key={idx}>
+              <li key={item.id ?? idx}>
                 <button
                   type="button"
                   onClick={() => setCurrent(idx)}
@@ -155,16 +171,16 @@ const TestimonialCarousel = () => {
                       : 'bg-white text-ink-900 ring-1 ring-ink-100 hover:ring-ocean-300 dark:bg-ink-950 dark:text-sand-50 dark:ring-ink-800 dark:hover:ring-ocean-500/60'
                   }`}
                 >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ocean-600/10 text-sm font-bold uppercase tracking-wide text-ocean-700 dark:bg-ocean-300/10 dark:text-ocean-300">
-                    {initials(t.name)}
-                  </span>
+                  <Avatar
+                    name={item.client_name}
+                    photo={item.client_photo}
+                    className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ocean-600/10 text-sm font-bold uppercase tracking-wide text-ocean-700 dark:bg-ocean-300/10 dark:text-ocean-300"
+                  />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-display text-base font-semibold">{t.name}</span>
-                    <span className="block text-xs font-semibold uppercase tracking-[0.14em] opacity-60">
-                      {t.role}
-                    </span>
+                    <span className="block truncate font-display text-base font-semibold">{item.client_name}</span>
+                    <span className="block truncate text-xs leading-relaxed opacity-70">{item.content}</span>
                   </span>
-                  <Stars count={t.rating} className="h-3 w-3" />
+                  <Stars count={item.rating} className="h-3 w-3" />
                 </button>
               </li>
             );

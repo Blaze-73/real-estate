@@ -30,7 +30,8 @@
     "skipToContent": "Skip to content",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "brandAria": "Asilah Estates — home"
+    "brandAria": "Asilah Estates — home",
+    "favorites": "Favorites"
   },
   "types": {
     "apartment": "Apartment",
@@ -126,6 +127,8 @@
     "ctaTitle1": "Ready to come home",
     "ctaTitle2": "to Asilah?",
     "contactUs": "Contact us",
+    "whatsappUs": "WhatsApp us",
+    "whatsappIntro": "Hi, I'd like to know more about your rentals in Asilah.",
     "answers24h": "Answers within 24 hours · English, Arabic & French",
     "heroImgAlt": "The shoreline of Asilah stretching toward the Atlantic",
     "muralImgAlt": "Street art murals painted on Asilah's medina walls",
@@ -341,18 +344,18 @@
     "moreVoices": "More voices",
     "previous": "Previous testimonial",
     "next": "Next testimonial",
-    "starsOutOf": "{{count}} out of 5 stars",
-    "roleOwner": "Property owner",
-    "roleTenant": "Tenant",
-    "roleInvestor": "Investor",
-    "roleBuyer": "Home buyer",
-    "t1": "They looked after my riad in the medina all last season — key handovers, clean-ups, guests sorted over WhatsApp. I only came back to collect the rent.",
-    "t2": "Found a beachfront flat for the summer two weeks before I flew in. What I saw in the photos is exactly what I got.",
-    "t3": "Bought a house near Rmel Bay through them. They walked me through the paperwork in French and Arabic and stayed with it until the keys were in my hand.",
-    "t4": "We came from Rabat for one weekend, saw three homes in a morning and had an answer the same evening. Months later they still call to see how we're settling in."
+    "starsOutOf": "{{count}} out of 5 stars"
   },
   "monthCal": {
-    "days": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+    "days": [
+      "Su",
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa"
+    ]
   },
   "theme": {
     "toggle": "Toggle theme"
@@ -380,5 +383,13 @@
     "viewProperty": "View property",
     "declined": "Payment was declined. Please try another card.",
     "invalidLink": "This payment link is invalid or expired."
+  },
+  "favorites": {
+    "title": "Saved Properties",
+    "subtitle": "Properties you saved — tap the heart again to remove one.",
+    "count": "{{count}} saved",
+    "empty": "No saved properties yet",
+    "emptyHint": "Tap the heart on any property to keep it here across all your devices.",
+    "browse": "Browse properties"
   }
 }

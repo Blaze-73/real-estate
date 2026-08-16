@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialResource extends JsonResource
 {
@@ -12,7 +13,11 @@ class TestimonialResource extends JsonResource
         return [
             'id' => $this->id,
             'client_name' => $this->client_name,
-            'client_photo' => $this->client_photo,
+            'client_photo' => $this->client_photo
+                ? (str_starts_with($this->client_photo, 'http')
+                    ? $this->client_photo
+                    : Storage::disk('public')->url($this->client_photo))
+                : null,
             'content' => $this->content,
             'rating' => $this->rating,
             'is_active' => $this->is_active,

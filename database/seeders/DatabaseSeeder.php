@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             ReservationSeeder::class,
             RentalSeeder::class,
             PaymentSeeder::class,
-            TestimonialSeeder::class,
             ContactSeeder::class,
         ]);
     }

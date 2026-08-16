@@ -30,7 +30,8 @@
     "skipToContent": "Aller au contenu",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
-    "brandAria": "Asilah Estates — accueil"
+    "brandAria": "Asilah Estates — accueil",
+    "favorites": "Favoris"
   },
   "types": {
     "apartment": "Appartement",
@@ -126,6 +127,8 @@
     "ctaTitle1": "Prêt à rentrer chez vous,",
     "ctaTitle2": "à Asilah ?",
     "contactUs": "Contactez-nous",
+    "whatsappUs": "Écrivez-nous sur WhatsApp",
+    "whatsappIntro": "Bonjour, je souhaite en savoir plus sur vos locations à Asilah.",
     "answers24h": "Réponse sous 24 h · Anglais, Arabe & Français",
     "heroImgAlt": "Le littoral d'Asilah s'étendant vers l'Atlantique",
     "muralImgAlt": "Fresques de street art sur les murs de la médina d'Asilah",
@@ -270,7 +273,7 @@
     "depositRequired": "Un acompte de {{amount}} est requis pour confirmer.",
     "availableMsg": "Disponible à ces dates. Séjour min. : {{min}} nuit(s).",
     "notAvailableMsg": "Indisponible à ces dates. Veuillez essayer d'autres dates.",
-"bookingReceived": "Demande de réservation reçue !",
+    "bookingReceived": "Demande de réservation reçue !",
     "bookingConfirmed": "Réservation confirmée !",
     "payToFinalize": "Votre séjour est confirmé. Payez l'acompte pour finaliser.",
     "yourReference": "Votre référence : {{reference}}",
@@ -341,18 +344,18 @@
     "moreVoices": "D'autres avis",
     "previous": "Témoignage précédent",
     "next": "Témoignage suivant",
-    "starsOutOf": "{{count}} sur 5 étoiles",
-    "roleOwner": "Propriétaire",
-    "roleTenant": "Locataire",
-    "roleInvestor": "Investisseur",
-    "roleBuyer": "Acheteur",
-    "t1": "Ils se sont occupés de mon riad dans la médina toute la saison — remise des clés, ménage, voyageurs gérés sur WhatsApp. Je ne revenais que pour encaisser le loyer.",
-    "t2": "J'ai trouvé un appartement en bord de mer pour l'été deux semaines avant mon arrivée. Les photos correspondaient exactement à ce que j'ai trouvé.",
-    "t3": "J'ai acheté une maison près de Rmel Bay par leur intermédiaire. Ils m'ont accompagné dans les papiers en français et en arabe et ont suivi jusqu'à ce que j'aie les clés en main.",
-    "t4": "Nous sommes venus de Rabat pour un week-end, avons visité trois biens en une matinée et avons eu une réponse le soir même. Des mois plus tard, ils appellent encore pour prendre de nos nouvelles."
+    "starsOutOf": "{{count}} sur 5 étoiles"
   },
   "monthCal": {
-    "days": ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"]
+    "days": [
+      "Di",
+      "Lu",
+      "Ma",
+      "Me",
+      "Je",
+      "Ve",
+      "Sa"
+    ]
   },
   "theme": {
     "toggle": "Changer de thème"
@@ -380,5 +383,13 @@
     "viewProperty": "Voir le bien",
     "declined": "Paiement refusé. Veuillez essayer une autre carte.",
     "invalidLink": "Ce lien de paiement est invalide ou a expiré."
+  },
+  "favorites": {
+    "title": "Propriétés sauvegardées",
+    "subtitle": "Les biens que vous avez sauvegardés — cliquez sur le cœur pour en retirer un.",
+    "count": "{{count}} sauvegardé(s)",
+    "empty": "Aucun bien sauvegardé",
+    "emptyHint": "Touchez le cœur sur un bien pour le retrouver ici sur tous vos appareils.",
+    "browse": "Parcourir les biens"
   }
 }

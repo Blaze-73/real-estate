@@ -1,69 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Asilah Estates
 
-> **Asilah Real Estate** — Laravel 12 API (`/api/v1`) + React 19 SPA (`frontend/`).
-> Competitive analysis, UX improvements, and SEO roadmap: see **[docs/COMPETITIVE_ANALYSIS_AND_SEO.md](docs/COMPETITIVE_ANALYSIS_AND_SEO.md)**.
+Real-estate platform for **Asilah, Morocco** — holiday rentals, long-term lets and property sales. Built around the town's real places: Rmel Bay, Bab Al Kasbah, the medina, and WhatsApp key handovers.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Monorepo: **Laravel 12 JSON API** at the repo root + **React 19 SPA** in [`frontend/`](frontend/). UI is trilingual (English, French, Arabic), mobile-first, and dark-mode aware.
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Backend** — Laravel 12 · PHP 8.2+ · Sanctum token auth · role-based access (admin / manager / agent) · SQLite for local dev, MySQL/PostgreSQL in production · queues + scheduled jobs for follow-up emails and saved-search alerts.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Frontend** — React 19 · Vite 8 · Tailwind CSS v4 · Redux Toolkit · Framer Motion · react-i18next (EN/FR/AR) · React Router 6 · Leaflet maps.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Payments** — Moroccan gateway flow (CMI/CIH-style): server-side checkout token, client-side payment page, async callback verification. Deposits on holiday bookings.
 
-## Learning Laravel
+## Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Property catalog** — rentals, long-term lets and sales; featured listings; per-property photo gallery, map, amenities and availability calendar (with `.ics` import from OTA calendars and `.ics` export for guests).
+- **Quotes & bookings** — instant price quote (nights × rate + cleaning + discount), guest checkout, and a printable confirmation with a full price breakdown.
+- **Promotions** — percentage or fixed discounts, minimum-night rules, seasonal valid-from/to windows, and early-bird "book by" deadlines.
+- **Payments** — deposit collection via the Moroccan gateway with async callback confirmation.
+- **Reviews & testimonials** — guest reviews (moderated by admins before publishing) plus curated testimonials.
+- **Guest accounts** — wishlist, saved searches with e-mail alerts, booking history.
+- **Contact leads** — contact form creates leads with automated D+1/D+7/D+30 follow-up e-mails; phone numbers stay hidden behind a rate-limited reveal endpoint (also captures a lead).
+- **Admin panel** — dashboard with revenue/occupancy/activity stats, properties, reservations, rentals, clients, payments (with monthly/yearly reports), deals & commissions, promotions, messages, testimonials, reviews, activity logs, notifications, and site settings (about/mission/vision text).
+- **SEO** — prerendered pages for the home, listing index, about/contact and every property, a generated `sitemap.xml`, and JSON-LD structured data.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Repository layout
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+├── app/                  Laravel app (controllers, models, services, resources)
+├── database/migrations/  Schema
+├── routes/api.php        All endpoints live under /api/v1
+├── tests/                Feature tests (incl. per-feature suites)
+├── tools/                Local dev-server bootstrap script
+└── frontend/
+    ├── src/pages/        Public + admin pages
+    ├── src/locales/      en / fr / ar translations
+    ├── scripts/          Prerender + sitemap generation
+    └── public/           Static assets (images, favicon, robots.txt)
+```
 
-## Laravel Sponsors
+## Local development
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Requirements: PHP 8.2+, Composer, Node 20+.
 
-### Premium Partners
+```bash
+# Backend (port 8000)
+composer install
+cp .env.example .env   # set DB_CONNECTION=sqlite, MAIL_MAILER=log, QUEUE_CONNECTION=sync
+php artisan key:generate
+php artisan migrate:fresh --seed
+php artisan serve --port=8000
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Frontend (port 5173)
+cd frontend
+npm install
+npm run dev -- --port 5173 --strictPort
+```
 
-## Contributing
+A one-shot helper does the whole dance (kills stale ports, fresh-seeds, starts both, waits for health):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```powershell
+powershell -File tools/dev-server.ps1 -Backend -Frontend
+```
 
-## Code of Conduct
+**Verify**: backend feature tests run with `php artisan test`; the frontend lints with `npm run lint` and builds with `npm run build` (the build also prerenders pages for SEO).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Configuration
 
-## Security Vulnerabilities
+Admin seed account: `admin@asilah.ma` / `password`. Key settings editable from the admin panel include commission rates for sales (2.5%) and rentals (10%), company contact info, and the about/mission/vision copy shown on the public pages.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Docs
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `docs/COMPETITIVE_ANALYSIS_AND_SEO.md` — competitive analysis, UX roadmap and SEO plan.
+- `AGENTS.md` — environment notes and verification workflow for this repo.

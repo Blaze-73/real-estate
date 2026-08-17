@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -116,7 +116,7 @@ const SavedSearches = () => {
           </svg>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">{t('savedSearches.empty')}</h3>
           <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">{t('savedSearches.emptyHint')}</p>
-          <Link to="/properties" className="inline-block px-5 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-medium transition-colors">
+          <Link to="/properties" className="inline-block px-5 py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-medium transition-colors">
             {t('savedSearches.browse')}
           </Link>
         </div>
@@ -145,7 +145,7 @@ const SavedSearches = () => {
                 <div className="flex items-center gap-2 shrink-0">
                   <Link
                     to={buildResultsUrl(item.filters)}
-                    className="px-4 py-2 rounded-xl bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border border-[#1f94af]/40 text-sm font-medium hover:bg-[#1f94af]/20 transition-colors"
+                    className="px-4 py-2 rounded-xl bg-[#ececf0]/10 text-[#52575d] dark:text-[#d9d9de] border border-[#9aa0a6]/40 text-sm font-medium hover:bg-[#ececf0]/20 transition-colors"
                   >
                     {t('savedSearches.viewResults')}
                   </Link>

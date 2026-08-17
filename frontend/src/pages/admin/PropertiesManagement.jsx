@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchProperties, createProperty, updateProperty, deleteProperty } from '../../store/slices/propertySlice';
@@ -168,7 +168,7 @@ const PropertiesManagement = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Properties</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">Manage all properties</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">
           + Add Property
         </motion.button>
       </div>
@@ -208,7 +208,7 @@ const PropertiesManagement = () => {
                     </td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">{p.location}</td>
                     <td className="p-4 text-right">
-                      <button onClick={() => openEdit(p)} className="px-3 py-1.5 rounded-lg text-[#1f94af] hover:bg-[#1f94af]/10 transition-colors text-xs font-medium mr-2">Edit</button>
+                      <button onClick={() => openEdit(p)} className="px-3 py-1.5 rounded-lg text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/10 transition-colors text-xs font-medium mr-2">Edit</button>
                       <button onClick={() => setDeleteConfirm(p._id || p.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Delete</button>
                     </td>
                   </tr>
@@ -225,32 +225,32 @@ const PropertiesManagement = () => {
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-ink-900 rounded-2xl p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{editing ? 'Edit Property' : 'Add Property'}</h2>
               <form onSubmit={handleSubmit} className="space-y-3">
-                <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
+                <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
                 <div className="grid grid-cols-2 gap-3">
-                  <select name="type" value={form.type} onChange={handleChange} className="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+                  <select name="type" value={form.type} onChange={handleChange} className="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
                     <option value="apartment">Apartment</option>
                     <option value="villa">Villa</option>
                     <option value="house">House</option>
                     <option value="studio">Studio</option>
                     <option value="office">Office</option>
                   </select>
-                  <select name="status" value={form.status} onChange={handleChange} className="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+                  <select name="status" value={form.status} onChange={handleChange} className="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
                     <option value="available">Available</option>
                     <option value="rented">Rented</option>
                     <option value="maintenance">Maintenance</option>
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                  <input type="number" name="surface" value={form.surface} onChange={handleChange} placeholder="Surface (mÂ²)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                  <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                  <input type="number" name="surface" value={form.surface} onChange={handleChange} placeholder="Surface (mÂ²)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <input type="number" name="bedrooms" value={form.bedrooms} onChange={handleChange} placeholder="Bedrooms" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                  <input type="number" name="bathrooms" value={form.bathrooms} onChange={handleChange} placeholder="Bathrooms" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                  <input type="number" name="bedrooms" value={form.bedrooms} onChange={handleChange} placeholder="Bedrooms" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                  <input type="number" name="bathrooms" value={form.bathrooms} onChange={handleChange} placeholder="Bathrooms" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 </div>
-                <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none" />
-                <input type="text" name="features" value={form.features} onChange={handleChange} placeholder="Features (comma separated)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" />
+                <input type="text" name="features" value={form.features} onChange={handleChange} placeholder="Features (comma separated)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
 
                 <div>
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Amenities</p>
@@ -270,8 +270,8 @@ const PropertiesManagement = () => {
                           aria-pressed={active}
                           className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium border transition-colors text-left ${
                             active
-                              ? 'bg-[#1f94af]/10 text-[#117490] border-[#1f94af]/40'
-                              : 'bg-gray-50 dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#1f94af]'
+                              ? 'bg-[#ececf0]/10 text-[#52575d] border-[#9aa0a6]/40'
+                              : 'bg-gray-50 dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#9aa0a6]'
                           }`}
                         >
                           <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,39 +284,39 @@ const PropertiesManagement = () => {
                   </div>
                 </div>
 
-                <input type="url" name="video_url" value={form.video_url} onChange={handleChange} placeholder="Video tour URL (YouTube / Vimeo)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                <input type="url" name="video_url" value={form.video_url} onChange={handleChange} placeholder="Video tour URL (YouTube / Vimeo)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
 
                 <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Seasonal / Rental Pricing</p>
                   <div className="grid grid-cols-2 gap-3">
-                    <input type="number" name="nightly_price" value={form.nightly_price} onChange={handleChange} placeholder="Nightly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="number" name="monthly_price" value={form.monthly_price} onChange={handleChange} placeholder="Monthly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="number" name="nightly_price" value={form.nightly_price} onChange={handleChange} placeholder="Nightly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="number" name="monthly_price" value={form.monthly_price} onChange={handleChange} placeholder="Monthly Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                   <div className="grid grid-cols-3 gap-3 mt-3">
-                    <input type="number" name="min_nights" value={form.min_nights} onChange={handleChange} placeholder="Min Nights" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="number" name="cleaning_fee" value={form.cleaning_fee} onChange={handleChange} placeholder="Cleaning Fee" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="number" name="deposit" value={form.deposit} onChange={handleChange} placeholder="Deposit" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="number" name="min_nights" value={form.min_nights} onChange={handleChange} placeholder="Min Nights" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="number" name="cleaning_fee" value={form.cleaning_fee} onChange={handleChange} placeholder="Cleaning Fee" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="number" name="deposit" value={form.deposit} onChange={handleChange} placeholder="Deposit" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                   <label className="flex items-center justify-between mt-3 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-ink-900 cursor-pointer">
                     <span>
                       <span className="block text-sm font-medium text-gray-900 dark:text-white">Instant booking</span>
                       <span className="block text-xs text-gray-500 dark:text-gray-400">Guests get confirmed immediately instead of waiting for approval</span>
                     </span>
-                    <input type="checkbox" name="instant_book" checked={!!form.instant_book} onChange={(e) => setForm({ ...form, instant_book: e.target.checked })} className="h-5 w-5 rounded accent-[#1f94af]" />
+                    <input type="checkbox" name="instant_book" checked={!!form.instant_book} onChange={(e) => setForm({ ...form, instant_book: e.target.checked })} className="h-5 w-5 rounded accent-[#9aa0a6]" />
                   </label>
                   <div className="grid grid-cols-3 gap-3 mt-3">
-                    <input type="date" name="high_season_from" value={form.high_season_from} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="date" name="high_season_to" value={form.high_season_to} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="number" name="high_season_price" value={form.high_season_price} onChange={handleChange} placeholder="High Season Price" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="date" name="high_season_from" value={form.high_season_from} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="date" name="high_season_to" value={form.high_season_to} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="number" name="high_season_price" value={form.high_season_price} onChange={handleChange} placeholder="High Season Price" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                   <p className="text-xs text-gray-400 mt-2">High season dates &amp; price override the nightly rate during that period.</p>
                 </div>
 
-                <input type="url" name="ical_url" value={form.ical_url} onChange={handleChange} placeholder="iCal URL (Airbnb / Booking.com sync)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                <input type="url" name="ical_url" value={form.ical_url} onChange={handleChange} placeholder="iCal URL (Airbnb / Booking.com sync)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
 
                 <div>
                   <label className="text-xs text-gray-500 dark:text-gray-400">Cancellation Policy</label>
-                  <select name="cancellation_policy" value={form.cancellation_policy} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] mt-1">
+                  <select name="cancellation_policy" value={form.cancellation_policy} onChange={handleChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] mt-1">
                     <option value="">No free cancellation</option>
                     <option value="Free cancellation until 7 days before check-in">Free cancellation until 7 days before check-in</option>
                     <option value="Free cancellation until 48 hours before check-in">Free cancellation until 48 hours before check-in</option>
@@ -336,11 +336,11 @@ const PropertiesManagement = () => {
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             {!img.is_primary && (
-                              <button type="button" onClick={() => handleSetPrimary(img.id)} className="px-2 py-1 rounded-lg bg-[#1f94af] text-white text-xs font-medium">Main</button>
+                              <button type="button" onClick={() => handleSetPrimary(img.id)} className="px-2 py-1 rounded-lg bg-[#ececf0] text-ink-950 text-xs font-medium">Main</button>
                             )}
                             <button type="button" onClick={() => handleDeleteImage(img.id)} className="px-2 py-1 rounded-lg bg-red-500 text-white text-xs font-medium">Remove</button>
                           </div>
-                          {img.is_primary && <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-[#1f94af] text-white text-[10px] font-semibold">Primary</span>}
+                          {img.is_primary && <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-[#ececf0] text-ink-950 text-[10px] font-semibold">Primary</span>}
                         </div>
                       ))}
                     </div>
@@ -371,7 +371,7 @@ const PropertiesManagement = () => {
 
                 {formError && <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-600 text-sm">{formError}</div>}
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" disabled={submitting} className="flex-1 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors disabled:opacity-60">{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}</button>
+                  <button type="submit" disabled={submitting} className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors disabled:opacity-60">{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}</button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>
               </form>

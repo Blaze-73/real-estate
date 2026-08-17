@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import contactService from '../../services/contactService';
 
 const MessagesManagement = () => {
@@ -86,7 +86,7 @@ const MessagesManagement = () => {
           <p className="text-gray-500 dark:text-gray-400 text-sm">Inbound inquiries from the contact form, viewing requests and phone reveals</p>
         </div>
         <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-          <input type="checkbox" checked={unreadOnly} onChange={(e) => setUnreadOnly(e.target.checked)} className="w-4 h-4 accent-[#1f94af]" />
+          <input type="checkbox" checked={unreadOnly} onChange={(e) => setUnreadOnly(e.target.checked)} className="w-4 h-4 accent-[#9aa0a6]" />
           Unread only
         </label>
       </div>
@@ -113,7 +113,7 @@ const MessagesManagement = () => {
                 >
                   <div className="flex items-start justify-between mb-1">
                     <span className={`text-sm font-medium truncate ${m.is_read ? 'text-gray-600 dark:text-gray-300' : 'text-gray-900 dark:text-white'}`}>{m.name}</span>
-                    {!m.is_read && <span className="w-2 h-2 rounded-full bg-[#1f94af] shrink-0 mt-1" />}
+                    {!m.is_read && <span className="w-2 h-2 rounded-full bg-[#ececf0] shrink-0 mt-1" />}
                   </div>
                   <p className="text-xs text-gray-400 truncate">{m.subject}</p>
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mt-1">{m.type === 'phone_reveal' ? 'Phone reveal' : 'Contact form'}</p>
@@ -151,7 +151,7 @@ const MessagesManagement = () => {
                 <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{selected.message}</p>
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                <a href={replyHref} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
+                <a href={replyHref} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M3 8l9-5 9 5v10a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm0 0l9 5 9-5" />
                   </svg>

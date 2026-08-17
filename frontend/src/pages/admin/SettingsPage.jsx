@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import settingService from '../../services/settingService';
 
@@ -60,7 +60,7 @@ const SettingsPage = () => {
     }
   };
 
-  const inputCls = 'w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]';
+  const inputCls = 'w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]';
 
   const renderField = ([key, field, label, type]) => {
     if (type === 'textarea') {
@@ -130,7 +130,7 @@ const SettingsPage = () => {
             </div>
           </motion.div>
 
-          <button type="submit" className="px-6 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
+          <button type="submit" className="px-6 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">
             {saved ? 'Saved!' : 'Save Settings'}
           </button>
         </form>

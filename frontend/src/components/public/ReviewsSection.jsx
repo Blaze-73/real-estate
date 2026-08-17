@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { fetchPropertyReviews, submitPropertyReview } from '../../services/reviewService';
@@ -65,7 +65,7 @@ const ReviewsSection = ({ property }) => {
       <div className="flex items-center gap-3 mb-4">
         <h2 id="reviews-heading" className="text-xl font-semibold text-gray-900 dark:text-white">{t('reviews.title')}</h2>
         {reviewsCount > 0 && (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#1f94af]/10 text-[#1f94af] text-sm font-semibold">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] text-sm font-semibold">
             <Star filled />
             {ratingScore.toFixed(1)}
             <span className="font-normal text-gray-500 dark:text-gray-400">({reviewsCount})</span>
@@ -87,7 +87,7 @@ const ReviewsSection = ({ property }) => {
               className="rounded-2xl bg-white dark:bg-ink-900 border border-gray-100 dark:border-gray-800 p-5"
             >
               <div className="flex items-center gap-3 mb-2">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#1f94af]/10 text-[#1f94af] font-bold text-sm">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] font-bold text-sm">
                   {(review.guest_name || 'G').charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -131,7 +131,7 @@ const ReviewsSection = ({ property }) => {
             onChange={(e) => setForm({ ...form, guest_name: e.target.value })}
             placeholder={t('reviews.yourName')}
             required
-            className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]"
+            className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]"
           />
           <div className="flex items-center gap-1">
             <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">{t('reviews.rating')}:</span>
@@ -154,12 +154,12 @@ const ReviewsSection = ({ property }) => {
             placeholder={t('reviews.shareExperience')}
             rows={3}
             required
-            className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none"
+            className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none"
           />
           <button
             type="submit"
             disabled={submitting}
-            className="px-6 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {submitting ? t('reviews.submitting') : t('reviews.submit')}
           </button>

@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { fetchNotifications, markAsRead, markAllAsRead } from '../../store/slices/notificationSlice';
@@ -17,7 +17,7 @@ const NotificationsPage = () => {
           <p className="text-gray-500 dark:text-gray-400 text-sm">{unreadCount} unread notifications</p>
         </div>
         {unreadCount > 0 && (
-          <button onClick={() => dispatch(markAllAsRead())} className="px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
+          <button onClick={() => dispatch(markAllAsRead())} className="px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">
             Mark All as Read
           </button>
         )}
@@ -35,11 +35,11 @@ const NotificationsPage = () => {
                 key={n._id || n.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-4 flex items-start justify-between ${!n.read ? 'bg-[#1f94af]/5' : ''}`}
+                className={`p-4 flex items-start justify-between ${!n.read ? 'bg-[#ececf0]/5' : ''}`}
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    {!n.read && <span className="w-2 h-2 rounded-full bg-[#1f94af]" />}
+                    {!n.read && <span className="w-2 h-2 rounded-full bg-[#ececf0]" />}
                     <p className={`text-sm ${n.read ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white font-medium'}`}>
                       {n.message || n.title || 'Notification'}
                     </p>
@@ -49,7 +49,7 @@ const NotificationsPage = () => {
                   )}
                 </div>
                 {!n.read && (
-                  <button onClick={() => dispatch(markAsRead(n._id || n.id))} className="text-xs text-[#1f94af] hover:underline flex-shrink-0 ml-4">
+                  <button onClick={() => dispatch(markAsRead(n._id || n.id))} className="text-xs text-[#63686f] dark:text-[#d9d9de] hover:underline flex-shrink-0 ml-4">
                     Mark Read
                   </button>
                 )}

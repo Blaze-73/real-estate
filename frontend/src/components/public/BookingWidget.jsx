@@ -1,4 +1,4 @@
-﻿import { Component, useEffect, useState } from 'react';
+import { Component, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import propertyService from '../../services/propertyService';
 import paymentService from '../../services/paymentService';
@@ -125,13 +125,13 @@ const BookingWidget = ({ property, slug }) => {
     }
   };
 
-  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]";
+  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]";
   const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
 
   return (
     <div className="bg-white dark:bg-ink-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
       <div className="flex items-baseline justify-between mb-4">
-        <p className="text-3xl font-bold text-[#1f94af]">
+        <p className="text-3xl font-bold text-[#63686f] dark:text-[#d9d9de]">
           {formatPrice(quote?.rate ?? property.nightly_price ?? property.monthly_price ?? property.price, t('common.contactForPrice'))}
         </p>
         {(property.nightly_price || property.monthly_price) && (
@@ -210,7 +210,7 @@ const BookingWidget = ({ property, slug }) => {
           <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">{quoteState.error}</p>
         )}
 
-        <button type="submit" disabled={quoteState.loading} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" disabled={quoteState.loading} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
           {quoteState.loading ? t('booking.checking') : t('booking.checkAvailability')}
         </button>
       </form>
@@ -241,7 +241,7 @@ const BookingWidget = ({ property, slug }) => {
             <p className="text-xs text-gray-500 dark:text-gray-400">{t('booking.depositRequired', { amount: formatPrice(quote.deposit, '') })}</p>
           )}
           {quote.instant_book && (
-            <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#117490]">
+            <p className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#52575d]">
               <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
@@ -321,7 +321,7 @@ const BookingWidget = ({ property, slug }) => {
                     type="button"
                     onClick={handlePayDeposit}
                     disabled={payState.loading}
-                    className="w-full py-2.5 rounded-xl bg-[#117490] hover:bg-[#0e5d75] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {payState.loading ? t('booking.payRedirecting') : t('booking.payDeposit', { amount: formatPrice(quote.deposit, '') })}
                   </button>
@@ -343,11 +343,11 @@ const BookingWidget = ({ property, slug }) => {
                       type="checkbox"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#1f94af]"
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded accent-[#9aa0a6]"
                     />
                     <span>{t('booking.consentLabel')}</span>
                   </label>
-                  <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                  <button type="submit" disabled={bookingState.sending} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     {bookingState.sending ? t('booking.submitting') : quote.instant_book ? t('booking.confirmBooking') : t('booking.requestBooking')}
                   </button>
                 </>

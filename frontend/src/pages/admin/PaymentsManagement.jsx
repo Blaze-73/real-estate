@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import paymentService from '../../services/paymentService';
 import { TableSkeleton } from '../../components/common/LoadingSkeleton';
@@ -76,7 +76,7 @@ const PaymentsManagement = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {[
-          { label: 'Total Revenue', value: stats.total, color: 'from-[#1f94af] to-[#117490]' },
+          { label: 'Total Revenue', value: stats.total, color: 'from-[#ececf0] to-[#c3c7cc]' },
           { label: 'Collected', value: payments.filter((p) => p.status === 'paid').reduce((s, p) => s + Number(p.amount || 0), 0), color: 'from-[#10B981] to-[#059669]' },
           { label: 'Pending Deposits', value: stats.pending, color: 'from-[#F59E0B] to-[#D97706]' },
         ].map((card, idx) => (
@@ -95,7 +95,7 @@ const PaymentsManagement = () => {
               onClick={() => setStatusFilter(s)}
               className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-colors ${
                 statusFilter === s
-                  ? 'bg-[#1f94af] text-white'
+                  ? 'bg-[#ececf0] text-ink-950'
                   : 'bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -139,7 +139,7 @@ const PaymentsManagement = () => {
                     </td>
                     <td className="p-4 text-right">
                       {p.status !== 'paid' && (
-                        <button onClick={() => handleMarkPaid(p.id)} className="px-3 py-1.5 rounded-lg bg-[#1f94af] text-white hover:bg-[#117490] transition-colors text-xs font-medium">Mark Paid</button>
+                        <button onClick={() => handleMarkPaid(p.id)} className="px-3 py-1.5 rounded-lg bg-[#ececf0] text-ink-950 hover:bg-white transition-colors text-xs font-medium">Mark Paid</button>
                       )}
                     </td>
                   </tr>

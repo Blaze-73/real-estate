@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import testimonialService from '../../services/testimonialService';
 
@@ -102,7 +102,7 @@ const TestimonialsManagement = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Testimonials</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">Manage client testimonials. Only verified, real clients should be published.</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setError(''); setForm(emptyForm); setModalOpen(true); }} className="px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">+ Add Testimonial</motion.button>
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => { setError(''); setForm(emptyForm); setModalOpen(true); }} className="px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">+ Add Testimonial</motion.button>
       </div>
 
       {error && (
@@ -154,8 +154,8 @@ const TestimonialsManagement = () => {
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-ink-900 rounded-2xl p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Add Testimonial</h2>
               <form onSubmit={handleSubmit} className="space-y-3">
-                <input type="text" name="client_name" value={form.client_name} onChange={(e) => setForm({ ...form, client_name: e.target.value })} placeholder="Client name" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                <textarea name="content" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} placeholder="What they said, in their words" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none" required />
+                <input type="text" name="client_name" value={form.client_name} onChange={(e) => setForm({ ...form, client_name: e.target.value })} placeholder="Client name" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                <textarea name="content" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} placeholder="What they said, in their words" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" required />
                 <div>
                   <label className="text-xs text-gray-500 dark:text-gray-400">Rating</label>
                   <div className="flex gap-1 mt-1">
@@ -170,14 +170,14 @@ const TestimonialsManagement = () => {
                 </div>
                 <label className="flex items-center justify-between text-sm text-gray-700 dark:text-gray-200">
                   <span>Publish now</span>
-                  <input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} className="w-5 h-5 accent-[#1f94af]" />
+                  <input type="checkbox" checked={form.is_active} onChange={(e) => setForm({ ...form, is_active: e.target.checked })} className="w-5 h-5 accent-[#9aa0a6]" />
                 </label>
                 <div>
                   <label className="text-xs text-gray-500 dark:text-gray-400">Client photo (optional)</label>
                   <input type="file" accept="image/jpeg,image/png" onChange={(e) => setForm({ ...form, photo: e.target.files?.[0] || null })} className="mt-1 w-full text-sm text-gray-500 dark:text-gray-400" />
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors disabled:opacity-50">
+                  <button type="submit" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors disabled:opacity-50">
                     {saving ? 'Savingâ€¦' : 'Add'}
                   </button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>

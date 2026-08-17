@@ -1,4 +1,4 @@
-﻿import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const MonthCalendar = ({
   month,
@@ -42,7 +42,7 @@ const MonthCalendar = ({
 
           let cls = 'flex items-center justify-center h-9 text-sm rounded-lg transition-colors ';
           if (isSelected) {
-            cls += 'bg-[#1f94af] text-white font-semibold';
+            cls += 'bg-[#ececf0] text-ink-950 font-semibold';
           } else if (status === 'booked') {
             cls += 'bg-sky-500/15 text-sky-700 dark:text-sky-300';
           } else if (status === 'blocked') {

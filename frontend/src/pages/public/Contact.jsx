@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ const Contact = () => {
         canonical="/contact"
       />
       <section className="relative py-20 bg-gradient-to-r from-ink-950 to-ink-900 overflow-hidden">
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #1f94af 0%, transparent 50%)' }} />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 70% 30%, #d9d9de 0%, transparent 50%)' }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold text-white mb-4">{t('contact.getInTouch')}</motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -61,13 +61,13 @@ const Contact = () => {
               )}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#1f94af] text-sm" required />
-                  <input type="email" name="email" value={form.email} onChange={handleChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#1f94af] text-sm" required />
+                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#9aa0a6] text-sm" required />
+                  <input type="email" name="email" value={form.email} onChange={handleChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#9aa0a6] text-sm" required />
                 </div>
-                <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#1f94af] text-sm" />
-                <input type="text" name="subject" value={form.subject} onChange={handleChange} placeholder={t('contact.subject')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#1f94af] text-sm" required />
-                <textarea name="message" value={form.message} onChange={handleChange} placeholder={t('propertyDetails.yourMessage')} rows={5} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#1f94af] text-sm resize-none" required />
-                <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} type="submit" disabled={status.sending} className="w-full py-3 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#9aa0a6] text-sm" />
+                <input type="text" name="subject" value={form.subject} onChange={handleChange} placeholder={t('contact.subject')} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#9aa0a6] text-sm" required />
+                <textarea name="message" value={form.message} onChange={handleChange} placeholder={t('propertyDetails.yourMessage')} rows={5} className="w-full px-4 py-3 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:border-[#9aa0a6] text-sm resize-none" required />
+                <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} type="submit" disabled={status.sending} className="w-full py-3 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                   {status.sending ? t('common.sending') : status.sent ? t('common.messageSent') : t('common.sendMessage')}
                 </motion.button>
               </form>
@@ -83,8 +83,8 @@ const Contact = () => {
                   { label: t('contact.labelWorkingHours'), value: t('contact.workingHoursValue'), icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#1f94af]/10 flex items-center justify-center flex-shrink-0">
-                      <svg className="w-6 h-6 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-12 h-12 rounded-2xl bg-[#ececf0]/10 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
                       </svg>
                     </div>

@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Seo from '../../components/common/Seo';
@@ -29,7 +29,7 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <span className="text-[#1f94af] font-semibold text-sm uppercase tracking-wider">{t('about.ourStory')}</span>
+              <span className="text-[#63686f] dark:text-[#d9d9de] font-semibold text-sm uppercase tracking-wider">{t('about.ourStory')}</span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6">{t('about.decadeTitle')}</h2>
               <div className="space-y-4 text-gray-600 dark:text-gray-300 leading-relaxed text-left sm:text-center">
                 <p>{settings.about_us || t('about.p1')}</p>
@@ -44,9 +44,9 @@ const About = () => {
       <section className="py-16 bg-white dark:bg-ink-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-[#1f94af]/5 to-transparent border border-[#1f94af]/10">
-              <div className="w-12 h-12 rounded-xl bg-[#1f94af]/10 flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-[#d9d9de]/5 to-transparent border border-[#9aa0a6]/10">
+              <div className="w-12 h-12 rounded-xl bg-[#ececf0]/10 flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>

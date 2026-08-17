@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import availabilityService from '../../services/availabilityService';
@@ -115,7 +115,7 @@ const CalendarManagement = () => {
     }
   };
 
-  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]";
+  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]";
 
   const counts = useMemo(() => {
     const values = Object.values(days);
@@ -179,7 +179,7 @@ const CalendarManagement = () => {
               <input type="date" min={blockForm.start_date || undefined} value={blockForm.end_date} onChange={(e) => setBlockForm({ ...blockForm, end_date: e.target.value })} className={inputCls} required />
               <input type="text" value={blockForm.reason} onChange={(e) => setBlockForm({ ...blockForm, reason: e.target.value })} placeholder="Reason (optional)" className={inputCls} />
               <div className="md:col-span-3">
-                <button type="submit" disabled={frameLoading} className="px-5 py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50">Block selected range</button>
+                <button type="submit" disabled={frameLoading} className="px-5 py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-semibold transition-colors disabled:opacity-50">Block selected range</button>
               </div>
             </form>
           </div>
@@ -212,7 +212,7 @@ const CalendarManagement = () => {
                 onChange={(e) => setIcalFile(e.target.files?.[0] || null)}
                 className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 dark:file:bg-gray-800 file:text-gray-700 dark:file:text-gray-300 file:text-sm file:font-medium hover:file:bg-gray-200 dark:hover:file:bg-gray-700 transition-colors"
               />
-              <button type="submit" disabled={frameLoading || !icalFile} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50">Import calendar (.ics)</button>
+              <button type="submit" disabled={frameLoading || !icalFile} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-semibold transition-colors disabled:opacity-50">Import calendar (.ics)</button>
             </form>
           </div>
         </div>

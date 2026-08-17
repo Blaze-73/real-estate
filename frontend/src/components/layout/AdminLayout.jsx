@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ const AdminLayout = () => {
           >
             <div className="p-4">
               <Link to="/admin" className="flex items-center gap-2 mb-8">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#1f94af] to-[#117490] flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ececf0] to-[#c3c7cc] flex items-center justify-center flex-shrink-0">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                   </svg>
@@ -65,7 +65,7 @@ const AdminLayout = () => {
                       to={link.to}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                         active
-                          ? 'bg-[#1f94af]/10 text-[#1f94af] border border-[#1f94af]/20'
+                          ? 'bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] border border-[#9aa0a6]/20'
                           : 'text-gray-400 hover:text-white hover:bg-white/5'
                       }`}
                     >
@@ -92,11 +92,11 @@ const AdminLayout = () => {
             </button>
 
             <div className="flex items-center gap-3">
-              <Link to="/" className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#1f94af] transition-colors">
+              <Link to="/" className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#63686f] dark:text-[#d9d9de] transition-colors">
                 View Site
               </Link>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-ink-900">
-                <div className="w-7 h-7 rounded-full bg-[#1f94af] flex items-center justify-center text-white text-xs font-bold">
+                <div className="w-7 h-7 rounded-full bg-[#ececf0] flex items-center justify-center text-ink-950 text-xs font-bold">
                   {user?.name?.charAt(0) || 'A'}
                 </div>
                 <span className="text-sm text-gray-700 dark:text-gray-300">{user?.name || 'Admin'}</span>

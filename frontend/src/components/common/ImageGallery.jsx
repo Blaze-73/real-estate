@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ImageGallery = ({ images = [] }) => {
@@ -41,7 +41,7 @@ const ImageGallery = ({ images = [] }) => {
       {gallery.length > 1 && (
         <div className="flex gap-2 p-3 overflow-x-auto">
           {gallery.map((img, idx) => (
-            <button key={idx} onClick={() => setCurrent(idx)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${idx === current ? 'border-[#1f94af]' : 'border-transparent'}`}>
+            <button key={idx} onClick={() => setCurrent(idx)} className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-colors ${idx === current ? 'border-[#9aa0a6]' : 'border-transparent'}`}>
               <img src={img} alt="" className="w-full h-full object-cover" />
             </button>
           ))}

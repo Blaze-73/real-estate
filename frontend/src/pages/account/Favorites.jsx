@@ -72,7 +72,7 @@ const Favorites = () => {
           <p className="mx-auto mt-2 max-w-md text-sm text-ink-500 dark:text-ink-300">{t('favorites.emptyHint')}</p>
           <Link
             to="/properties"
-            className="mt-6 inline-block rounded-xl bg-ocean-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
+            className="mt-6 inline-block rounded-xl bg-[#ececf0] px-6 py-3 text-sm font-semibold text-ink-950 transition-colors hover:bg-white"
           >
             {t('favorites.browse')}
           </Link>

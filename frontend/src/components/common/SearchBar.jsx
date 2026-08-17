@@ -119,7 +119,7 @@ const SearchBar = ({ onSearch, className = '' }) => {
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.985 }}
         type="submit"
-        className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-ocean-600 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-500"
+        className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-[#ececf0] py-3.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-white"
       >
         <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />

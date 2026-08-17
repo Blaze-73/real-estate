@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
@@ -164,7 +164,7 @@ const PropertyDetails = () => {
       <div className="pt-24 pb-16 bg-sand-50 dark:bg-ink-950 min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           <p className="text-red-500">{error}</p>
-          <Link to="/properties" className="mt-4 inline-block text-[#1f94af] hover:underline">{t('common.backToProperties')}</Link>
+          <Link to="/properties" className="mt-4 inline-block text-[#63686f] dark:text-[#d9d9de] hover:underline">{t('common.backToProperties')}</Link>
         </div>
       </div>
     );
@@ -189,7 +189,7 @@ const PropertyDetails = () => {
       />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <Link to="/properties" className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-[#1f94af] mb-6 transition-colors">
+          <Link to="/properties" className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-[#63686f] dark:text-[#d9d9de] mb-6 transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
@@ -216,13 +216,13 @@ const PropertyDetails = () => {
                   )}
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl font-bold text-[#1f94af]">
+                  <p className="text-3xl font-bold text-[#63686f] dark:text-[#d9d9de]">
                     {formatPrice(property.nightly_price ?? property.monthly_price ?? property.price, t('common.contactForPrice'))}
                     {property.nightly_price && <span className="text-sm font-medium text-gray-500 dark:text-gray-400"> {t('common.perNight')}</span>}
                     {!property.nightly_price && property.monthly_price && <span className="text-sm font-medium text-gray-500 dark:text-gray-400"> {t('common.perMonth')}</span>}
                   </p>
                   {property.type && (
-                    <span className="inline-block mt-1 px-3 py-1 rounded-full bg-[#1f94af]/10 text-[#1f94af] text-sm">{t(`types.${property.type}`, { defaultValue: property.type })}</span>
+                    <span className="inline-block mt-1 px-3 py-1 rounded-full bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] text-sm">{t(`types.${property.type}`, { defaultValue: property.type })}</span>
                   )}
                 </div>
               </div>
@@ -235,8 +235,8 @@ const PropertyDetails = () => {
                   { label: t('propertyDetails.status'), value: property.status === 'available' ? t('propertyDetails.available') : property.status, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
                 ].map((item, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white dark:bg-ink-900 border border-gray-100 dark:border-gray-800 text-center">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#1f94af]/10 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-[#ececf0]/10 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={item.icon} />
                       </svg>
                     </div>
@@ -273,7 +273,7 @@ const PropertyDetails = () => {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                     {property.amenities.map((key) => (
                       <div key={key} className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300 rounded-xl bg-white dark:bg-ink-900 border border-gray-100 dark:border-gray-800 px-3 py-2">
-                        <svg className="w-4 h-4 text-[#1f94af] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-[#63686f] dark:text-[#d9d9de] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={amenityIcon(key)} />
                         </svg>
                         {t(`amenities.${key}`, { defaultValue: key })}
@@ -325,7 +325,7 @@ const PropertyDetails = () => {
 
               <div className="bg-white dark:bg-ink-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.3a1 1 0 01-.5 1.23l-1.55.78a11.03 11.03 0 006.25 6.25l.78-1.55a1 1 0 011.23-.5l3.3 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
                   </svg>
                   {t('propertyDetails.callOwner')}
@@ -340,7 +340,7 @@ const PropertyDetails = () => {
                     </p>
                     <a
                       href={`tel:${reveal.phone}`}
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.1 3.3a1 1 0 01-.5 1.23l-1.55.78a11.03 11.03 0 006.25 6.25l.78-1.55a1 1 0 011.23-.5l3.3 1.1a1 1 0 01.68.95V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6V5z" />
@@ -364,11 +364,11 @@ const PropertyDetails = () => {
                     {reveal.error && (
                       <p className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm">{reveal.error}</p>
                     )}
-                    <input type="text" name="name" value={reveal.name} onChange={(e) => setReveal((r) => ({ ...r, name: e.target.value }))} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                    <input type="email" name="email" value={reveal.email} onChange={(e) => setReveal((r) => ({ ...r, email: e.target.value }))} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                    <input type="tel" name="visitorPhone" value={reveal.visitorPhone} onChange={(e) => setReveal((r) => ({ ...r, visitorPhone: e.target.value }))} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="text" name="name" value={reveal.name} onChange={(e) => setReveal((r) => ({ ...r, name: e.target.value }))} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                    <input type="email" name="email" value={reveal.email} onChange={(e) => setReveal((r) => ({ ...r, email: e.target.value }))} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                    <input type="tel" name="visitorPhone" value={reveal.visitorPhone} onChange={(e) => setReveal((r) => ({ ...r, visitorPhone: e.target.value }))} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                     <p className="text-xs text-gray-400 dark:text-gray-500">{t('propertyDetails.revealNotice')}</p>
-                    <button type="submit" disabled={reveal.loading} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button type="submit" disabled={reveal.loading} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                       {reveal.loading ? t('common.sending') : t('propertyDetails.showNumber')}
                     </button>
                   </form>
@@ -377,7 +377,7 @@ const PropertyDetails = () => {
 
               <div className="bg-white dark:bg-ink-900 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   {t('propertyDetails.scheduleViewing')}
@@ -393,15 +393,15 @@ const PropertyDetails = () => {
                       {viewingStatus.error}
                     </p>
                   )}
-                  <input type="text" name="name" value={viewing.name} onChange={handleViewingChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                  <input type="email" name="email" value={viewing.email} onChange={handleViewingChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                  <input type="tel" name="phone" value={viewing.phone} onChange={handleViewingChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                  <input type="text" name="name" value={viewing.name} onChange={handleViewingChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                  <input type="email" name="email" value={viewing.email} onChange={handleViewingChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                  <input type="tel" name="phone" value={viewing.phone} onChange={handleViewingChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   <div className="grid grid-cols-2 gap-3">
-                    <input type="date" name="date" value={viewing.date} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                    <input type="time" name="time" value={viewing.time} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="date" name="date" value={viewing.date} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                    <input type="time" name="time" value={viewing.time} onChange={handleViewingChange} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
-                  <textarea name="message" value={viewing.message} onChange={handleViewingChange} placeholder={t('propertyDetails.viewingMessagePlaceholder')} rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none" />
-                  <button type="submit" disabled={viewingStatus.sending} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                  <textarea name="message" value={viewing.message} onChange={handleViewingChange} placeholder={t('propertyDetails.viewingMessagePlaceholder')} rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" />
+                  <button type="submit" disabled={viewingStatus.sending} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     {viewingStatus.sending ? t('common.sending') : t('propertyDetails.requestViewing')}
                   </button>
                 </form>
@@ -420,11 +420,11 @@ const PropertyDetails = () => {
                       {status.error}
                     </p>
                   )}
-                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                  <input type="email" name="email" value={form.email} onChange={handleChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                  <textarea name="message" value={form.message} onChange={handleChange} placeholder={t('propertyDetails.yourMessage')} rows={4} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none" required />
-                  <button type="submit" disabled={status.sending} className="w-full py-2.5 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder={t('propertyDetails.yourName')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                  <input type="email" name="email" value={form.email} onChange={handleChange} placeholder={t('propertyDetails.yourEmail')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder={t('propertyDetails.phoneNumber')} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                  <textarea name="message" value={form.message} onChange={handleChange} placeholder={t('propertyDetails.yourMessage')} rows={4} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" required />
+                  <button type="submit" disabled={status.sending} className="w-full py-2.5 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 font-semibold transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed">
                     {status.sending ? t('common.sending') : t('common.sendMessage')}
                   </button>
                 </form>
@@ -465,7 +465,7 @@ const PropertyDetails = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">{t('propertyDetails.similarTitle')}</h2>
                 <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">{t('propertyDetails.similarSubtitle', { city: property.city || 'Asilah' })}</p>
               </div>
-              <Link to="/properties" className="inline-flex items-center gap-1 text-sm font-semibold text-[#1f94af] hover:text-[#117490] transition-colors shrink-0">
+              <Link to="/properties" className="inline-flex items-center gap-1 text-sm font-semibold text-[#63686f] dark:text-[#d9d9de] hover:text-[#52575d] transition-colors shrink-0">
                 {t('common.viewAll')}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

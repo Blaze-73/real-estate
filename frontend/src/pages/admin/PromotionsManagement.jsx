@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import promotionService from '../../services/promotionService';
 import propertyService from '../../services/propertyService';
@@ -130,7 +130,7 @@ const PromotionsManagement = () => {
     return parts.length ? parts.join(' Â· ') : 'Always active';
   };
 
-  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]";
+  const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]";
   const labelCls = "block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1";
 
   return (
@@ -144,7 +144,7 @@ const PromotionsManagement = () => {
         </div>
         <button
           onClick={openCreate}
-          className="px-4 py-2 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors"
+          className="px-4 py-2 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-semibold transition-colors"
         >
           + New promotion
         </button>
@@ -177,7 +177,7 @@ const PromotionsManagement = () => {
                   <tr key={p.id} className="border-b border-gray-50 dark:border-gray-800/60 hover:bg-gray-50 dark:hover:bg-gray-800/40 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{p.name}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-300">
-                      {p.property ? p.property.title : <span className="text-[#1f94af]">All properties</span>}
+                      {p.property ? p.property.title : <span className="text-[#63686f] dark:text-[#d9d9de]">All properties</span>}
                     </td>
                     <td className="px-4 py-3">
                       <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-xs font-semibold">
@@ -191,7 +191,7 @@ const PromotionsManagement = () => {
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right whitespace-nowrap">
-                      <button onClick={() => openEdit(p)} className="text-[#1f94af] hover:text-[#117490] text-xs font-semibold mr-3 transition-colors">Edit</button>
+                      <button onClick={() => openEdit(p)} className="text-[#63686f] dark:text-[#d9d9de] hover:text-[#52575d] text-xs font-semibold mr-3 transition-colors">Edit</button>
                       <button onClick={() => setDeleteConfirm(p)} className="text-red-500 hover:text-red-600 text-xs font-semibold transition-colors">Delete</button>
                     </td>
                   </tr>
@@ -266,13 +266,13 @@ const PromotionsManagement = () => {
                   <p className="text-[11px] text-gray-400 mt-1">Promotion stops applying once this date has passed.</p>
                 </div>
                 <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="h-4 w-4 rounded accent-[#1f94af]" />
+                  <input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} className="h-4 w-4 rounded accent-[#9aa0a6]" />
                   Active
                 </label>
                 {formError && <p className="text-sm text-red-600 dark:text-red-400">{formError}</p>}
                 <div className="flex justify-end gap-3 pt-2">
                   <button type="button" onClick={() => setModalOpen(false)} className="px-4 py-2 rounded-xl text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cancel</button>
-                  <button type="submit" disabled={submitting} className="px-5 py-2 rounded-xl bg-[#1f94af] hover:bg-[#117490] text-white text-sm font-semibold transition-colors disabled:opacity-50">
+                  <button type="submit" disabled={submitting} className="px-5 py-2 rounded-xl bg-[#ececf0] hover:bg-white text-ink-950 text-sm font-semibold transition-colors disabled:opacity-50">
                     {submitting ? 'Saving...' : editing ? 'Save changes' : 'Create promotion'}
                   </button>
                 </div>

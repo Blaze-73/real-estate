@@ -130,7 +130,7 @@ const Home = () => {
           >
             <Link
               to="/properties"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-ocean-500 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-ocean-500/25 transition-all hover:bg-ocean-400 hover:shadow-ocean-400/30"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-[#ececf0] px-7 py-3.5 text-sm font-semibold text-ink-950 shadow-xl shadow-ocean-500/25 transition-all hover:bg-white hover:shadow-ocean-400/30"
             >
               {t('home.browseListings')}
               <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -547,7 +547,7 @@ const Home = () => {
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <Link
                 to="/properties"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-ocean-500 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-ocean-500/25 transition-all hover:bg-ocean-400"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-[#ececf0] px-8 py-4 text-sm font-semibold text-ink-950 shadow-xl shadow-ocean-500/25 transition-all hover:bg-white"
               >
                 {t('home.browseListings')}
                 <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

@@ -80,7 +80,7 @@ const Navbar = () => {
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-ocean-500 focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-[#ececf0] focus:px-4 focus:py-2 focus:text-sm focus:text-ink-950"
       >
         {t('nav.skipToContent')}
       </a>
@@ -132,7 +132,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/admin"
-                  className="rounded-xl bg-ocean-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
+                  className="rounded-xl bg-[#ececf0] px-5 py-2.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-white"
                 >
                   {t('nav.dashboard')}
                 </Link>
@@ -146,7 +146,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="rounded-xl bg-ocean-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ocean-400"
+                className="rounded-xl bg-[#ececf0] px-5 py-2.5 text-sm font-semibold text-ink-950 transition-colors hover:bg-white"
               >
                 {t('nav.login')}
               </Link>
@@ -229,7 +229,7 @@ const Navbar = () => {
                     <Link
                       to="/admin"
                       onClick={() => setMenuOpen(false)}
-                      className="flex-1 rounded-xl bg-ocean-500 px-4 py-3 text-center text-sm font-semibold text-white"
+                      className="flex-1 rounded-xl bg-[#ececf0] px-4 py-3 text-center text-sm font-semibold text-ink-950"
                     >
                       {t('nav.dashboard')}
                     </Link>
@@ -247,7 +247,7 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     onClick={() => setMenuOpen(false)}
-                    className="flex-1 rounded-xl bg-ocean-500 px-4 py-3 text-center text-sm font-semibold text-white"
+                    className="flex-1 rounded-xl bg-[#ececf0] px-4 py-3 text-center text-sm font-semibold text-ink-950"
                   >
                     {t('nav.login')}
                   </Link>

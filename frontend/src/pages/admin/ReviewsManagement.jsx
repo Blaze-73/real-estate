@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchAdminReviews, approveReview, deleteReview } from '../../services/reviewService';
 
@@ -100,7 +100,7 @@ const ReviewsManagement = () => {
                   {!r.is_approved && (
                     <button
                       onClick={() => handleApprove(r.id)}
-                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1f94af] text-white hover:bg-[#117490] transition-colors"
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#ececf0] text-ink-950 hover:bg-white transition-colors"
                     >
                       Approve
                     </button>

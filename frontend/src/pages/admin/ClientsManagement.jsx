@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchClients, createClient, updateClient, deleteClient } from '../../store/slices/clientSlice';
@@ -50,11 +50,11 @@ const ClientsManagement = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Clients</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">Manage all clients</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">+ Add Client</motion.button>
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">+ Add Client</motion.button>
       </div>
 
       <div className="mb-4">
-        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search clients..." className="w-full max-w-md px-4 py-2.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search clients..." className="w-full max-w-md px-4 py-2.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
       </div>
 
       {error && <div className="p-4 mb-6 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">{error}</div>}
@@ -84,7 +84,7 @@ const ClientsManagement = () => {
                     <td className="p-4 text-gray-500 dark:text-gray-400">{c.phone}</td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">{c.address}</td>
                     <td className="p-4 text-right">
-                      <button onClick={() => openEdit(c)} className="px-3 py-1.5 rounded-lg text-[#1f94af] hover:bg-[#1f94af]/10 transition-colors text-xs font-medium mr-2">Edit</button>
+                      <button onClick={() => openEdit(c)} className="px-3 py-1.5 rounded-lg text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/10 transition-colors text-xs font-medium mr-2">Edit</button>
                       <button onClick={() => setDeleteConfirm(c._id || c.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Delete</button>
                     </td>
                   </tr>
@@ -101,12 +101,12 @@ const ClientsManagement = () => {
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-ink-900 rounded-2xl p-6 w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{editing ? 'Edit Client' : 'Add Client'}</h2>
               <form onSubmit={handleSubmit} className="space-y-3">
-                <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Name" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required />
-                <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="Phone" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
-                <input type="text" name="address" value={form.address} onChange={handleChange} placeholder="Address" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Name" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
+                <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="Phone" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                <input type="text" name="address" value={form.address} onChange={handleChange} placeholder="Address" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" className="flex-1 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">{editing ? 'Update' : 'Create'}</button>
+                  <button type="submit" className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">{editing ? 'Update' : 'Create'}</button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>
               </form>

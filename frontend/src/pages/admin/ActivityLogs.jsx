@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import activityLogService from '../../services/activityLogService';
 
@@ -49,7 +49,7 @@ const ActivityLogs = () => {
     if (a.includes('create')) return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400';
     if (a.includes('approve')) return 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400';
     if (a.includes('cancel')) return 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400';
-    return 'bg-[#1f94af]/10 text-[#1f94af]';
+    return 'bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de]';
   };
 
   return (
@@ -80,8 +80,8 @@ const ActivityLogs = () => {
                 transition={{ delay: Math.min(idx * 0.02, 0.4) }}
                 className="p-4 flex items-start gap-4"
               >
-                <div className="w-9 h-9 rounded-full bg-[#1f94af]/10 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-[#1f94af]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <div className="w-9 h-9 rounded-full bg-[#ececf0]/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4 text-[#63686f] dark:text-[#d9d9de]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>

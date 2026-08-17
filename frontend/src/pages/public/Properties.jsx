@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,7 +20,7 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
     <div className="space-y-4">
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.type')}</label>
-        <select name="type" value={filters.type} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+        <select name="type" value={filters.type} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
           <option value="">{t('properties.allTypes')}</option>
           <option value="apartment">{t('types.apartment')}</option>
           <option value="villa">{t('types.villa')}</option>
@@ -31,22 +31,22 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.minPrice')}{priceSuffix}</label>
-        <input type="number" name="min_price" value={filters.min_price} onChange={onChange} placeholder="0" className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+        <input type="number" name="min_price" value={filters.min_price} onChange={onChange} placeholder="0" className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.maxPrice')}{priceSuffix}</label>
-        <input type="number" name="max_price" value={filters.max_price} onChange={onChange} placeholder={t('properties.any')} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+        <input type="number" name="max_price" value={filters.max_price} onChange={onChange} placeholder={t('properties.any')} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.bedrooms')}</label>
-        <select name="bedrooms" value={filters.bedrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+        <select name="bedrooms" value={filters.bedrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
           <option value="">{t('properties.any')}</option>
           {[1, 2, 3, 4, 5].map((n) => <option key={n} value={n}>{n}+</option>)}
         </select>
       </div>
       <div>
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.bathrooms')}</label>
-        <select name="bathrooms" value={filters.bathrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+        <select name="bathrooms" value={filters.bathrooms} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
           <option value="">{t('properties.any')}</option>
           {[1, 2, 3, 4].map((n) => <option key={n} value={n}>{n}+</option>)}
         </select>
@@ -64,8 +64,8 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
                 aria-pressed={active}
                 className={`flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium border transition-colors text-left ${
                   active
-                    ? 'bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border-[#1f94af]/40'
-                    : 'bg-gray-50 dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#1f94af]'
+                    ? 'bg-[#ececf0]/10 text-[#52575d] dark:text-[#d9d9de] border-[#9aa0a6]/40'
+                    : 'bg-gray-50 dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#9aa0a6]'
                 }`}
               >
                 <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,8 +266,8 @@ dispatch(fetchProperties(params));
               aria-pressed={type === v}
               className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-colors ${
                 type === v
-                  ? 'bg-[#1f94af] text-white border-[#1f94af]'
-                  : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#1f94af]'
+                  ? 'bg-[#ececf0] text-ink-950 border-[#9aa0a6]'
+                  : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-[#9aa0a6]'
               }`}
             >
               {t(`types.${v}`)}
@@ -276,7 +276,7 @@ dispatch(fetchProperties(params));
 
           {nights >= 1 && (
             <>
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#1f94af]/10 text-[#1f94af] text-sm font-medium border border-[#1f94af]/20">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] text-sm font-medium border border-[#9aa0a6]/20">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
@@ -285,7 +285,7 @@ dispatch(fetchProperties(params));
                   type="button"
                   onClick={clearDates}
                   aria-label={t('properties.removeDates')}
-                  className="grid h-5 w-5 place-items-center rounded-full bg-[#1f94af]/15 text-[#1f94af] hover:bg-[#1f94af]/30 transition-colors"
+                  className="grid h-5 w-5 place-items-center rounded-full bg-[#ececf0]/15 text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/30 transition-colors"
                 >
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 18L18 6M6 6l12 12" />
@@ -300,7 +300,7 @@ dispatch(fetchProperties(params));
                   aria-pressed={priceMode === 'night'}
                   className={`px-3.5 py-1.5 text-sm font-medium transition-colors ${
                     priceMode === 'night'
-                      ? 'bg-[#1f94af] text-white'
+                      ? 'bg-[#ececf0] text-ink-950'
                       : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
                 >
@@ -312,7 +312,7 @@ dispatch(fetchProperties(params));
                   aria-pressed={priceMode === 'total'}
                   className={`px-3.5 py-1.5 text-sm font-medium transition-colors border-l border-gray-200 dark:border-gray-700 ${
                     priceMode === 'total'
-                      ? 'bg-[#1f94af] text-white'
+                      ? 'bg-[#ececf0] text-ink-950'
                       : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                   }`}
                 >
@@ -328,7 +328,7 @@ dispatch(fetchProperties(params));
             <div className="sticky top-24 bg-white dark:bg-ink-900 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('properties.filters')}</h3>
-                <button onClick={clearFilters} className="text-xs text-[#1f94af] hover:underline">{t('properties.clearAll')}</button>
+                <button onClick={clearFilters} className="text-xs text-[#63686f] dark:text-[#d9d9de] hover:underline">{t('properties.clearAll')}</button>
               </div>
               <FilterControls filters={filters} onChange={handleFilterChange} onAmenityToggle={toggleAmenity} selectedAmenities={amenities} priceMode={priceMode} />
             </div>
@@ -354,7 +354,7 @@ dispatch(fetchProperties(params));
                   onClick={handleSaveSearch}
                   disabled={saveState.status === 'saving'}
                   title={t('properties.saveSearchTitle')}
-                  className="px-3 py-1.5 rounded-xl bg-[#1f94af]/10 text-[#117490] dark:text-[#1f94af] border border-[#1f94af]/40 text-sm font-medium flex items-center gap-1.5 hover:bg-[#1f94af]/20 transition-colors disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-xl bg-[#ececf0]/10 text-[#52575d] dark:text-[#d9d9de] border border-[#9aa0a6]/40 text-sm font-medium flex items-center gap-1.5 hover:bg-[#ececf0]/20 transition-colors disabled:opacity-50"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M5 3h14a1 1 0 011 1v17l-8-4.5L4 21V4a1 1 0 011-1z" />
@@ -373,7 +373,7 @@ dispatch(fetchProperties(params));
                     aria-pressed={!mapOpen}
                     className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors ${
                       !mapOpen
-                        ? 'bg-[#1f94af] text-white'
+                        ? 'bg-[#ececf0] text-ink-950'
                         : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -388,7 +388,7 @@ dispatch(fetchProperties(params));
                     aria-pressed={mapOpen}
                     className={`px-3.5 py-1.5 text-sm font-medium flex items-center gap-1.5 transition-colors border-l border-gray-200 dark:border-gray-700 ${
                       mapOpen
-                        ? 'bg-[#1f94af] text-white'
+                        ? 'bg-[#ececf0] text-ink-950'
                         : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -403,7 +403,7 @@ dispatch(fetchProperties(params));
                   name="sort"
                   value={filters.sort}
                   onChange={handleFilterChange}
-                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]"
+                  className="px-3 py-1.5 rounded-xl bg-white dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]"
                 >
                   {SORT_OPTIONS.map((opt) => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                 </select>
@@ -427,7 +427,7 @@ dispatch(fetchProperties(params));
                         onMouseEnter={() => setActiveId(key)}
                         onMouseLeave={() => setActiveId(null)}
                         className={`rounded-2xl transition-shadow ${
-                          activeId === key ? 'ring-2 ring-[#1f94af] shadow-lg shadow-[#1f94af]/10' : ''
+                          activeId === key ? 'ring-2 ring-[#d9d9de] shadow-lg shadow-[#a7adb3]/10' : ''
                         }`}
                       >
                         <PropertyCard property={property} priceMode={priceMode} nights={nights} />
@@ -456,7 +456,7 @@ dispatch(fetchProperties(params));
                     aria-current={filters.page === i + 1 ? 'page' : undefined}
                     className={`w-10 h-10 rounded-xl text-sm font-medium transition-colors ${
                       filters.page === i + 1
-                        ? 'bg-[#1f94af] text-white'
+                        ? 'bg-[#ececf0] text-ink-950'
                         : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                     }`}
                   >
@@ -538,7 +538,7 @@ dispatch(fetchProperties(params));
                 </button>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="mt-2 w-full py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold"
+                  className="mt-2 w-full py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold"
                 >
                   {t('properties.showResults')}
                 </button>
@@ -551,7 +551,7 @@ dispatch(fetchProperties(params));
       <button
         type="button"
         onClick={() => setMapOpen((v) => !v)}
-        className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-[#1f94af] text-white px-5 py-3 text-sm font-semibold shadow-lg shadow-[#1f94af]/30 active:scale-95 transition-transform"
+        className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-30 inline-flex items-center gap-2 rounded-full bg-[#ececf0] text-ink-950 px-5 py-3 text-sm font-semibold shadow-lg shadow-[#a7adb3]/30 active:scale-95 transition-transform"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           {mapOpen ? (

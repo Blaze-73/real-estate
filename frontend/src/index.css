@@ -26,17 +26,17 @@
   --color-sand-300: #d7c7a9;
   --color-sand-400: #c2ab83;
 
-  /* ocean — Atlantic teal, primary action */
-  --color-ocean-50: #eefbfd;
-  --color-ocean-100: #d5f2f7;
-  --color-ocean-200: #b0e4ee;
-  --color-ocean-300: #7dcfe0;
-  --color-ocean-400: #42b2c9;
-  --color-ocean-500: #1f94af;
-  --color-ocean-600: #117490;
-  --color-ocean-700: #0e5d75;
-  --color-ocean-800: #0b4b5f;
-  --color-ocean-900: #07323f;
+  /* ocean — polished silver/champagne, premium accents */
+  --color-ocean-50: #f6f6f7;
+  --color-ocean-100: #ececee;
+  --color-ocean-200: #dcdddf;
+  --color-ocean-300: #cccdd1;
+  --color-ocean-400: #a6aab0;
+  --color-ocean-500: #8a8f96;
+  --color-ocean-600: #6b7077;
+  --color-ocean-700: #50555b;
+  --color-ocean-800: #33373c;
+  --color-ocean-900: #202327;
 
   /* terra — terracotta, warm accents */
   --color-terra-50: #faf3ee;
@@ -127,6 +127,21 @@
   }
 }
 
+/* Premium silver buttons — pearl gradient, inner highlight, lift + silver glow on hover */
+[class*="bg-[#ececf0]"] {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, filter 0.25s ease;
+}
+[class*="bg-[#ececf0]"]:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(0, 0, 0, 0.06), 0 12px 28px rgba(255, 255, 255, 0.18), 0 3px 8px rgba(0, 0, 0, 0.16);
+}
+[class*="bg-[#ececf0]"]:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
 /* Map search pins */
 .pm-wrap {
   transform: translate(-50%, -100%);
@@ -165,14 +180,14 @@
   border-top: 7px solid var(--color-ink-950);
 }
 .pm-wrap.is-active .pm-pin {
-  background: #38bdf8;
+  background: #f2f2f4;
   transform: scale(1.12);
 }
 .pm-wrap.is-active .pm-pin::after {
-  border-top-color: #38bdf8;
+  border-top-color: #f2f2f4;
 }
 .pm-pin:focus-visible {
-  outline: 2px solid #38bdf8;
+  outline: 2px solid #f2f2f4;
   outline-offset: 2px;
 }
 .leaflet-container {

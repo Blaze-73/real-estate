@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import dealService from '../../services/dealService';
 import propertyService from '../../services/propertyService';
@@ -153,7 +153,7 @@ const DealsManagement = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Deals & Commission</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm">Track deals and commission even when payment happens outside the platform</p>
         </div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors">
+        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openCreate} className="px-4 py-2 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors">
           + New Deal
         </motion.button>
       </div>
@@ -177,7 +177,7 @@ const DealsManagement = () => {
             onClick={() => setStatusFilter(opt.value)}
             className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors capitalize ${
               statusFilter === opt.value
-                ? 'bg-[#1f94af] text-white border-[#1f94af]'
+                ? 'bg-[#ececf0] text-ink-950 border-[#9aa0a6]'
                 : 'bg-white dark:bg-ink-900 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700'
             }`}
           >
@@ -226,7 +226,7 @@ const DealsManagement = () => {
                       {deal.status !== 'closed' && deal.status !== 'lost' && (
                         <button onClick={() => quickClose(deal)} className="px-3 py-1.5 rounded-lg text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors text-xs font-medium mr-2">Close</button>
                       )}
-                      <button onClick={() => openEdit(deal)} className="px-3 py-1.5 rounded-lg text-[#1f94af] hover:bg-[#1f94af]/10 transition-colors text-xs font-medium mr-2">Edit</button>
+                      <button onClick={() => openEdit(deal)} className="px-3 py-1.5 rounded-lg text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/10 transition-colors text-xs font-medium mr-2">Edit</button>
                       <button onClick={() => setDeleteConfirm(deal.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Delete</button>
                     </td>
                   </tr>
@@ -245,7 +245,7 @@ const DealsManagement = () => {
               <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
                   <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Property</label>
-                  <select name="property_id" value={form.property_id} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" required>
+                  <select name="property_id" value={form.property_id} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required>
                     <option value="">Select property</option>
                     {properties.map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}
                   </select>
@@ -253,13 +253,13 @@ const DealsManagement = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</label>
-                    <select name="type" value={form.type} onChange={(e) => handleTypeChange(e.target.value)} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+                    <select name="type" value={form.type} onChange={(e) => handleTypeChange(e.target.value)} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
                       {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</label>
-                    <select name="status" value={form.status} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]">
+                    <select name="status" value={form.status} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
                       {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
@@ -267,28 +267,28 @@ const DealsManagement = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</label>
-                    <input type="text" name="client_name" value={form.client_name} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="text" name="client_name" value={form.client_name} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Email</label>
-                    <input type="email" name="client_email" value={form.client_email} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="email" name="client_email" value={form.client_email} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                 </div>
-                <input type="tel" name="client_phone" value={form.client_phone} onChange={handleChange} placeholder="Client phone" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                <input type="tel" name="client_phone" value={form.client_phone} onChange={handleChange} placeholder="Client phone" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Final Price (MAD)</label>
-                    <input type="number" name="price" value={form.price} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="number" name="price" value={form.price} onChange={handleChange} className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                   <div>
                     <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Commission %</label>
-                    <input type="number" name="commission_rate" value={form.commission_rate} onChange={handleChange} step="0.1" className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af]" />
+                    <input type="number" name="commission_rate" value={form.commission_rate} onChange={handleChange} step="0.1" className="w-full mt-1 px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                   </div>
                 </div>
-                <textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Notes" rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#1f94af] resize-none" />
+                <textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Notes" rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" />
                 {formError && <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-600 text-sm">{typeof formError === 'string' ? formError : JSON.stringify(formError)}</div>}
                 <div className="flex gap-3 pt-2">
-                  <button type="submit" disabled={submitting} className="flex-1 py-2.5 rounded-xl bg-[#1f94af] text-white text-sm font-semibold hover:bg-[#117490] transition-colors disabled:opacity-60">{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}</button>
+                  <button type="submit" disabled={submitting} className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors disabled:opacity-60">{submitting ? 'Saving...' : editing ? 'Update' : 'Create'}</button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>
               </form>

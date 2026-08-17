@@ -31,7 +31,7 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
   const freeNightsNextMonth = property?.free_nights_next_month || 0;
   const cancellationPolicy = property?.cancellation_policy || '';
   const hasFreeCancellation = /free/i.test(cancellationPolicy);
-  const coverImage = cover || images?.[0] || 'https://placehold.co/600x400/0B141B/D7C7A9?text=Asilah';
+  const coverImage = cover || images?.[0] || 'https://placehold.co/600x400/000000/D7C7A9?text=Asilah';
   const [favorites, setFavorites] = useState(getFavorites);
   const key = slug || id;
   const isFav = isLoggedIn ? wishlistSlugs.includes(key) : favorites.includes(key);

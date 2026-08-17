@@ -31,7 +31,11 @@
     "openMenu": "فتح القائمة",
     "closeMenu": "إغلاق القائمة",
     "brandAria": "أصيلة إستيتس — الرئيسية",
-    "favorites": "المفضلة"
+    "favorites": "المفضلة",
+    "confirmLogoutTitle": "تسجيل الخروج؟",
+    "confirmLogoutText": "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟",
+    "confirm": "تسجيل الخروج",
+    "cancel": "إلغاء"
   },
   "types": {
     "apartment": "شقة",

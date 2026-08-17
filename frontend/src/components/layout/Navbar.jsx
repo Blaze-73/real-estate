@@ -7,6 +7,7 @@ import { logoutUser } from '../../store/slices/authSlice';
 import { fetchWishlist } from '../../store/slices/wishlistSlice';
 import ThemeToggle from '../common/ThemeToggle';
 import LanguageSwitcher from '../common/LanguageSwitcher';
+import LogoutConfirm from '../common/LogoutConfirm';
 
 const Brand = () => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const Navbar = () => {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const wishlistCount = useSelector((state) => state.wishlist.slugs.length);
   const wishlistLoaded = useSelector((state) => state.wishlist.loaded);
@@ -53,6 +55,8 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
+    setLogoutConfirm(false);
+    setMenuOpen(false);
     dispatch(logoutUser());
     navigate('/');
   };
@@ -137,7 +141,7 @@ const Navbar = () => {
                   {t('nav.dashboard')}
                 </Link>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => setLogoutConfirm(true)}
                   className="rounded-xl border border-white/20 px-4 py-2.5 text-sm text-white transition-colors hover:bg-white/10"
                 >
                   {t('nav.logout')}
@@ -220,7 +224,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    handleLogout();
+                    setLogoutConfirm(true);
                     setMenuOpen(false);
                   }}
                   className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-[15px] text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
@@ -274,6 +278,8 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <LogoutConfirm open={logoutConfirm} onConfirm={handleLogout} onClose={() => setLogoutConfirm(false)} />
     </motion.nav>
   );
 };

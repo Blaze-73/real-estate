@@ -31,7 +31,11 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "brandAria": "Asilah Estates — accueil",
-    "favorites": "Favoris"
+    "favorites": "Favoris",
+    "confirmLogoutTitle": "Se déconnecter ?",
+    "confirmLogoutText": "Voulez-vous vraiment vous déconnecter de votre compte ?",
+    "confirm": "Se déconnecter",
+    "cancel": "Annuler"
   },
   "types": {
     "apartment": "Appartement",

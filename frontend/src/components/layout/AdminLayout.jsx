@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import Seo from '../common/Seo';
+import LogoutConfirm from '../common/LogoutConfirm';
 
 const sidebarLinks = [
   { to: '/admin', label: 'Dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -25,6 +26,7 @@ const sidebarLinks = [
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ const AdminLayout = () => {
   }, []);
 
   const handleLogout = () => {
+    setLogoutConfirm(false);
     dispatch(logout());
     navigate('/login');
   };
@@ -137,7 +140,7 @@ const AdminLayout = () => {
                 </div>
                 <span className="text-sm text-gray-700 dark:text-gray-300">{user?.name || 'Admin'}</span>
               </div>
-              <button onClick={handleLogout} className="px-3 py-1.5 rounded-lg text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">Logout</button>
+              <button onClick={() => setLogoutConfirm(true)} className="px-3 py-1.5 rounded-lg text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">Logout</button>
             </div>
           </div>
         </header>
@@ -146,6 +149,8 @@ const AdminLayout = () => {
           <Outlet />
         </main>
       </div>
+
+      <LogoutConfirm open={logoutConfirm} onConfirm={handleLogout} onClose={() => setLogoutConfirm(false)} />
     </div>
   );
 };

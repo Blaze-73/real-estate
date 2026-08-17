@@ -118,7 +118,7 @@ const AdminLayout = () => {
         )}
       </AnimatePresence>
 
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen min-w-0">
         <header className="bg-white dark:bg-ink-900 shadow-sm border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between px-4 md:px-6 h-16">
             <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-ink-900 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
@@ -142,7 +142,7 @@ const AdminLayout = () => {
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-6 overflow-auto">
+        <main className="flex-1 min-w-0 p-4 md:p-6 overflow-x-hidden">
           <Outlet />
         </main>
       </div>

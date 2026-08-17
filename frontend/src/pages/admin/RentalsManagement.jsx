@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import rentalService from '../../services/rentalService';
 import clientService from '../../services/clientService';
 import propertyService from '../../services/propertyService';
+import formatDate from '../../utils/formatDate';
 
 const unwrap = (res) => (Array.isArray(res) ? res : res?.data ?? []);
 
@@ -158,7 +159,7 @@ const RentalsManagement = () => {
                   <tr key={r.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{r.property?.title || `Property #${r.property_id}`}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.client?.name || `Client #${r.client_id}`}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.start_date} → {r.end_date}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{formatDate(r.start_date)} → {formatDate(r.end_date)}</td>
                     <td className="px-4 py-3 text-gray-900 dark:text-white font-medium">{Number(r.monthly_rent).toLocaleString()} MAD</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.deposit ? `${Number(r.deposit).toLocaleString()} MAD` : '—'}</td>
                     <td className="px-4 py-3">

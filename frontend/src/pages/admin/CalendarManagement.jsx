@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import availabilityService from '../../services/availabilityService';
 import MonthCalendar from '../../components/common/MonthCalendar';
+import formatDate from '../../utils/formatDate';
 
 const monthKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 
@@ -194,7 +195,7 @@ const CalendarManagement = () => {
               {blocks.map((b) => (
                 <div key={b.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-100 dark:border-gray-700">
                   <div>
-                    <p className="text-sm text-gray-900 dark:text-white font-medium">{b.start_date} → {b.end_date}</p>
+                    <p className="text-sm text-gray-900 dark:text-white font-medium">{formatDate(b.start_date)} → {formatDate(b.end_date)}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{b.reason || 'No reason'}</p>
                   </div>
                   <button type="button" onClick={() => handleUnblock(b.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Unblock</button>

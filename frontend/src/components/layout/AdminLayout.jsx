@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
@@ -24,11 +24,20 @@ const sidebarLinks = [
 ];
 
 const AdminLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1024);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onChange = (e) => {
+      if (e.matches) setSidebarOpen(true);
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -48,14 +57,25 @@ const AdminLayout = () => {
             className="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-ink-950 overflow-y-auto"
           >
             <div className="p-4">
-              <Link to="/admin" className="flex items-center gap-2 mb-8">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ececf0] to-[#c3c7cc] flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              <div className="flex items-center justify-between mb-8">
+                <Link to="/admin" className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ececf0] to-[#c3c7cc] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                  </div>
+                  <span className="text-white font-bold text-sm">Admin Panel</span>
+                </Link>
+                <button
+                  onClick={() => setSidebarOpen(false)}
+                  className="lg:hidden w-8 h-8 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 flex items-center justify-center transition-colors"
+                  aria-label="Close menu"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                </div>
-                <span className="text-white font-bold text-sm">Admin Panel</span>
-              </Link>
+                </button>
+              </div>
               <nav className="space-y-1">
                 {sidebarLinks.map((link) => {
                   const active = location.pathname === link.to || (link.to !== '/admin' && location.pathname.startsWith(link.to));
@@ -63,6 +83,9 @@ const AdminLayout = () => {
                     <Link
                       key={link.to}
                       to={link.to}
+                      onClick={() => {
+                        if (window.innerWidth < 1024) setSidebarOpen(false);
+                      }}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
                         active
                           ? 'bg-[#ececf0]/10 text-[#63686f] dark:text-[#d9d9de] border border-[#9aa0a6]/20'
@@ -79,6 +102,19 @@ const AdminLayout = () => {
               </nav>
             </div>
           </motion.aside>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          />
         )}
       </AnimatePresence>
 

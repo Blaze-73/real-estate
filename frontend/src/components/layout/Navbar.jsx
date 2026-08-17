@@ -178,7 +178,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden bg-ink-950/95 backdrop-blur-xl border-t border-white/10"
+            className="md:hidden bg-ink-950/95 backdrop-blur-xl border-t border-white/10 max-h-[calc(100dvh-4.5rem)] overflow-y-auto"
           >
             <div className="px-4 py-5 space-y-1.5">
               {navLinks.map((link) => (
@@ -199,6 +199,39 @@ const Navbar = () => {
                   </svg>
                 </Link>
               ))}
+
+              <Link
+                to="/admin"
+                onClick={() => setMenuOpen(false)}
+                aria-current={isActive('/admin') ? 'page' : undefined}
+                className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-[15px] transition-colors ${
+                  isActive('/admin')
+                    ? 'bg-white/10 text-ocean-300'
+                    : 'text-sand-100/85 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {t('nav.dashboard')}
+                <svg className="h-4 w-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+
+              {token && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleLogout();
+                    setMenuOpen(false);
+                  }}
+                  className="flex w-full items-center justify-between rounded-xl px-4 py-3.5 text-[15px] text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                >
+                  {t('nav.logout')}
+                  <svg className="h-4 w-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
+              )}
+
               <div className="flex items-center gap-3 pt-4 mt-4 border-t border-white/10">
                 <LanguageSwitcher />
                 <ThemeToggle />
@@ -226,40 +259,15 @@ const Navbar = () => {
                     >
                       {t('nav.myAlerts')}
                     </Link>
-                    <Link
-                      to="/admin"
-                      onClick={() => setMenuOpen(false)}
-                      className="flex-1 rounded-xl bg-[#ececf0] px-4 py-3 text-center text-sm font-semibold text-ink-950"
-                    >
-                      {t('nav.dashboard')}
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setMenuOpen(false);
-                      }}
-                      className="flex-1 rounded-xl border border-white/20 px-4 py-3 text-center text-sm text-white"
-                    >
-                      {t('nav.logout')}
-                    </button>
                   </>
                 ) : (
-                  <>
-                    <Link
-                      to="/admin"
-                      onClick={() => setMenuOpen(false)}
-                      className="flex-1 rounded-xl border border-white/20 px-4 py-3 text-center text-sm font-medium text-white"
-                    >
-                      {t('nav.dashboard')}
-                    </Link>
-                    <Link
-                      to="/login"
-                      onClick={() => setMenuOpen(false)}
-                      className="flex-1 rounded-xl bg-[#ececf0] px-4 py-3 text-center text-sm font-semibold text-ink-950"
-                    >
-                      {t('nav.login')}
-                    </Link>
-                  </>
+                  <Link
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex-1 rounded-xl bg-[#ececf0] px-4 py-3 text-center text-sm font-semibold text-ink-950"
+                  >
+                    {t('nav.login')}
+                  </Link>
                 )}
               </div>
             </div>

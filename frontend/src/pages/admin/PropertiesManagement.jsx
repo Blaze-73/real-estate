@@ -175,49 +175,79 @@ const PropertiesManagement = () => {
 
       {error && <div className="p-4 mb-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 text-red-600 text-sm">{error}</div>}
 
-      <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
-        {loading ? (
+      {loading ? (
+        <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
           <div className="p-6"><TableSkeleton rows={6} /></div>
-        ) : properties.length === 0 ? (
+        </div>
+      ) : properties.length === 0 ? (
+        <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
           <div className="p-12 text-center text-gray-400">No properties found. Click "Add Property" to create one.</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-ink-900/50">
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Title</th>
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Type</th>
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Price</th>
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Status</th>
-                  <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Location</th>
-                  <th className="text-right p-4 font-medium text-gray-500 dark:text-gray-400">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {properties.map((p) => (
-                  <tr key={p._id || p.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td className="p-4 text-gray-900 dark:text-white font-medium">{p.title}</td>
-                    <td className="p-4 text-gray-500 dark:text-gray-400 capitalize">{p.type}</td>
-                    <td className="p-4 text-gray-900 dark:text-white">{p.price?.toLocaleString()} MAD</td>
-                    <td className="p-4">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                        p.status === 'available' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
-                        p.status === 'rented' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
-                        'bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-400'
-                      }`}>{p.status}</span>
-                    </td>
-                    <td className="p-4 text-gray-500 dark:text-gray-400">{p.location}</td>
-                    <td className="p-4 text-right">
-                      <button onClick={() => openEdit(p)} className="px-3 py-1.5 rounded-lg text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/10 transition-colors text-xs font-medium mr-2">Edit</button>
-                      <button onClick={() => setDeleteConfirm(p._id || p.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Delete</button>
-                    </td>
+        </div>
+      ) : (
+        <>
+          <div className="hidden md:block bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-ink-900/50">
+                    <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Title</th>
+                    <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Type</th>
+                    <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Price</th>
+                    <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Status</th>
+                    <th className="text-left p-4 font-medium text-gray-500 dark:text-gray-400">Location</th>
+                    <th className="text-right p-4 font-medium text-gray-500 dark:text-gray-400">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {properties.map((p) => (
+                    <tr key={p._id || p.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                      <td className="p-4 text-gray-900 dark:text-white font-medium">{p.title}</td>
+                      <td className="p-4 text-gray-500 dark:text-gray-400 capitalize">{p.type}</td>
+                      <td className="p-4 text-gray-900 dark:text-white">{p.price?.toLocaleString()} MAD</td>
+                      <td className="p-4">
+                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                          p.status === 'available' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
+                          p.status === 'rented' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
+                          'bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-400'
+                        }`}>{p.status}</span>
+                      </td>
+                      <td className="p-4 text-gray-500 dark:text-gray-400">{p.location}</td>
+                      <td className="p-4 text-right">
+                        <button onClick={() => openEdit(p)} className="px-3 py-1.5 rounded-lg text-[#63686f] dark:text-[#d9d9de] hover:bg-[#ececf0]/10 transition-colors text-xs font-medium mr-2">Edit</button>
+                        <button onClick={() => setDeleteConfirm(p._id || p.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Delete</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        )}
-      </div>
+
+          <div className="md:hidden space-y-3">
+            {properties.map((p) => (
+              <div key={p._id || p.id} className="bg-white dark:bg-ink-900 rounded-xl border border-gray-100 dark:border-gray-800 p-4 shadow-sm">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-medium text-gray-900 dark:text-white break-words">{p.title}</p>
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium shrink-0 ${
+                    p.status === 'available' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
+                    p.status === 'rented' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400' :
+                    'bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-400'
+                  }`}>{p.status}</span>
+                </div>
+                <div className="mt-2 space-y-1 text-sm text-gray-500 dark:text-gray-400">
+                  <p className="capitalize">Type: {p.type}</p>
+                  <p className="text-gray-900 dark:text-white font-medium">{p.price?.toLocaleString()} MAD</p>
+                  <p>Location: {p.location}</p>
+                </div>
+                <div className="flex gap-2 pt-3 mt-3 border-t border-gray-100 dark:border-gray-800">
+                  <button onClick={() => openEdit(p)} className="flex-1 py-2 rounded-lg bg-[#ececf0] text-ink-950 hover:bg-white transition-colors text-xs font-semibold">Edit</button>
+                  <button onClick={() => setDeleteConfirm(p._id || p.id)} className="flex-1 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors text-xs font-medium">Delete</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
 
       <AnimatePresence>
         {modalOpen && (

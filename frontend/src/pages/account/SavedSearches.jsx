@@ -24,13 +24,13 @@ const summaryFor = (t, filters = {}) => {
   const parts = [];
   if (filters.type) parts.push(t(`types.${filters.type}`));
   if (filters.city) parts.push(filters.city);
-  if (filters.min_price && filters.max_price) parts.push(`${filters.min_price}â€“${filters.max_price}`);
+  if (filters.min_price && filters.max_price) parts.push(`${filters.min_price}–${filters.max_price}`);
   else if (filters.min_price) parts.push(`${filters.min_price}+`);
-  else if (filters.max_price) parts.push(`â‰¤ ${filters.max_price}`);
+  else if (filters.max_price) parts.push(`≤ ${filters.max_price}`);
   if (filters.bedrooms) parts.push(`${filters.bedrooms}+ ${t('properties.bedrooms').toLowerCase()}`);
   if (filters.bathrooms) parts.push(`${filters.bathrooms}+ ${t('properties.bathrooms').toLowerCase()}`);
-  if (filters.check_in && filters.check_out) parts.push(`${filters.check_in} â†’ ${filters.check_out}`);
-  return parts.length ? parts.join(' Â· ') : t('savedSearches.allProperties');
+  if (filters.check_in && filters.check_out) parts.push(`${filters.check_in} → ${filters.check_out}`);
+  return parts.length ? parts.join(' · ') : t('savedSearches.allProperties');
 };
 
 const SavedSearches = () => {
@@ -139,7 +139,7 @@ const SavedSearches = () => {
                       <span className={`w-1.5 h-1.5 rounded-full ${item.active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
                       {item.active ? t('savedSearches.active') : t('savedSearches.paused')}
                     </span>
-                    <span className="text-xs text-gray-400 dark:text-gray-500">{t('savedSearches.lastAlert')}: {item.last_alert_at || 'â€”'}</span>
+                    <span className="text-xs text-gray-400 dark:text-gray-500">{t('savedSearches.lastAlert')}: {item.last_alert_at || '—'}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">

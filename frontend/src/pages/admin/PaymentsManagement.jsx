@@ -57,12 +57,12 @@ const PaymentsManagement = () => {
 
   const label = (p) => {
     if (p.reservation) {
-      return `${p.reservation.booking_reference} Â· ${p.reservation.property?.title || ''}`;
+      return `${p.reservation.booking_reference} · ${p.reservation.property?.title || ''}`;
     }
     if (p.rental) {
-      return `${p.rental.property?.title || 'Rental'} Â· ${p.rental.tenant_name || p.rental.client_name || ''}`;
+      return `${p.rental.property?.title || 'Rental'} · ${p.rental.tenant_name || p.rental.client_name || ''}`;
     }
-    return 'â€”';
+    return '—';
   };
 
   return (

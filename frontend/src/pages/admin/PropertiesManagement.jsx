@@ -242,7 +242,7 @@ const PropertiesManagement = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="Price (MAD)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" required />
-                  <input type="number" name="surface" value={form.surface} onChange={handleChange} placeholder="Surface (mÂ²)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
+                  <input type="number" name="surface" value={form.surface} onChange={handleChange} placeholder="Surface (m²)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <input type="number" name="bedrooms" value={form.bedrooms} onChange={handleChange} placeholder="Bedrooms" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />

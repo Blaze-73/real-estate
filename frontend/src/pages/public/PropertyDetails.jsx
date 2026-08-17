@@ -131,7 +131,7 @@ const PropertyDetails = () => {
     e.preventDefault();
     setViewingStatus({ sending: true, sent: false, error: '' });
     try {
-      const when = [viewing.date, viewing.time].filter(Boolean).join(' Ãƒâ€šÃ‚Â· ');
+      const when = [viewing.date, viewing.time].filter(Boolean).join(' · ');
       const message = viewing.message || t('propertyDetails.viewingDefaultMessage', { when: when || t('common.asap') });
       await contactService.send({
         name: viewing.name,
@@ -231,7 +231,7 @@ const PropertyDetails = () => {
                 {[
                   { label: t('propertyDetails.bedrooms'), value: property.bedrooms || 0, icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
                   { label: t('propertyDetails.bathrooms'), value: property.bathrooms || 0, icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' },
-                  { label: t('propertyDetails.surface'), value: `${property.surface || 0} mÃƒâ€šÃ‚Â²`, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5' },
+                  { label: t('propertyDetails.surface'), value: `${property.surface || 0} m²`, icon: 'M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5' },
                   { label: t('propertyDetails.status'), value: property.status === 'available' ? t('propertyDetails.available') : property.status, icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
                 ].map((item, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white dark:bg-ink-900 border border-gray-100 dark:border-gray-800 text-center">

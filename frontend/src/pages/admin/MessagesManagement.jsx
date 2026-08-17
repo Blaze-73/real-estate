@@ -100,7 +100,7 @@ const MessagesManagement = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
           {loading ? (
-            <div className="p-8 text-center text-gray-400 text-sm">Loading messagesâ€¦</div>
+            <div className="p-8 text-center text-gray-400 text-sm">Loading messages…</div>
           ) : messages.length === 0 ? (
             <div className="p-6 text-center text-gray-400 text-sm">No messages</div>
           ) : (
@@ -139,7 +139,7 @@ const MessagesManagement = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{selected.subject}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     From: {selected.name} ({selected.email})
-                    {selected.phone ? ` Â· Phone: ${selected.phone}` : ''}
+                    {selected.phone ? ` · Phone: ${selected.phone}` : ''}
                   </p>
                   <p className="text-xs text-gray-400">{new Date(selected.created_at).toLocaleString()}</p>
                 </div>

@@ -127,7 +127,7 @@ const PromotionsManagement = () => {
     if (p.valid_to) parts.push(`to ${p.valid_to}`);
     if (p.book_by) parts.push(`book by ${p.book_by}`);
     if (p.min_nights) parts.push(`${p.min_nights}+ nights`);
-    return parts.length ? parts.join(' Â· ') : 'Always active';
+    return parts.length ? parts.join(' · ') : 'Always active';
   };
 
   const inputCls = "w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]";

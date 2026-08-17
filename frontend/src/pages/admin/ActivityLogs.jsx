@@ -67,7 +67,7 @@ const ActivityLogs = () => {
 
       <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-gray-400">Loading activityâ€¦</div>
+          <div className="p-12 text-center text-gray-400">Loading activity…</div>
         ) : logs.length === 0 ? (
           <div className="p-12 text-center text-gray-400">No activity logged yet.</div>
         ) : (

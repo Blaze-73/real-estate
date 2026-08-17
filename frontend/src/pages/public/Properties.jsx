@@ -15,7 +15,7 @@ const TYPE_CHIPS = ['apartment', 'villa', 'house', 'studio'];
 
 const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities = [], priceMode = 'night' }) => {
   const { t } = useTranslation();
-  const priceSuffix = priceMode === 'total' ? ` Â· ${t('properties.priceTotal')}` : '';
+  const priceSuffix = priceMode === 'total' ? ` · ${t('properties.priceTotal')}` : '';
   return (
     <div className="space-y-4">
       <div>
@@ -280,7 +280,7 @@ dispatch(fetchProperties(params));
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                {check_in} â†’ {check_out} Â· {t('properties.nightCount', { count: nights })}
+                {check_in} → {check_out} · {t('properties.nightCount', { count: nights })}
                 <button
                   type="button"
                   onClick={clearDates}

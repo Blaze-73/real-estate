@@ -6,7 +6,7 @@ import propertyService from '../../services/propertyService';
 
 const unwrap = (res) => (Array.isArray(res) ? res : res?.data ?? []);
 
-const statusLabel = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : 'â€”');
+const statusLabel = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '—');
 
 const RentalsManagement = () => {
   const [activeTab, setActiveTab] = useState('active');
@@ -130,7 +130,7 @@ const RentalsManagement = () => {
 
       <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-gray-400">Loading rentalsâ€¦</div>
+          <div className="p-12 text-center text-gray-400">Loading rentals…</div>
         ) : rentals.length === 0 ? (
           <div className="p-12 text-center">
             <svg className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,9 +158,9 @@ const RentalsManagement = () => {
                   <tr key={r.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
                     <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">{r.property?.title || `Property #${r.property_id}`}</td>
                     <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.client?.name || `Client #${r.client_id}`}</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.start_date} â†’ {r.end_date}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.start_date} → {r.end_date}</td>
                     <td className="px-4 py-3 text-gray-900 dark:text-white font-medium">{Number(r.monthly_rent).toLocaleString()} MAD</td>
-                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.deposit ? `${Number(r.deposit).toLocaleString()} MAD` : 'â€”'}</td>
+                    <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{r.deposit ? `${Number(r.deposit).toLocaleString()} MAD` : '—'}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${r.status === 'active' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : r.status === 'upcoming' ? 'bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-400' : 'bg-gray-100 dark:bg-ink-900 text-gray-500 dark:text-gray-400'}`}>
                         {statusLabel(r.status)}
@@ -232,7 +232,7 @@ const RentalsManagement = () => {
                 <textarea name="notes" value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Notes (optional)" rows={2} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" />
                 <div className="flex gap-3 pt-2">
                   <button type="submit" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors disabled:opacity-50">
-                    {saving ? 'Savingâ€¦' : 'Create rental'}
+                    {saving ? 'Saving…' : 'Create rental'}
                   </button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>

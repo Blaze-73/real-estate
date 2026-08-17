@@ -73,7 +73,7 @@ const Login = () => {
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                placeholder="••••••••"
                 className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-[#9aa0a6] transition-colors text-sm"
                 required
               />

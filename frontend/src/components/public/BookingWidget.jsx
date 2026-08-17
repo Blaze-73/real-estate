@@ -181,11 +181,11 @@ const BookingWidget = ({ property, slug }) => {
           <div className="flex items-center justify-between mb-2">
             <p className={labelCls}>{t('booking.availabilityCalendar')}</p>
             <div className="flex items-center gap-2">
-              <button type="button" onClick={() => shiftMonth(-1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">â€¹</button>
+              <button type="button" onClick={() => shiftMonth(-1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">‹</button>
               <span className="text-xs font-medium text-gray-600 dark:text-gray-300 min-w-[110px] text-center">
                 {calMonth.toLocaleString(i18n.language || 'en', { month: 'long', year: 'numeric' })}
               </span>
-              <button type="button" onClick={() => shiftMonth(1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">â€º</button>
+              <button type="button" onClick={() => shiftMonth(1)} className="w-6 h-6 rounded-md bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm leading-none">›</button>
             </div>
           </div>
           {calLoading ? (
@@ -224,7 +224,7 @@ const BookingWidget = ({ property, slug }) => {
           {quote.discount > 0 && quote.promotion && (
             <div className="flex items-center justify-between text-sm text-green-600 dark:text-green-400">
               <span>{t('booking.promoApplied', { name: quote.promotion.name })}</span>
-              <span>âˆ’{formatPrice(quote.discount, '')}</span>
+              <span>−{formatPrice(quote.discount, '')}</span>
             </div>
           )}
           {quote.cleaning_fee > 0 && (
@@ -266,22 +266,22 @@ const BookingWidget = ({ property, slug }) => {
                       <span>{t('booking.yourDates')}</span>
                       <span className="text-right">
                         {new Date(quote.check_in + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        {' â†’ '}
+                        {' → '}
                         {new Date(quote.check_out + 'T00:00:00').toLocaleDateString(i18n.language || 'en', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>
                     </div>
                     <div className="flex items-center justify-between gap-3">
-                      <span>{t('booking.nightsCount', { count: quote.nights })} Â· {t('booking.guestCount', { count: guests })}</span>
+                      <span>{t('booking.nightsCount', { count: quote.nights })} · {t('booking.guestCount', { count: guests })}</span>
                     </div>
                     <p className="pt-1 text-xs font-semibold uppercase tracking-[0.14em]">{t('booking.priceBreakdown')}</p>
                     <div className="flex items-center justify-between gap-3">
-                      <span>{formatPrice(quote.rate, '')} Ã— {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
+                      <span>{formatPrice(quote.rate, '')} × {quote.nights} {quote.rate_type === 'month' ? t('booking.month') : t('booking.nights')}</span>
                       <span>{formatPrice(quote.subtotal, '')}</span>
                     </div>
                     {quote.discount > 0 && quote.promotion && (
                       <div className="flex items-center justify-between gap-3 text-green-600 dark:text-green-400">
                         <span>{t('booking.promoApplied', { name: quote.promotion.name })}</span>
-                        <span>âˆ’{formatPrice(quote.discount, '')}</span>
+                        <span>−{formatPrice(quote.discount, '')}</span>
                       </div>
                     )}
                     {quote.cleaning_fee > 0 && (

@@ -116,7 +116,7 @@ const PaymentPage = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500 dark:text-gray-400">{t('payment.dates')}</span>
                   <span className="text-sm font-medium text-gray-900 dark:text-white">
-                    {new Date(preview.check_in).toLocaleDateString()} â†’ {new Date(preview.check_out).toLocaleDateString()}
+                    {new Date(preview.check_in).toLocaleDateString()} → {new Date(preview.check_out).toLocaleDateString()}
                   </span>
                 </div>
               )}

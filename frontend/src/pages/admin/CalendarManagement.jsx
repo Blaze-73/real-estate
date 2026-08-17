@@ -155,11 +155,11 @@ const CalendarManagement = () => {
               <>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">â€¹</button>
+                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">‹</button>
                     <span className="text-base font-semibold text-gray-900 dark:text-white min-w-[170px] text-center">
                       {calMonth.toLocaleString('en', { month: 'long', year: 'numeric' })}
                     </span>
-                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">â€º</button>
+                    <button type="button" onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1))} className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-ink-900 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">›</button>
                   </div>
                   <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                     <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-sky-500/15 border border-sky-300 dark:border-sky-700" />{counts.booked} booked</span>
@@ -194,7 +194,7 @@ const CalendarManagement = () => {
               {blocks.map((b) => (
                 <div key={b.id} className="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-100 dark:border-gray-700">
                   <div>
-                    <p className="text-sm text-gray-900 dark:text-white font-medium">{b.start_date} â†’ {b.end_date}</p>
+                    <p className="text-sm text-gray-900 dark:text-white font-medium">{b.start_date} → {b.end_date}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">{b.reason || 'No reason'}</p>
                   </div>
                   <button type="button" onClick={() => handleUnblock(b.id)} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Unblock</button>

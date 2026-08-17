@@ -113,7 +113,7 @@ const TestimonialsManagement = () => {
 
       <div className="bg-white dark:bg-ink-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-gray-400">Loading testimonialsâ€¦</div>
+          <div className="p-12 text-center text-gray-400">Loading testimonials…</div>
         ) : testimonials.length === 0 ? (
           <div className="p-12 text-center text-gray-400">No testimonials yet. Add your first verified client testimonial.</div>
         ) : (
@@ -178,7 +178,7 @@ const TestimonialsManagement = () => {
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="submit" disabled={saving} className="flex-1 py-2.5 rounded-xl bg-[#ececf0] text-ink-950 text-sm font-semibold hover:bg-white transition-colors disabled:opacity-50">
-                    {saving ? 'Savingâ€¦' : 'Add'}
+                    {saving ? 'Saving…' : 'Add'}
                   </button>
                   <button type="button" onClick={() => setModalOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Cancel</button>
                 </div>

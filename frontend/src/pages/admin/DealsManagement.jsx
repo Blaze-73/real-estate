@@ -140,10 +140,10 @@ const DealsManagement = () => {
   };
 
   const statCards = [
-    { label: 'Total Commission (Closed)', value: stats ? `${Number(stats.total_commission || 0).toLocaleString()} MAD` : 'â€”', accent: 'text-green-600 dark:text-green-400' },
-    { label: 'Active Deals', value: stats?.active_deals ?? 'â€”' },
-    { label: 'Closed Deals', value: stats?.closed_deals ?? 'â€”' },
-    { label: 'Total Deals', value: stats?.total_deals ?? 'â€”' },
+    { label: 'Total Commission (Closed)', value: stats ? `${Number(stats.total_commission || 0).toLocaleString()} MAD` : '—', accent: 'text-green-600 dark:text-green-400' },
+    { label: 'Active Deals', value: stats?.active_deals ?? '—' },
+    { label: 'Closed Deals', value: stats?.closed_deals ?? '—' },
+    { label: 'Total Deals', value: stats?.total_deals ?? '—' },
   ];
 
   return (
@@ -208,18 +208,18 @@ const DealsManagement = () => {
               <tbody>
                 {deals.map((deal) => (
                   <tr key={deal.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td className="p-4 text-gray-900 dark:text-white font-medium">{deal.property?.title || 'â€”'}</td>
+                    <td className="p-4 text-gray-900 dark:text-white font-medium">{deal.property?.title || '—'}</td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">
-                      {deal.client_name || deal.contact?.name || 'â€”'}
+                      {deal.client_name || deal.contact?.name || '—'}
                       {deal.client_email && <span className="block text-xs">{deal.client_email}</span>}
                     </td>
                     <td className="p-4 text-gray-500 dark:text-gray-400 capitalize">{deal.type}</td>
                     <td className="p-4">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium capitalize ${STATUS_BADGE[deal.status] || STATUS_BADGE.contacted}`}>{deal.status}</span>
                     </td>
-                    <td className="p-4 text-gray-900 dark:text-white">{deal.price ? `${Number(deal.price).toLocaleString()} MAD` : 'â€”'}</td>
+                    <td className="p-4 text-gray-900 dark:text-white">{deal.price ? `${Number(deal.price).toLocaleString()} MAD` : '—'}</td>
                     <td className="p-4">
-                      <span className="text-gray-900 dark:text-white">{deal.commission_amount ? `${Number(deal.commission_amount).toLocaleString()} MAD` : 'â€”'}</span>
+                      <span className="text-gray-900 dark:text-white">{deal.commission_amount ? `${Number(deal.commission_amount).toLocaleString()} MAD` : '—'}</span>
                       {deal.commission_rate && <span className="block text-xs text-gray-400">{deal.commission_rate}%</span>}
                     </td>
                     <td className="p-4 text-right whitespace-nowrap">

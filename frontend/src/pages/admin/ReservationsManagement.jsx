@@ -50,14 +50,14 @@ const ReservationsManagement = () => {
               <tbody>
                 {reservations.map((r) => (
                   <tr key={r._id || r.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
-                    <td className="p-4 font-mono text-xs text-gray-500 dark:text-gray-400">{r.booking_reference || r.reference || 'â€”'}</td>
+                    <td className="p-4 font-mono text-xs text-gray-500 dark:text-gray-400">{r.booking_reference || r.reference || '—'}</td>
                     <td className="p-4 text-gray-900 dark:text-white font-medium">{r.guest_name || r.client?.name || r.name || 'N/A'}</td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">{r.property?.title || r.propertyTitle || 'N/A'}</td>
                     <td className="p-4 text-gray-500 dark:text-gray-400">
-                      {r.check_in ? `${new Date(r.check_in).toLocaleDateString()} â†’ ${new Date(r.check_out).toLocaleDateString()}` : (r.date ? new Date(r.date).toLocaleDateString() : 'N/A')}
+                      {r.check_in ? `${new Date(r.check_in).toLocaleDateString()} → ${new Date(r.check_out).toLocaleDateString()}` : (r.date ? new Date(r.date).toLocaleDateString() : 'N/A')}
                     </td>
-                    <td className="p-4 text-gray-500 dark:text-gray-400">{r.guests || 'â€”'}</td>
-                    <td className="p-4 text-gray-900 dark:text-white">{r.total_price != null ? `${Number(r.total_price).toLocaleString()} MAD` : 'â€”'}</td>
+                    <td className="p-4 text-gray-500 dark:text-gray-400">{r.guests || '—'}</td>
+                    <td className="p-4 text-gray-900 dark:text-white">{r.total_price != null ? `${Number(r.total_price).toLocaleString()} MAD` : '—'}</td>
                     <td className="p-4">
                       {Number(r.deposit) > 0 ? (
                         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${r.deposit_paid ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400'}`}>
@@ -80,7 +80,7 @@ const ReservationsManagement = () => {
                           <button onClick={() => dispatch(rejectReservation(r._id || r.id))} className="px-3 py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-xs font-medium">Reject</button>
                         </>
                       )}
-                      {r.status !== 'pending' && <span className="text-xs text-gray-400">â€”</span>}
+                      {r.status !== 'pending' && <span className="text-xs text-gray-400">—</span>}
                     </td>
                   </tr>
                 ))}

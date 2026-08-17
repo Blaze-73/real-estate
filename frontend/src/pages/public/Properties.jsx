@@ -107,8 +107,9 @@ const Properties = () => {
 
   const check_in = searchParams.get('check_in') || '';
   const check_out = searchParams.get('check_out') || '';
-  const rawPriceMode = searchParams.get('price_mode') === 'total' ? 'total' : 'night';
-  const amenities = searchParams.getAll('amenities[]');
+const rawPriceMode = searchParams.get('price_mode') === 'total' ? 'total' : 'night';
+  const searchStr = searchParams.toString();
+  const amenities = useMemo(() => new URLSearchParams(searchStr).getAll('amenities[]'), [searchStr]);
 
   const nights = useMemo(() => {
     if (!check_in || !check_out) return 0;
@@ -158,8 +159,8 @@ const Properties = () => {
       }
     }
     Object.keys(params).forEach((k) => { if (!params[k]) delete params[k]; });
-    dispatch(fetchProperties(params));
-  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page, check_in, check_out, priceMode, nights, amenities]);
+dispatch(fetchProperties(params));
+  }, [dispatch, type, min_price, max_price, bedrooms, bathrooms, sort_by, sort_order, page, check_in, check_out, priceMode, nights, searchStr, amenities]);
 
   const updateParam = (name, value) => {
     const next = new URLSearchParams(searchParams);

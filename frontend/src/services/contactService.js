@@ -6,6 +6,11 @@ const contactService = {
     return data;
   },
 
+  sendSell: async (sellData) => {
+    const { data } = await api.post('/public/sell', sellData);
+    return data;
+  },
+
   revealPhone: async (slug, contactData) => {
     const { data } = await api.post(`/public/properties/${slug}/reveal-phone`, contactData);
     return data;

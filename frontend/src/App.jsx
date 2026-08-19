@@ -11,6 +11,7 @@ const Properties = lazy(() => import('./pages/public/Properties'));
 const PropertyDetails = lazy(() => import('./pages/public/PropertyDetails'));
 const About = lazy(() => import('./pages/public/About'));
 const Contact = lazy(() => import('./pages/public/Contact'));
+const Sell = lazy(() => import('./pages/public/Sell'));
 const PaymentPage = lazy(() => import('./pages/public/PaymentPage'));
 const SavedSearches = lazy(() => import('./pages/account/SavedSearches'));
 const Favorites = lazy(() => import('./pages/account/Favorites'));
@@ -54,6 +55,7 @@ function App() {
           <Route path="/properties" element={<Properties />} />
           <Route path="/properties/:slug" element={<PropertyDetails />} />
           <Route path="/about" element={<About />} />
+          <Route path="/sell" element={<Sell />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/pay/:token" element={<PaymentPage />} />
           <Route path="/account/saved-searches" element={<ProtectedRoute><SavedSearches /></ProtectedRoute>} />

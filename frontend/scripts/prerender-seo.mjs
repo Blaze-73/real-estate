@@ -140,8 +140,15 @@ const staticPages = [
     path: '/about',
     out: 'about/index.html',
     title: 'About Us',
-    description: 'Asilah Real Estate — a trusted agency in Asilah, Morocco since 2015. Your partner for buying, selling and renting properties on the Atlantic coast.',
-    body: '<h1>About Asilah Real Estate</h1><p>Your trusted partner in Asilah\'s real estate market since 2015.</p>',
+    description: 'Asilah Real Estate — a local agency in Asilah, Morocco. Your partner for buying, selling and renting properties on the Atlantic coast.',
+    body: '<h1>About Asilah Real Estate</h1><p>A small, local team in Asilah — honest pricing, clear contracts and someone on the ground.</p>',
+  },
+  {
+    path: '/sell',
+    out: 'sell/index.html',
+    title: 'Sell or Rent Out Your Property in Asilah',
+    description: 'List your property in Asilah with a local agency. Sell, rent out seasonally or long-term — we visit every home before it goes live.',
+    body: '<h1>Sell your property in Asilah</h1><p>Tell us about your home in Asilah — sale, seasonal rental or long-term let — and we will take it from there.</p>',
   },
   {
     path: '/contact',

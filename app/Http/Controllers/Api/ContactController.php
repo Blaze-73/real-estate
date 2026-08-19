@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreContactRequest;
+use App\Http\Requests\StoreSellRequest;
 use App\Models\Contact;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
@@ -32,6 +33,28 @@ class ContactController extends Controller
     public function store(StoreContactRequest $request): JsonResponse
     {
         $contact = Contact::create($request->validated());
+
+        return response()->json($contact, 201);
+    }
+
+    public function storeSell(StoreSellRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        $typeLabel = ucwords(str_replace('_', ' ', $validated['property_type']));
+        $contact = Contact::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'subject' => ucfirst($validated['purpose']) . ' request — ' . $typeLabel . ' — ' . $validated['neighborhood'],
+            'message' => implode("\n", array_filter([
+                __('Sell request', [], 'en') . ': ' . __('Purpose', [], 'en') . ' — ' . $validated['purpose'],
+                __('Property type', [], 'en') . ': ' . $typeLabel,
+                __('Neighborhood', [], 'en') . ': ' . $validated['neighborhood'],
+                $validated['message'] ?? null,
+            ])),
+            'type' => 'owner_listing',
+        ]);
 
         return response()->json($contact, 201);
     }

@@ -53,6 +53,7 @@ Route::prefix('v1')->group(function () {
     Route::post('public/properties/{property:slug}/reviews', [ReviewController::class, 'store'])
         ->middleware('throttle:5,1');
     Route::post('public/contact', [ContactController::class, 'store']);
+    Route::post('public/sell', [ContactController::class, 'storeSell']);
     Route::post('public/properties/{property:slug}/reveal-phone', [ContactController::class, 'revealPhone'])
         ->middleware('throttle:5,1');
     Route::post('public/payments/checkout', [PublicPaymentController::class, 'checkout'])

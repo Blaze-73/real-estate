@@ -116,7 +116,7 @@ const MessagesManagement = () => {
                     {!m.is_read && <span className="w-2 h-2 rounded-full bg-[#ececf0] shrink-0 mt-1" />}
                   </div>
                   <p className="text-xs text-gray-400 truncate">{m.subject}</p>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mt-1">{m.type === 'phone_reveal' ? 'Phone reveal' : 'Contact form'}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mt-1">{m.type === 'phone_reveal' ? 'Phone reveal' : m.type === 'owner_listing' ? 'Sell request' : 'Contact form'}</p>
                   <p className="text-xs text-gray-400 mt-1">{new Date(m.created_at).toLocaleDateString()}</p>
                 </button>
               ))}

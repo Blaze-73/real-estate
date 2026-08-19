@@ -19,7 +19,11 @@ class AvailabilityController extends Controller
 
     public function calendar(Request $request, Property $property): JsonResponse
     {
-        $month = $request->month ?? now()->format('Y-m');
+        $validated = $request->validate([
+            'month' => ['nullable', 'regex:/^\d{4}-\d{2}$/'],
+        ]);
+
+        $month = $validated['month'] ?? now()->format('Y-m');
         $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
         $end = $start->copy()->endOfMonth();
 

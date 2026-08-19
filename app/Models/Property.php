@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -155,7 +156,7 @@ class Property extends Model
             ->get();
     }
 
-    public function freeNightsNextMonth(): int
+    public function freeNightsNextMonth(?Collection $blocks = null, ?Collection $reservations = null): int
     {
         if (!$this->nightly_price) {
             return 0;
@@ -165,19 +166,20 @@ class Property extends Model
         $end = $start->copy()->addDays(29);
 
         $blocked = [];
-        $this->availabilityBlocks()
+        $blocks = $blocks ?? $this->availabilityBlocks()
             ->whereDate('start_date', '<=', $end->toDateString())
             ->whereDate('end_date', '>=', $start->toDateString())
-            ->get()
-            ->each(function ($block) use (&$blocked, $start, $end) {
-                $from = $block->start_date->greaterThan($start) ? $block->start_date : $start;
-                $to = $block->end_date->lessThan($end) ? $block->end_date : $end;
-                for ($day = $from->copy(); $day->lte($to); $day->addDay()) {
-                    $blocked[$day->toDateString()] = true;
-                }
-            });
+            ->get();
 
-        $reservations = $this->reservations()
+        $blocks->each(function ($block) use (&$blocked, $start, $end) {
+            $from = $block->start_date->greaterThan($start) ? $block->start_date : $start;
+            $to = $block->end_date->lessThan($end) ? $block->end_date : $end;
+            for ($day = $from->copy(); $day->lte($to); $day->addDay()) {
+                $blocked[$day->toDateString()] = true;
+            }
+        });
+
+        $reservations = $reservations ?? $this->reservations()
             ->whereIn('status', ['pending', 'approved'])
             ->where('check_in', '<', $end->copy()->addDay()->toDateString())
             ->where('check_out', '>', $start->toDateString())

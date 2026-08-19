@@ -35,6 +35,8 @@ class StorePropertyRequest extends FormRequest
             'bathrooms' => 'nullable|integer|min:0',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'cancellation_policy' => 'nullable|string|max:500',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'status' => 'nullable|in:available,rented,pending,maintenance',

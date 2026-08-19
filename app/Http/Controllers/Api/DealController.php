@@ -29,7 +29,7 @@ class DealController extends Controller
             })
             ->when($request->property_id, fn ($q) => $q->where('property_id', $request->property_id))
             ->orderByDesc('updated_at')
-            ->paginate($request->integer('per_page', 10))
+            ->paginate(min(max($request->integer('per_page', 10), 1), 100))
             ->withQueryString();
 
         return response()->json($deals);

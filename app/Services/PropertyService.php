@@ -23,7 +23,22 @@ class PropertyService
 
     public function show(Property $property): Property
     {
-        return $property->load(['images', 'user', 'approvedReviews']);
+        return $property->load([
+            'images',
+            'user',
+            'approvedReviews',
+            'availabilityBlocks' => fn ($q) => $q
+                ->whereDate('start_date', '<=', now()->addDays(29)->toDateString())
+                ->whereDate('end_date', '>=', now()->toDateString()),
+            'reservations' => fn ($q) => $q
+                ->whereIn('status', ['pending', 'approved'])
+                ->where('check_in', '<', now()->addDays(30)->toDateString())
+                ->where('check_out', '>', now()->toDateString()),
+        ])->loadCount([
+            'reservations as bookings_this_month' => fn ($q) => $q
+                ->where('status', 'approved')
+                ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()]),
+        ]);
     }
 
     public function similar(Property $property, int $limit = 3): Collection
@@ -34,7 +49,17 @@ class PropertyService
                 $query->where('type', $property->type)
                     ->orWhere('city', $property->city);
             })
-            ->with('primaryImage')
+            ->with([
+                'primaryImage',
+                'approvedReviews',
+                'availabilityBlocks' => fn ($q) => $q
+                    ->whereDate('start_date', '<=', now()->addDays(29)->toDateString())
+                    ->whereDate('end_date', '>=', now()->toDateString()),
+                'reservations' => fn ($q) => $q
+                    ->whereIn('status', ['pending', 'approved'])
+                    ->where('check_in', '<', now()->addDays(30)->toDateString())
+                    ->where('check_out', '>', now()->toDateString()),
+            ])
             ->orderBy('featured', 'desc')
             ->limit($limit)
             ->get();
@@ -44,6 +69,7 @@ class PropertyService
     {
         $data['slug'] = Property::makeUniqueSlug($data['title']);
         $data['user_id'] = auth()->id();
+        $this->normalizeLocation($data);
 
         $property = Property::create($data);
 
@@ -54,6 +80,8 @@ class PropertyService
 
     public function update(Property $property, array $data): Property
     {
+        $this->normalizeLocation($data);
+
         if (isset($data['title']) && $data['title'] !== $property->title) {
             $data['slug'] = Property::makeUniqueSlug($data['title'], $property->id);
         }
@@ -63,6 +91,15 @@ class PropertyService
         $this->attachImages($property, $data['images'] ?? []);
 
         return $property->fresh()->load('images');
+    }
+
+    private function normalizeLocation(array &$data): void
+    {
+        if (isset($data['location']) && $data['location'] !== '' && empty($data['address'])) {
+            $data['address'] = $data['location'];
+        }
+
+        unset($data['location']);
     }
 
     public function delete(Property $property): void
@@ -87,7 +124,17 @@ class PropertyService
     public function getFeatured(): Collection
     {
         return Cache::remember('featured_properties', now()->addMinutes(10), function () {
-            return Property::featured()->available()->with('primaryImage')->get();
+            return Property::featured()->available()->with([
+                'primaryImage',
+                'approvedReviews',
+                'availabilityBlocks' => fn ($q) => $q
+                    ->whereDate('start_date', '<=', now()->addDays(29)->toDateString())
+                    ->whereDate('end_date', '>=', now()->toDateString()),
+                'reservations' => fn ($q) => $q
+                    ->whereIn('status', ['pending', 'approved'])
+                    ->where('check_in', '<', now()->addDays(30)->toDateString())
+                    ->where('check_out', '>', now()->toDateString()),
+            ])->get();
         });
     }
 

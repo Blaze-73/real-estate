@@ -13,7 +13,7 @@ const PropertiesManagement = () => {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState({
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
-    status: 'available', description: '', features: '', amenities: [], video_url: '',
+    status: 'available', description: '', amenities: [], video_url: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
     instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
@@ -27,7 +27,7 @@ const PropertiesManagement = () => {
 
   const emptyForm = () => ({
     title: '', type: 'apartment', price: '', surface: '', bedrooms: '', bathrooms: '', location: '',
-    status: 'available', description: '', features: '', amenities: [], video_url: '',
+    status: 'available', description: '', amenities: [], video_url: '',
     nightly_price: '', monthly_price: '', min_nights: 1, cleaning_fee: '', deposit: '',
     instant_book: false,
     high_season_from: '', high_season_to: '', high_season_price: '', ical_url: '', cancellation_policy: '',
@@ -71,7 +71,6 @@ const PropertiesManagement = () => {
       location: property.location || '',
       status: property.status || 'available',
       description: property.description || '',
-      features: property.features?.join(', ') || '',
       amenities: property.amenities || [],
       video_url: property.video_url || '',
       nightly_price: property.nightly_price ?? '',
@@ -104,7 +103,6 @@ const PropertiesManagement = () => {
       surface: Number(form.surface),
       bedrooms: Number(form.bedrooms),
       bathrooms: Number(form.bathrooms),
-      features: form.features.split(',').map((f) => f.trim()).filter(Boolean),
       amenities: form.amenities,
       video_url: form.video_url || null,
       nightly_price: num(form.nightly_price),
@@ -280,7 +278,6 @@ const PropertiesManagement = () => {
                 </div>
                 <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Location" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
                 <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" rows={3} className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6] resize-none" />
-                <input type="text" name="features" value={form.features} onChange={handleChange} placeholder="Features (comma separated)" className="w-full px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]" />
 
                 <div>
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Amenities</p>

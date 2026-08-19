@@ -16,7 +16,7 @@ class PromotionController extends Controller
             ->when($request->property_id, fn ($q) => $q->where('property_id', $request->property_id))
             ->when($request->active !== null, fn ($q) => $q->where('active', $request->boolean('active')))
             ->orderByDesc('updated_at')
-            ->paginate($request->integer('per_page', 20))
+            ->paginate(min(max($request->integer('per_page', 20), 1), 100))
             ->withQueryString();
 
         return response()->json($promotions);

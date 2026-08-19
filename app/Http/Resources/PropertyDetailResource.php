@@ -40,13 +40,19 @@ class PropertyDetailResource extends JsonResource
             'amenities' => $this->amenities ?? [],
             'video_url' => $this->video_url,
             'cancellation_policy' => $this->cancellation_policy,
-            'reviews_count' => $this->reviews()->approved()->count(),
-            'rating_score' => round((float) ($this->reviews()->approved()->avg('rating') ?? 0), 1),
-            'bookings_this_month' => $this->reservations()
+            'reviews_count' => $this->whenLoaded('approvedReviews')
+                ? $this->approvedReviews->count()
+                : $this->reviews()->approved()->count(),
+            'rating_score' => $this->whenLoaded('approvedReviews')
+                ? round((float) ($this->approvedReviews->avg('rating') ?? 0), 1)
+                : round((float) ($this->reviews()->approved()->avg('rating') ?? 0), 1),
+            'bookings_this_month' => $this->bookings_this_month ?? $this->reservations()
                 ->where('status', 'approved')
                 ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()])
                 ->count(),
-            'free_nights_next_month' => $this->freeNightsNextMonth(),
+            'free_nights_next_month' => $this->whenLoaded('availabilityBlocks') && $this->whenLoaded('reservations')
+                ? $this->freeNightsNextMonth($this->availabilityBlocks, $this->reservations)
+                : $this->freeNightsNextMonth(),
             'promotions' => $this->activePromotions()->map(fn ($p) => [
                 'id' => $p->id,
                 'name' => $p->name,

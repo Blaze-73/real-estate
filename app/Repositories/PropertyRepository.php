@@ -10,7 +10,24 @@ class PropertyRepository
 {
     public function paginate(array $filters = []): LengthAwarePaginator
     {
-        $query = Property::query()->with(['primaryImage', 'user']);
+        $query = Property::query()->with([
+            'primaryImage',
+            'user',
+            'approvedReviews',
+            'availabilityBlocks' => fn ($q) => $q
+                ->whereDate('start_date', '<=', now()->addDays(29)->toDateString())
+                ->whereDate('end_date', '>=', now()->toDateString())
+                ->select(['id', 'property_id', 'start_date', 'end_date']),
+            'reservations' => fn ($q) => $q
+                ->whereIn('status', ['pending', 'approved'])
+                ->where('check_in', '<', now()->addDays(30)->toDateString())
+                ->where('check_out', '>', now()->toDateString())
+                ->select(['id', 'property_id', 'check_in', 'check_out']),
+        ])->withCount([
+            'reservations as bookings_this_month' => fn ($q) => $q
+                ->where('status', 'approved')
+                ->whereBetween('check_in', [now()->startOfMonth(), now()->endOfMonth()]),
+        ]);
 
         if (isset($filters['search'])) {
             $search = $filters['search'];
@@ -73,7 +90,7 @@ class PropertyRepository
             $query->latest();
         }
 
-        $perPage = $filters['per_page'] ?? 15;
+        $perPage = min(max((int) ($filters['per_page'] ?? 15), 1), 200);
 
         return $query->paginate($perPage);
     }

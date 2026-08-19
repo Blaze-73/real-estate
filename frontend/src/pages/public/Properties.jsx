@@ -97,13 +97,13 @@ const Properties = () => {
   const handleMapSelect = useCallback((id) => navigate(`/properties/${id}`), [navigate]);
 
   const SORT_OPTIONS = [
-    { value: '-createdAt', label: t('properties.newest') },
-    { value: 'createdAt', label: t('properties.oldest') },
+    { value: '-created_at', label: t('properties.newest') },
+    { value: 'created_at', label: t('properties.oldest') },
     { value: 'price', label: t('properties.priceLowHigh') },
     { value: '-price', label: t('properties.priceHighLow') },
   ];
 
-  const readSort = () => searchParams.get('sort') || '-createdAt';
+  const readSort = () => searchParams.get('sort') || '-created_at';
 
   const check_in = searchParams.get('check_in') || '';
   const check_out = searchParams.get('check_out') || '';

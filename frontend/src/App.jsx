@@ -65,19 +65,19 @@ function App() {
           <Route element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="properties" element={<PropertiesManagement />} />
-<Route path="deals" element={<DealsManagement />} />
-            <Route path="promotions" element={<PromotionsManagement />} />
+            <Route path="deals" element={<ProtectedRoute roles={['admin', 'manager']}><DealsManagement /></ProtectedRoute>} />
+            <Route path="promotions" element={<ProtectedRoute roles={['admin', 'manager']}><PromotionsManagement /></ProtectedRoute>} />
             <Route path="clients" element={<ClientsManagement />} />
             <Route path="reservations" element={<ReservationsManagement />} />
             <Route path="calendar" element={<CalendarManagement />} />
             <Route path="rentals" element={<RentalsManagement />} />
-            <Route path="payments" element={<PaymentsManagement />} />
-            <Route path="testimonials" element={<TestimonialsManagement />} />
-            <Route path="reviews" element={<ReviewsManagement />} />
+            <Route path="payments" element={<ProtectedRoute roles={['admin', 'manager']}><PaymentsManagement /></ProtectedRoute>} />
+            <Route path="testimonials" element={<ProtectedRoute roles={['admin', 'manager']}><TestimonialsManagement /></ProtectedRoute>} />
+            <Route path="reviews" element={<ProtectedRoute roles={['admin', 'manager']}><ReviewsManagement /></ProtectedRoute>} />
             <Route path="messages" element={<MessagesManagement />} />
             <Route path="notifications" element={<NotificationsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="activity-logs" element={<ActivityLogs />} />
+            <Route path="settings" element={<ProtectedRoute roles={['admin']}><SettingsPage /></ProtectedRoute>} />
+            <Route path="activity-logs" element={<ProtectedRoute roles={['admin']}><ActivityLogs /></ProtectedRoute>} />
           </Route>
         </Route>
       </Routes>

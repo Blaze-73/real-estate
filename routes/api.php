@@ -60,63 +60,70 @@ Route::prefix('v1')->group(function () {
     Route::post('public/payments/preview', [PublicPaymentController::class, 'preview']);
     Route::post('public/payments/callback', [PublicPaymentController::class, 'callback']);
 
-    Route::middleware(['auth:sanctum', 'role:admin,manager,agent'])->group(function () {
-        Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);
-        Route::put('properties/{property}/featured', [PropertyController::class, 'toggleFeatured']);
-        Route::post('properties/{property}/images', [PropertyImageController::class, 'store']);
-        Route::patch('property-images/{image}/primary', [PropertyImageController::class, 'setPrimary']);
-        Route::delete('property-images/{image}', [PropertyImageController::class, 'destroy']);
-        Route::get('properties/{property}/availability', [AvailabilityController::class, 'index']);
-        Route::post('properties/{property}/availability', [AvailabilityController::class, 'store']);
-        Route::post('properties/{property}/ical-import', [AvailabilityController::class, 'importIcs']);
-        Route::delete('availability/{availability}', [AvailabilityController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::middleware('role:admin,manager,agent')->group(function () {
+            Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);
+            Route::put('properties/{property}/featured', [PropertyController::class, 'toggleFeatured']);
+            Route::post('properties/{property}/images', [PropertyImageController::class, 'store']);
+            Route::patch('property-images/{image}/primary', [PropertyImageController::class, 'setPrimary']);
+            Route::delete('property-images/{image}', [PropertyImageController::class, 'destroy']);
+            Route::get('properties/{property}/availability', [AvailabilityController::class, 'index']);
+            Route::post('properties/{property}/availability', [AvailabilityController::class, 'store']);
+            Route::post('properties/{property}/ical-import', [AvailabilityController::class, 'importIcs']);
+            Route::delete('availability/{availability}', [AvailabilityController::class, 'destroy']);
 
-        Route::apiResource('clients', ClientController::class);
+            Route::apiResource('clients', ClientController::class);
 
-        Route::apiResource('reservations', ReservationController::class)->only(['index', 'show', 'store', 'destroy']);
-        Route::put('reservations/{reservation}/approve', [ReservationController::class, 'approve']);
-        Route::put('reservations/{reservation}/reject', [ReservationController::class, 'reject']);
-        Route::put('reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
-        Route::put('reservations/{reservation}/archive', [ReservationController::class, 'archive']);
+            Route::apiResource('reservations', ReservationController::class)->only(['index', 'show', 'store', 'destroy']);
+            Route::put('reservations/{reservation}/approve', [ReservationController::class, 'approve']);
+            Route::put('reservations/{reservation}/reject', [ReservationController::class, 'reject']);
+            Route::put('reservations/{reservation}/cancel', [ReservationController::class, 'cancel']);
+            Route::put('reservations/{reservation}/archive', [ReservationController::class, 'archive']);
 
-        Route::get('rentals/active', [RentalController::class, 'active']);
-        Route::get('rentals/upcoming', [RentalController::class, 'upcoming']);
-        Route::get('rentals/expired', [RentalController::class, 'expired']);
-        Route::apiResource('rentals', RentalController::class);
+            Route::get('rentals/active', [RentalController::class, 'active']);
+            Route::get('rentals/upcoming', [RentalController::class, 'upcoming']);
+            Route::get('rentals/expired', [RentalController::class, 'expired']);
+            Route::apiResource('rentals', RentalController::class);
 
-        Route::get('payments/reports/monthly', [PaymentController::class, 'monthlyReport']);
-        Route::get('payments/reports/yearly', [PaymentController::class, 'yearlyReport']);
-        Route::put('payments/{payment}/mark-paid', [PaymentController::class, 'markPaid']);
-        Route::apiResource('payments', PaymentController::class);
+            Route::get('notifications/unread-count', [NotificationController::class, 'unreadCount']);
+            Route::put('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+            Route::put('notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
+            Route::get('notifications', [NotificationController::class, 'index']);
 
-        Route::get('notifications/unread-count', [NotificationController::class, 'unreadCount']);
-        Route::put('notifications/read-all', [NotificationController::class, 'markAllAsRead']);
-        Route::put('notifications/{notification}/read', [NotificationController::class, 'markAsRead']);
-        Route::get('notifications', [NotificationController::class, 'index']);
+            Route::apiResource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
+            Route::put('contacts/{contact}/read', [ContactController::class, 'markAsRead']);
 
-        Route::apiResource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
-        Route::put('contacts/{contact}/read', [ContactController::class, 'markAsRead']);
+            Route::get('dashboard/stats', [DashboardController::class, 'stats']);
+            Route::get('dashboard/property-types', [DashboardController::class, 'propertyTypes']);
+            Route::get('dashboard/rental-stats', [DashboardController::class, 'occupancy']);
+            Route::get('dashboard/activity', [DashboardController::class, 'recentActivity']);
+        });
 
-        Route::get('deals/stats', [DealController::class, 'stats']);
-        Route::apiResource('deals', DealController::class);
+        Route::middleware('role:admin,manager')->group(function () {
+            Route::get('payments/reports/monthly', [PaymentController::class, 'monthlyReport']);
+            Route::get('payments/reports/yearly', [PaymentController::class, 'yearlyReport']);
+            Route::put('payments/{payment}/mark-paid', [PaymentController::class, 'markPaid']);
+            Route::apiResource('payments', PaymentController::class);
 
-        Route::apiResource('promotions', PromotionController::class);
+            Route::get('deals/stats', [DealController::class, 'stats']);
+            Route::apiResource('deals', DealController::class);
 
-        Route::apiResource('testimonials', TestimonialController::class);
+            Route::apiResource('promotions', PromotionController::class);
 
-        Route::get('reviews', [ReviewController::class, 'index']);
-        Route::put('reviews/{review}/approve', [ReviewController::class, 'approve']);
-        Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
+            Route::apiResource('testimonials', TestimonialController::class);
 
-        Route::get('dashboard/stats', [DashboardController::class, 'stats']);
-        Route::get('dashboard/revenue', [DashboardController::class, 'revenueChart']);
-        Route::get('dashboard/property-types', [DashboardController::class, 'propertyTypes']);
-        Route::get('dashboard/rental-stats', [DashboardController::class, 'occupancy']);
-        Route::get('dashboard/activity', [DashboardController::class, 'recentActivity']);
+            Route::get('reviews', [ReviewController::class, 'index']);
+            Route::put('reviews/{review}/approve', [ReviewController::class, 'approve']);
+            Route::delete('reviews/{review}', [ReviewController::class, 'destroy']);
 
-        Route::get('activity-logs', [ActivityLogController::class, 'index']);
-        Route::get('activity-logs/{activityLog}', [ActivityLogController::class, 'show']);
+            Route::get('dashboard/revenue', [DashboardController::class, 'revenueChart']);
+        });
 
-        Route::put('settings', [SettingController::class, 'update']);
+        Route::middleware('role:admin')->group(function () {
+            Route::get('activity-logs', [ActivityLogController::class, 'index']);
+            Route::get('activity-logs/{activityLog}', [ActivityLogController::class, 'show']);
+
+            Route::put('settings', [SettingController::class, 'update']);
+        });
     });
 });

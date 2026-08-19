@@ -36,17 +36,17 @@ const notificationSlice = createSlice({
         state.loading = false;
         const data = action.payload.notifications || action.payload.data || action.payload || [];
         state.notifications = data;
-        state.unreadCount = data.filter((n) => !n.read).length;
+        state.unreadCount = data.filter((n) => !n.is_read).length;
       })
       .addCase(fetchNotifications.rejected, (state) => { state.loading = false; })
       .addCase(markAsRead.fulfilled, (state, action) => {
         const updated = action.payload.notification || action.payload.data || action.payload;
-        const idx = state.notifications.findIndex((n) => n._id === updated._id || n.id === updated.id);
-        if (idx !== -1) state.notifications[idx] = { ...state.notifications[idx], read: true };
-        state.unreadCount = state.notifications.filter((n) => !n.read).length;
+        const idx = state.notifications.findIndex((n) => n.id === (updated?.id ?? updated?._id));
+        if (idx !== -1) state.notifications[idx] = { ...state.notifications[idx], is_read: true };
+        state.unreadCount = state.notifications.filter((n) => !n.is_read).length;
       })
       .addCase(markAllAsRead.fulfilled, (state) => {
-        state.notifications = state.notifications.map((n) => ({ ...n, read: true }));
+        state.notifications = state.notifications.map((n) => ({ ...n, is_read: true }));
         state.unreadCount = 0;
       });
   },

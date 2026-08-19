@@ -32,24 +32,24 @@ const NotificationsPage = () => {
           <div className="divide-y divide-gray-100 dark:divide-gray-800">
             {notifications.map((n) => (
               <motion.div
-                key={n._id || n.id}
+                key={n.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-4 flex items-start justify-between ${!n.read ? 'bg-[#ececf0]/5' : ''}`}
+                className={`p-4 flex items-start justify-between ${!n.is_read ? 'bg-[#ececf0]/5' : ''}`}
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    {!n.read && <span className="w-2 h-2 rounded-full bg-[#ececf0]" />}
-                    <p className={`text-sm ${n.read ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white font-medium'}`}>
+                    {!n.is_read && <span className="w-2 h-2 rounded-full bg-[#ececf0]" />}
+                    <p className={`text-sm ${n.is_read ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white font-medium'}`}>
                       {n.message || n.title || 'Notification'}
                     </p>
                   </div>
-                  {n.createdAt && (
-                    <p className="text-xs text-gray-400 mt-1 ml-4">{new Date(n.createdAt).toLocaleString()}</p>
+                  {n.created_at && (
+                    <p className="text-xs text-gray-400 mt-1 ml-4">{new Date(n.created_at).toLocaleString()}</p>
                   )}
                 </div>
-                {!n.read && (
-                  <button onClick={() => dispatch(markAsRead(n._id || n.id))} className="text-xs text-[#63686f] dark:text-[#d9d9de] hover:underline flex-shrink-0 ml-4">
+                {!n.is_read && (
+                  <button onClick={() => dispatch(markAsRead(n.id))} className="text-xs text-[#63686f] dark:text-[#d9d9de] hover:underline flex-shrink-0 ml-4">
                     Mark Read
                   </button>
                 )}

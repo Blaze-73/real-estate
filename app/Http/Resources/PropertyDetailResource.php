@@ -57,7 +57,7 @@ class PropertyDetailResource extends JsonResource
             'reviews' => ReviewResource::collection($this->whenLoaded('approvedReviews')),
             'cover' => PropertyImageResource::resolveUrl($this->images->firstWhere('is_primary', true)?->image_path ?? $this->images->first()?->image_path),
             'images' => PropertyImageResource::collection($this->whenLoaded('images')),
-            'user' => new UserResource($this->whenLoaded('user')),
+            'owner_name' => $this->whenLoaded('user', fn () => $this->user?->name),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

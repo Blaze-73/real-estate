@@ -53,7 +53,7 @@ class PropertyResource extends JsonResource
                 'value' => (float) $p->value,
                 'min_nights' => $p->min_nights,
             ])->values(),
-            'user' => new UserResource($this->whenLoaded('user')),
+            'owner_name' => $this->whenLoaded('user', fn () => $this->user?->name),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

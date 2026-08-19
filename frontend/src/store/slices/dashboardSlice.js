@@ -35,7 +35,7 @@ const dashboardSlice = createSlice({
       .addCase(fetchDashboardStats.fulfilled, (state, action) => { state.loading = false; state.stats = action.payload.stats || action.payload.data || action.payload; })
       .addCase(fetchDashboardStats.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(fetchRevenueData.pending, (state) => { state.loading = true; })
-      .addCase(fetchRevenueData.fulfilled, (state, action) => { state.loading = false; state.revenueData = action.payload.revenue || action.payload.data || action.payload || []; })
+      .addCase(fetchRevenueData.fulfilled, (state, action) => { state.loading = false; state.revenueData = action.payload; })
       .addCase(fetchRevenueData.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
       .addCase(fetchRentalStats.pending, (state) => { state.loading = true; })
       .addCase(fetchRentalStats.fulfilled, (state, action) => { state.loading = false; state.rentalStats = action.payload.stats || action.payload.data || action.payload; })

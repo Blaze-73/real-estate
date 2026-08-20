@@ -69,6 +69,11 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
         })()
       : null;
 
+  const isNightlyRental = Number(nightly_price) > 0;
+  const isMonthlyRental = !isNightlyRental && Number(monthly_price) > 0;
+  const displayRate = isNightlyRental ? nightly_price : isMonthlyRental ? monthly_price : price;
+  const unitLabel = isNightlyRental ? t('common.perNight') : isMonthlyRental ? t('common.perMonth') : null;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -161,8 +166,15 @@ const PropertyCard = ({ property, priceMode = 'night', nights = 0 }) => {
                 </span>
               </span>
             ) : (
-              <span className="font-display text-2xl font-semibold text-white drop-shadow-sm">
-                {formatPrice(price)}
+              <span className="flex flex-col leading-tight">
+                <span className="font-display text-2xl font-semibold text-white drop-shadow-sm">
+                  {formatPrice(displayRate)}
+                </span>
+                {unitLabel && (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-sand-100/80">
+                    {unitLabel}
+                  </span>
+                )}
               </span>
             )}
           </div>

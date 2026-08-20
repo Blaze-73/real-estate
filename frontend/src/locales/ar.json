@@ -43,7 +43,9 @@
     "villa": "فيلا",
     "house": "منزل",
     "studio": "استوديو",
-    "office": "مكتب"
+    "seasonal": "موسمي",
+    "commercial": "تجاري",
+    "long_term": "طويل الأمد"
   },
   "search": {
     "propertyType": "نوع العقار",

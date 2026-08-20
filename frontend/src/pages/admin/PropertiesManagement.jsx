@@ -260,7 +260,9 @@ const PropertiesManagement = () => {
                     <option value="villa">Villa</option>
                     <option value="house">House</option>
                     <option value="studio">Studio</option>
-                    <option value="office">Office</option>
+                    <option value="seasonal">Seasonal</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="long_term">Long-term</option>
                   </select>
                   <select name="status" value={form.status} onChange={handleChange} className="px-4 py-2.5 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
                     <option value="available">Available</option>

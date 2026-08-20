@@ -45,7 +45,9 @@ const SearchBar = ({ onSearch, className = '' }) => {
           <option value="villa">{t('types.villa')}</option>
           <option value="house">{t('types.house')}</option>
           <option value="studio">{t('types.studio')}</option>
-          <option value="office">{t('types.office')}</option>
+          <option value="seasonal">{t('types.seasonal')}</option>
+          <option value="commercial">{t('types.commercial')}</option>
+          <option value="long_term">{t('types.long_term')}</option>
         </select>
         <input
           type="number"

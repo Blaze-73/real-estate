@@ -11,7 +11,9 @@ import { CardSkeleton } from '../../components/common/LoadingSkeleton';
 import Seo from '../../components/common/Seo';
 import { AMENITIES } from '../../constants/amenities';
 
-const TYPE_CHIPS = ['apartment', 'villa', 'house', 'studio'];
+const TYPE_OPTIONS = ['apartment', 'villa', 'house', 'studio', 'seasonal', 'commercial', 'long_term'];
+
+const TYPE_CHIPS = TYPE_OPTIONS;
 
 const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities = [], priceMode = 'night' }) => {
   const { t } = useTranslation();
@@ -22,11 +24,9 @@ const FilterControls = ({ filters, onChange, onAmenityToggle, selectedAmenities 
         <label className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t('properties.type')}</label>
         <select name="type" value={filters.type} onChange={onChange} className="mt-1 w-full px-3 py-2 rounded-xl bg-gray-50 dark:bg-ink-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#9aa0a6]">
           <option value="">{t('properties.allTypes')}</option>
-          <option value="apartment">{t('types.apartment')}</option>
-          <option value="villa">{t('types.villa')}</option>
-          <option value="house">{t('types.house')}</option>
-          <option value="studio">{t('types.studio')}</option>
-          <option value="office">{t('types.office')}</option>
+          {TYPE_OPTIONS.map((v) => (
+            <option key={v} value={v}>{t(`types.${v}`)}</option>
+          ))}
         </select>
       </div>
       <div>

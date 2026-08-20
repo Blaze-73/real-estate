@@ -43,7 +43,9 @@
     "villa": "Villa",
     "house": "Maison",
     "studio": "Studio",
-    "office": "Bureau"
+    "seasonal": "Saisonnier",
+    "commercial": "Commercial",
+    "long_term": "Longue durée"
   },
   "search": {
     "propertyType": "Type de bien",

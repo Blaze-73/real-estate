@@ -163,18 +163,18 @@ const BookingWidget = ({ property, slug }) => {
       <form onSubmit={handleQuote} className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className={labelCls}>{t('booking.checkIn')}</label>
-            <input type="date" min={today()} value={dates.check_in} onChange={(e) => setDates({ ...dates, check_in: e.target.value })} className={inputCls} required />
+            <label htmlFor="booking-check-in" className={labelCls}>{t('booking.checkIn')}</label>
+            <input id="booking-check-in" type="date" min={today()} value={dates.check_in} onChange={(e) => setDates({ ...dates, check_in: e.target.value })} className={inputCls} required />
           </div>
           <div>
-            <label className={labelCls}>{t('booking.checkOut')}</label>
-            <input type="date" min={dates.check_in || today()} value={dates.check_out} onChange={(e) => setDates({ ...dates, check_out: e.target.value })} className={inputCls} required />
+            <label htmlFor="booking-check-out" className={labelCls}>{t('booking.checkOut')}</label>
+            <input id="booking-check-out" type="date" min={dates.check_in || today()} value={dates.check_out} onChange={(e) => setDates({ ...dates, check_out: e.target.value })} className={inputCls} required />
           </div>
         </div>
 
         <div>
-          <label className={labelCls}>{t('booking.guests')}</label>
-          <input type="number" min="1" max="20" value={guests} onChange={(e) => setGuests(Number(e.target.value) || 1)} className={inputCls} />
+          <label htmlFor="booking-guests" className={labelCls}>{t('booking.guests')}</label>
+          <input id="booking-guests" type="number" min="1" max="20" value={guests} onChange={(e) => setGuests(Number(e.target.value) || 1)} className={inputCls} />
         </div>
 
         <div className="pt-1">

@@ -20,6 +20,8 @@ class BookingService
 
     public function quote(Property $property, string $checkIn, string $checkOut): array
     {
+        $this->assertBookable($property);
+
         $start = Carbon::parse($checkIn)->startOfDay();
         $end = Carbon::parse($checkOut)->startOfDay();
         $nights = $start->diffInDays($end);
@@ -81,6 +83,13 @@ class BookingService
         return $promotion;
     }
 
+    private function assertBookable(Property $property): void
+    {
+        if (!$property->nightly_price && !$property->monthly_price) {
+            throw new \DomainException('This property is not available for booking.');
+        }
+    }
+
     public function rateForNight(Property $property, Carbon $date): float
     {
         $highStart = $property->high_season_from ? Carbon::parse($property->high_season_from) : null;
@@ -127,6 +136,8 @@ class BookingService
 
     public function createBooking(Property $property, array $data): array
     {
+        $this->assertBookable($property);
+
         $checkIn = Carbon::parse($data['check_in'])->startOfDay();
         $checkOut = Carbon::parse($data['check_out'])->startOfDay();
 

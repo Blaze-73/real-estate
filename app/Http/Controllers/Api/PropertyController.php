@@ -92,7 +92,11 @@ class PropertyController extends Controller
             'check_out' => 'required|date|after:check_in',
         ]);
 
-        $quote = $this->bookingService->quote($property, $validated['check_in'], $validated['check_out']);
+        try {
+            $quote = $this->bookingService->quote($property, $validated['check_in'], $validated['check_out']);
+        } catch (\DomainException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
 
         return response()->json($quote);
     }
